@@ -38,6 +38,15 @@
             "./migrations/.gitignore"
         ]
     },
+    "easycorp/easyadmin-bundle": {
+        "version": "4.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "b131e6cbfe1b898a508987851963fff485986285"
+        }
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
@@ -50,6 +59,31 @@
             "./.env.test",
             "./phpunit.xml.dist",
             "./tests/bootstrap.php"
+        ]
+    },
+    "scheb/2fa-bundle": {
+        "version": "6.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.0",
+            "ref": "1e6f68089146853a790b5da9946fc5974f6fcd49"
+        },
+        "files": [
+            "./config/packages/scheb_2fa.yaml",
+            "./config/routes/scheb_2fa.yaml"
+        ]
+    },
+    "sensio/framework-extra-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "./config/packages/sensio_framework_extra.yaml"
         ]
     },
     "symfony/console": {
@@ -204,20 +238,6 @@
             "./config/packages/security.yaml"
         ]
     },
-    "symfony/stimulus-bundle": {
-        "version": "2.14",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "2.13",
-            "ref": "6acd9ff4f7fd5626d2962109bd4ebab351d43c43"
-        },
-        "files": [
-            "./assets/bootstrap.js",
-            "./assets/controllers.json",
-            "./assets/controllers/hello_controller.js"
-        ]
-    },
     "symfony/translation": {
         "version": "5.4",
         "recipe": {
@@ -243,9 +263,6 @@
             "./config/packages/twig.yaml",
             "./templates/base.html.twig"
         ]
-    },
-    "symfony/ux-turbo": {
-        "version": "v2.14.2"
     },
     "symfony/validator": {
         "version": "5.4",
