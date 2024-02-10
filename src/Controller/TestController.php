@@ -19,7 +19,7 @@ class TestController extends AbstractController
     #[Route('/back', name: 'app_back')]
     public function back(): Response
     {
-        return $this->render('BackOffice/back_template.html.twig', [
+        return $this->render('BackOffice/test.html.twig', [
             'controller_name' => 'BackController',
         ]);
         
