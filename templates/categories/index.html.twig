@@ -1,0 +1,35 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block main %}
+<div class="card-body">
+<h5 class="card-title">Categories Table</h5>
+
+<!-- Default Table -->
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">name</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for Categories in Categoriess %}
+    <tr>
+      <th scope="row">1</th>
+      
+    
+<td>{{ Categories.name }}</td>
+  <td>
+<a href ="{{path('Categories_update',{'id':Categories.id})}}">Update</a> |
+<a href ="{{path('Categories_delete',{'id':Categories.id})}}">Delete</a> |
+
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<!-- End Default Table Example -->
+</div>
+{% endblock %}

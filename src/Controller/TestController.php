@@ -24,4 +24,13 @@ class TestController extends AbstractController
         ]);
         
     }
+    #[Route('/layouts', name: 'app_layouts')]
+    public function layouts(): Response
+    {
+        return $this->render('BackOffice/forms-layouts.html.twig', [
+            'controller_name' => 'BackController',
+        ]);
+        
+    }
+    
 }
