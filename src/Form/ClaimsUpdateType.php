@@ -8,20 +8,55 @@ use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class ClaimsUpdateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('createDate')
-            ->add('state')
+            ->add('title', null, [
+                'constraints' => [
+                    new Length(['max' => 64]),
+                ],
+                'attr' => [
+                    'style' => 'display: none;', // Hide the title field
+                ],
+            ])
             
+            ->add('description', TextType::class, [
+                
+                'attr' => [
+                    'style' => 'display: none;', // Hide the description field
+                ],
+            ])
+            ->add('createDate', null, [
+                'attr' => [
+                    'style' => 'display: none;', // Hide the createDate field
+                ],
+            ])
+            ->add('state', ChoiceType::class, [
+                'choices' => [
+                    'Treated' => 'treated',
+                    'Not Treated' => 'not_treated',
+                ],
+                'placeholder' => 'Choose the state',
+                'constraints' => [
+                    new Choice([
+                        'choices' => ['treated', 'not_treated'],
+                        'strict' => true,
+                    ]),
+                ],
+            ])
+            ->add('reply')
             ->add('fkC', EntityType::class, [
                 'class' => Categories::class,
                 'choice_label' => 'name',
+                'attr' => [
+                    'style' => 'display: none;', // Hide the description field
+                ],
                 'placeholder' => 'Select a category',
             ])
             

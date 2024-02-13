@@ -36,6 +36,8 @@ class ClaimsController extends AbstractController
         $form=$this->createForm(ClaimsAddType::class,$Claims);
         $form->handleRequest($request);
         if($form->isSubmitted()){
+
+            $Claims->setCreateDate(new \DateTimeImmutable());
             $em= $doctrine->getManager();
             $em->persist($Claims);
             $em->flush();

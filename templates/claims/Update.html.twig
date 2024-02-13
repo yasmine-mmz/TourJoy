@@ -38,6 +38,11 @@
                         {{ form_widget(Claims.fkC, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(Claims.fkC) }}
                     </div>
+                    <div class="mb-3">
+                        {{ form_label(Claims.reply) }}
+                        {{ form_widget(Claims.reply, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(Claims.reply) }}
+                    </div>
                     
                     
                     <button id="submit-btn" type="submit" class="btn btn-primary">Update</button>

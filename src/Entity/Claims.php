@@ -23,11 +23,14 @@ class Claims
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createDate = null;
 
-    #[ORM\Column]
-    private ?int $state = null;
+    #[ORM\Column(length: 255)]
+    private ?string $state = null;
 
     #[ORM\ManyToOne(inversedBy: 'claims')]
     private ?Categories $fkC = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $reply = null;
 
     public function getId(): ?int
     {
@@ -70,12 +73,12 @@ class Claims
         return $this;
     }
 
-    public function getState(): ?int
+    public function getState(): ?string
     {
         return $this->state;
     }
 
-    public function setState(int $state): static
+    public function setState(string $state): static
     {
         $this->state = $state;
 
@@ -90,6 +93,18 @@ class Claims
     public function setFkC(?Categories $fkC): static
     {
         $this->fkC = $fkC;
+
+        return $this;
+    }
+
+    public function getReply(): ?string
+    {
+        return $this->reply;
+    }
+
+    public function setReply(string $reply): static
+    {
+        $this->reply = $reply;
 
         return $this;
     }

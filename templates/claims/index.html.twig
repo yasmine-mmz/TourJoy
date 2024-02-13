@@ -14,6 +14,7 @@
       <th scope="col">Date of creation</th>
       <th scope="col">State</th>
     <th scope="col">Category</th>
+  <th scope="col">Reply</th>
     </tr>
   </thead>
   <tbody>
@@ -27,6 +28,7 @@
 <td>{{ Claims.createDate|date('Y-m-d') }}</td>
 <td>{{ Claims.state }}</td>
 <td>{{ Claims.fkC.name}}</td>
+<td>{{ Claims.reply}}</td>
 <td>
 
 <a href ="{{path('Claims_update',{'id':Claims.id})}}">Update</a> |
