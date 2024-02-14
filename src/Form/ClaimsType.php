@@ -25,6 +25,7 @@ class ClaimsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Claims::class,
+            
         ]);
     }
 }

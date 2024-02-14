@@ -18,6 +18,7 @@ class ClaimsUpdateType extends AbstractType
     {
         $builder
             ->add('title', null, [
+                'label' => false,
                 'constraints' => [
                     new Length(['max' => 64]),
                 ],
@@ -27,12 +28,14 @@ class ClaimsUpdateType extends AbstractType
             ])
             
             ->add('description', TextType::class, [
+                'label' => false,
                 
                 'attr' => [
                     'style' => 'display: none;', // Hide the description field
                 ],
             ])
             ->add('createDate', null, [
+                'label' => false,
                 'attr' => [
                     'style' => 'display: none;', // Hide the createDate field
                 ],

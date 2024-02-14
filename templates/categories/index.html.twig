@@ -8,6 +8,7 @@
 <table class="table">
   <thead>
     <tr>
+    <a href ="{{path('Categories_add')}}">Add category</a>
       <th scope="col">#</th>
       <th scope="col">name</th>
 
@@ -16,8 +17,8 @@
   <tbody>
     {% for Categories in Categoriess %}
     <tr>
-      <th scope="row">1</th>
-      
+    <th scope="row">{{ loop.index }}</th>
+
     
 <td>{{ Categories.name }}</td>
   <td>

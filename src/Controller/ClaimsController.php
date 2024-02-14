@@ -12,6 +12,7 @@ use App\Form\ClaimsAddType;
 use App\Form\ClaimsUpdateType;
 use App\Entity\Claims;
 use App\Repository\ClaimsRepository;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class ClaimsController extends AbstractController
@@ -41,7 +42,7 @@ class ClaimsController extends AbstractController
             $em= $doctrine->getManager();
             $em->persist($Claims);
             $em->flush();
-            return $this-> redirectToRoute('Claims_show');
+            return $this-> redirectToRoute('app_test');
         }
         return $this->render('Claims/Add.html.twig',[
             'Claims'=>$form->createView(),

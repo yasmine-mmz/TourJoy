@@ -18,26 +18,16 @@ use Symfony\Component\Validator\Constraints\Type;
 
 
 
+
 class ClaimsAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('title', null, [
-            'constraints' => [
-                new NotBlank(['message' => 'Le titre ne peut pas être vide']),
-                new Type(['type' => 'string', 'message' => 'Le titre doit être une chaîne de caractères']),
-                new Length(['max' => 255, 'maxMessage' => 'Le titre ne peut pas dépasser {{ limit }} caractères']),
-            ],
-        ])
-        ->add('description', null, [
-            'constraints' => [
-                new NotBlank(['message' => 'La description ne peut pas être vide']),
-                new Type(['type' => 'string', 'message' => 'La description doit être une chaîne de caractères']),
-                new Length(['max' => 255, 'maxMessage' => 'La description ne peut pas dépasser {{ limit }} caractères']),
-            ],
-        ])
+        ->add('title')
+        ->add('description')
             ->add('createDate', DateTimeType::class, [
+                'label' => false,
                 'required' => false,
                 'disabled' => true,
                 'attr' => [
@@ -45,6 +35,7 @@ class ClaimsAddType extends AbstractType
                 ],
             ])
             ->add('state', TextType::class, [
+                'label' => false,
                 'required' => false,
                 
                 'attr' => [
@@ -53,11 +44,13 @@ class ClaimsAddType extends AbstractType
                 'data' => 'Not Treated',
             ])
             ->add('fkC', EntityType::class, [
+                'label' => "Category",
                 'class' => Categories::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Select a category',
             ])
             ->add('reply', TextType::class, [
+                'label' => false,
                 'required' => false,
                 
                 'attr' => [
@@ -72,6 +65,7 @@ class ClaimsAddType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Claims::class,
+            
         ]);
     }
 }

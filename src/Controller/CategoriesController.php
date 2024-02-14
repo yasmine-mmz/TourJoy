@@ -12,7 +12,7 @@ use App\Form\CategoriesAddType;
 use App\Form\CategoriesUpdateType;
 use App\Entity\Categories;
 use App\Repository\CategoriesRepository;
-
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CategoriesController extends AbstractController
 {
     #[Route('/categories', name: 'app_categories')]
@@ -29,12 +29,18 @@ class CategoriesController extends AbstractController
         return $this->render('Categories/index.html.twig', ['Categoriess'=>$Categoriess]);
     }
     #[Route('/Categoriesadd', name: 'Categories_add')]
-    public function AddCategories(ManagerRegistry $doctrine, Request $request): Response
+    public function AddCategories(ManagerRegistry $doctrine, Request $request,ValidatorInterface $validator): Response
     {
         $Categories =new Categories();
         $form=$this->createForm(CategoriesAddType::class,$Categories);
         $form->handleRequest($request);
         if($form->isSubmitted()){
+            $errors = $validator->validate($Categories); 
+            if (count($errors) > 0) {
+                $errorsString = (string) $errors;
+        
+                return new Response($errorsString);
+            }
             $em= $doctrine->getManager();
             $em->persist($Categories);
             $em->flush();

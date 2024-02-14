@@ -15,6 +15,7 @@ class CategoriesAddType extends AbstractType
     {
         $builder
             ->add('name')
+            
            
             
            
@@ -25,6 +26,7 @@ class CategoriesAddType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Categories::class,
+            
         ]);
     }
 }

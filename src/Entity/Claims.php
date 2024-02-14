@@ -15,21 +15,28 @@ class Claims
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 1255)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $state = null;
 
     #[ORM\ManyToOne(inversedBy: 'claims')]
     private ?Categories $fkC = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private ?string $reply = null;
 
     public function getId(): ?int
