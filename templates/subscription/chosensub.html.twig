@@ -1,0 +1,19 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+    <div class="card-body">
+        <h5 class="card-title">my Subscriptions</h5>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p><strong>Plan:</strong> {{ selectedSubscription.plan }}</p>
+                    <p><strong>Duration (Days):</strong> {{ selectedSubscription.duration }}</p>
+                    <p><strong>Type:</strong> {{ selectedSubscription.typeT }}</p>
+                    {# Add more subscription details as needed #}
+                </div>
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+{% endblock %}
