@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\SubscriptionRepository;
 
 class TestController extends AbstractController
 {
@@ -23,5 +24,11 @@ class TestController extends AbstractController
             'controller_name' => 'BackController',
         ]);
         
+    }
+    #[Route('/showSF', name: 'showSF')]
+    public function showF(SubscriptionRepository $rep): Response
+    {
+        $subscriptionList = $rep->findAll();
+        return $this->render('subscription/subscriptionsF.html.twig', ['subscriptionList'=>$subscriptionList]);
     }
 }

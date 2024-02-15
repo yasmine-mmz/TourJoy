@@ -1,0 +1,42 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+{% block status %} 
+{% endblock %}
+<div class="card-body">
+    <h5 class="card-title">Subscriptions</h5>
+
+    <!-- Add subscriptionation Button -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ path('createS') }}" class="btn btn-primary">Add subscription</a>
+    </div>
+
+    <!-- Default Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th scope="col">Plan</th>
+                
+                <th scope="col">Duration(Days)</th> 
+                <th scope="col">Type</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for subscription in subscriptionList %}
+            <tr>
+                
+                <td>{{ subscription.plan }}</td>
+                <td>{{ subscription.duration }}</td>
+                <td>{{ subscription.typeT }}</td>
+                
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <!-- End Default Table Example -->
+</div>
+{% endblock %}
