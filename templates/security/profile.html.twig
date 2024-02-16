@@ -2,6 +2,8 @@
 {% extends 'FrontOffice/navbar.html.twig' %}
 
 {% block body %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <br>
 <br>
 <br>
@@ -43,9 +45,9 @@
         </div>
         <div class="col-md-6">
             <div class="card border-0"> 
-                <div class="card-body " style="height: 150%;"> 
+                <div class="card-body " style="height: 100%;"> 
                     {% if user.profilePicture %}
-                        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 150%; max-height: 150%;"> 
+                        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 100%; max-height: 100%;"> 
                     {% else %}
                         <p>No profile picture available</p>
                     {% endif %}
@@ -61,5 +63,9 @@
 {% endblock %}
 
 {% block footer %}
-    
+    <script>
+        $(document).ready(function() {
+            $('#countrySelect').select2();
+        });
+    </script>
 {% endblock %}

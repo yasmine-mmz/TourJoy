@@ -60,25 +60,28 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #f2f2f2;">
 
-    <div style="margin-top:100px"   class="container">
-        <img style="margin-left:180px; height:40%; width:40%" id="imageQRcode" src="{{ qrcode }}" alt="QR CODE" name="imageQRcode" />
-        <form class="form" action="/2fa_check" method="post">
-            <p> </p>
-                <input class="form-control ds-input" style="width: 200px; height:40px; margin-left:190px" id="_auth_code"
-                    type="text"
-                    name="_auth_code"
-                    placeholder="   Authentication Code"
-                    autocomplete="one-time-code"
-                    autofocus  >
-                <p> </p><section style="margin-left:200px">
-                <button type="submit" class="btn btn-primary btn-lg"> Login </button>
-        
-    
-    <a href="/logout" class="btn btn-secondary btn-lg">Cancel</a>
-   </section>
-    </form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center mb-4">
+                <img src="{{ qrcode }}" alt="QR Code" style="max-width: 100%;">
+            </div>
+            <form action="/2fa_check" method="post">
+                <div class="mb-3">
+                    <label for="_auth_code" class="form-label">Enter Authentication Code</label>
+                    <input type="text" class="form-control" id="_auth_code" name="_auth_code" placeholder="Authentication Code" autocomplete="one-time-code" autofocus>
+                    <div id="auth_code_help" class="form-text">Check your authentication app <br> (e.g., <a href="https://apps.apple.com/us/app/authy/id494168017" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" style="height: 1.5em;"></a> <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" style="height: 1.5em;"></a>) for the code.</div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                    <a href="/logout" class="btn btn-secondary btn-lg">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
 </body>
 </html>

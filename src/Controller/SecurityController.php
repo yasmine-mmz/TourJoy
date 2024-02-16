@@ -45,46 +45,49 @@ class SecurityController extends AbstractController
     public function check2fa(GoogleAuthenticatorInterface $authentificator, TokenStorageInterface $storage)
     {
         $code = $authentificator->getQRContent($storage->getToken()->getUser());
-        $qrcode = "https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" . $code;
+        $qrcode = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" . $code;
         return $this->render('Security/2fa_login.html.twig', [
             'qrcode' => $qrcode
         ]);
     }
     #[Route('/profile', name: 'app_profile')]
-public function profile(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger): Response
-{
-    $user = $this->getUser();
-    $form = $this->createForm(UpdateFormType::class, $user);
+    public function profile(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UpdateFormType::class, $user);
 
-    $form->handleRequest($request);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
+        
+        
 
-        $user->setModifiedAt(new \DateTimeImmutable());
-        $profilePictureFile = $form->get('profilePicture')->getData();
-        if ($profilePictureFile instanceof UploadedFile) {
-            $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePictureFile->guessExtension();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $profilePictureFile->move(
-                $this->getParameter('profile_picture_directory'),
-                $newFilename
-            );
+            $user->setModifiedAt(new \DateTimeImmutable());
+            $profilePictureFile = $form->get('profilePicture')->getData();
+            if ($profilePictureFile instanceof UploadedFile) {
+                $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePictureFile->guessExtension();
 
-            $user->setProfilePicture($newFilename);
+                $profilePictureFile->move(
+                    $this->getParameter('profile_picture_directory'),
+                    $newFilename
+                );
+
+                $user->setProfilePicture($newFilename);
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_profile');
         }
 
-        $entityManager = $doctrine->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_profile');
+        return $this->render('security/profile.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
     }
-
-    return $this->render('security/profile.html.twig', [
-        'form' => $form->createView(),
-        'user' => $user,
-    ]);
-}
 }
