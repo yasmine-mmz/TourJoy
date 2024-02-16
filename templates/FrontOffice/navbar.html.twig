@@ -41,7 +41,7 @@
 			<section class="banner-area" id="home">
 				<!-- Start Header Area -->
 				<header class="default-header">
-					<nav class="navbar navbar-expand-lg  navbar-light bg-primary">
+					<nav class="navbar navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'app_profile' %}bg-secondary{% endif %}">
 						<div class="container">
 							  <a class="navbar-brand" href="index.html">
 							  	<img src="img/logo.png" alt="">
@@ -49,7 +49,6 @@
 							  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							    <span class="text-white lnr lnr-menu"></span>
 							  </button>
-
 							  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
 							    <ul class="navbar-nav">
 									<li><a href="#home">Home</a></li>
@@ -58,16 +57,24 @@
 									<li><a href="#gallery">Gallery</a></li>
 									<li><a href="#faq">Faq</a></li>
 									<li><a href="#contact">Contact</a></li>
+									<li>
+									{% if app.user %}
+									<a href="{{ path ('app_profile')}}">Profile</a>
+									<a href="{{ path('app_logout') }}">Logout</a>
+									{% else %}
+									<a href="{{ path('app_login') }}">Sign In</a>
+									{% endif %}
+									</li>
 									<!-- Dropdown -->
-								    <li class="dropdown">
+								    {# <li class="dropdown">
 								      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-								        Pages
+								        Actions
 								      </a>
 								      <div class="dropdown-menu">
 								        <a class="dropdown-item" href="generic.html">Generic</a>
 								        <a class="dropdown-item" href="elements.html">Elements</a>
 								      </div>
-								    </li>
+								    </li> #}
 							    </ul>
 							  </div>						
 						</div>

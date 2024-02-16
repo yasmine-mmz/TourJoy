@@ -1,0 +1,146 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Register</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %} #}
+
+
+{# --------------------------------------------------------------- #}
+
+
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+
+<style>
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    content: 'Choose file';
+    color: #fff;
+    background-color: #007bff;
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-file-input:hover::before {
+    background-color: #0056b3;
+}
+
+.custom-file-input:active::before {
+    background-color: #0056b3;
+}
+
+.custom-file-input:focus::before {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+</style>
+
+<section class="banner-area" id="home">
+    <!-- Start Header Area -->
+    <header class="default-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('app_test') }}">
+                    <img src="img/logo.png" alt="" style="">
+                </a>
+            </div>
+        </nav>
+    </header>
+</section>
+
+<br><br><br>
+
+{# {% block status %}
+<a href="{{ path('app_signin') }}" style="color: white"></a>
+{% endblock %} #}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Sign Up</h4>
+                </div>
+                <div class="card-body">
+                    {{ form_start(registrationForm) }}
+                    <div class="row">
+                        <div class="col-md-6" style="margin-top: 1%">
+                            <div class="form-group">
+                                {{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'tabindex': '1'}}) }}
+                                {{ form_errors(registrationForm.email) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'type': 'password', 'tabindex': '3'}}) }}
+                                {{ form_errors(registrationForm.plainPassword) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(registrationForm.firstName, 'First Name', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control', 'tabindex': '5'}}) }}
+                                {{ form_errors(registrationForm.firstName) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(registrationForm.phoneNumber, 'Phone Number', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.phoneNumber, {'attr': {'class': 'form-control', 'tabindex': '7'}}) }}
+                                {{ form_errors(registrationForm.phoneNumber) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" style="margin-top :2vh">
+                                {{ form_label(registrationForm.profilePicture, 'Profile Picture', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.profilePicture, {'attr': {'class': 'form-control-file', 'tabindex': '2'}}) }}
+                                {{ form_errors(registrationForm.profilePicture) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(registrationForm.confirmPassword, 'Confirm Password', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control', 'type': 'password', 'tabindex': '4'}}) }}
+                                {{ form_errors(registrationForm.confirmPassword) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(registrationForm.lastName, 'Last Name', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control', 'tabindex': '6'}}) }}
+                                {{ form_errors(registrationForm.lastName) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(registrationForm.country, 'Country', {'label_attr': {'class': 'mb-2'}}) }}
+                                {{ form_widget(registrationForm.country, {'attr': {'class': 'form-control', 'tabindex': '8'}}) }}
+                                {{ form_errors(registrationForm.country) }}
+                            </div>
+                        </div>
+                    </div>
+                    <button id="submit-btn" type="submit" class="btn btn-primary btn-block" tabindex="9">Sign Up</button>
+                    {{ form_end(registrationForm) }}
+                    <div id="error-message" style="display: none;">Invalid email address</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br><br><br>
+{% endblock %}

@@ -1,0 +1,65 @@
+
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+
+<div class="container" style="margin-left: 30%">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Update Profile</h2>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_row(form.email, {'attr': {'class': 'form-control mb-3', 'tabindex': '1'}}) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.firstName, {'attr': {'class': 'form-control mb-3', 'tabindex': '3'}}) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.lastName, {'attr': {'class': 'form-control mb-3', 'tabindex': '4'}}) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.country, {'attr': {'class': 'form-control mb-3', 'tabindex': '5'}}) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.phoneNumber, {'attr': {'class': 'form-control mb-3', 'tabindex': '6'}}) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.profilePicture, {'attr': {'class': 'form-control-file mb-3', 'tabindex': '7'}}) }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" tabindex="10">Update Profile</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0"> 
+                <div class="card-body " style="height: 150%;"> 
+                    {% if user.profilePicture %}
+                        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 150%; max-height: 150%;"> 
+                    {% else %}
+                        <p>No profile picture available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}
+
+{% block footer %}
+    
+{% endblock %}
