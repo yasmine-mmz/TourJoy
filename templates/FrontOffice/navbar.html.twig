@@ -26,6 +26,10 @@
 {% endblock %}   
 		</head>
 		<body>
+
+		{% set user = app.user %}
+		{% set isVerified = user and not user.isVerified() %}
+		
         {% block navbar %}
             
         
