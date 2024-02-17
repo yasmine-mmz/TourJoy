@@ -11,8 +11,12 @@ class TestController extends AbstractController
     #[Route('/', name: 'app_test')]
     public function index(): Response
     {
+        $user =$this->getUser();
+        $isVerified = $user && !$user->IsVerified();
+
         return $this->render('FrontOffice/front_template.html.twig', [
             'controller_name' => 'TestController',
+            'isVerified' => $isVerified,
         ]);
         
     }

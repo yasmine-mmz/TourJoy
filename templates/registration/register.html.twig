@@ -33,6 +33,22 @@
     visibility: hidden;
 }
 
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* Custom label styling */
+.form-check-label {
+    font-size: 16px;
+    margin-left: 5px;
+    color: #007BFF; 
+    margin-left: -4%;
+    margin-top: 1%;
+}
+
 </style>
 
 <section class="banner-area" id="home">
@@ -83,6 +99,13 @@
                                 {{ form_widget(registrationForm.phoneNumber, {'attr': {'class': 'form-control', 'tabindex': '7'}}) }}
                                 {{ form_errors(registrationForm.phoneNumber) }}
                             </div>
+                            <div class="form-group" style="margin-left: 10%">
+                                <div class="form-check">
+                                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'agreeTerms'}}) }}
+                                    {{ form_label(registrationForm.agreeTerms, 'I agree to the terms', {'label_attr': {'class': 'form-check-label', 'for': 'agreeTerms'}}) }}
+                                    {{ form_errors(registrationForm.agreeTerms) }}
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" style="margin-top :2vh">
@@ -105,7 +128,7 @@
                                 {{ form_widget(registrationForm.country, {'attr': {'class': 'form-control', 'tabindex': '8'}}) }}
                                 {{ form_errors(registrationForm.country) }}
                             </div>
-                        </div>
+                             
                     </div>
                     <button id="submit-btn" type="submit" class="btn btn-primary btn-block" tabindex="9">Sign Up</button>
                     {{ form_end(registrationForm) }}
@@ -117,4 +140,8 @@
 </div>
 
 <br><br><br><br><br>
+{% endblock %}
+
+{% block footer %}
+    
 {% endblock %}

@@ -14,7 +14,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
 class RegistrationFormType extends AbstractType
 {
@@ -68,7 +69,13 @@ class RegistrationFormType extends AbstractType
             ->add('confirmPassword', PasswordType::class, [
                 'mapped' => false, 
                 'label' => 'Confirm Password',
-            ]);
+            ])
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'homepage',
+            ])
+            ;
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void

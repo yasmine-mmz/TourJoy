@@ -67,6 +67,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $modifiedAt = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+
 
     public function getId(): ?int
     {
@@ -255,6 +258,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
    public function setModifiedAt(?\DateTimeImmutable $modifiedAt): static
    {
        $this->modifiedAt = $modifiedAt;
+
+       return $this;
+   }
+
+   public function isVerified(): bool
+   {
+       return $this->isVerified;
+   }
+
+   public function setIsVerified(bool $isVerified): static
+   {
+       $this->isVerified = $isVerified;
 
        return $this;
    }
