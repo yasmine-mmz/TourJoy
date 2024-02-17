@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\SubscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: SubscriptionRepository::class)]
 class Subscription
@@ -14,9 +16,13 @@ class Subscription
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Regex('/^[a-zA-Z]+$/')]
+    #[Assert\Length(max: 255)]
     private ?string $plan = null;
 
     #[ORM\Column]
+    #[Assert\LessThanOrEqual(value: 356)]
     private ?int $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'subscriptions')]
