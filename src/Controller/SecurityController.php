@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Form\UpdateFormType;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -14,8 +14,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 
@@ -53,24 +53,29 @@ class SecurityController extends AbstractController
         ]);
     }
     #[Route('/profile', name: 'app_profile')]
-    public function profile(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger): Response
+    public function profile(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger,  UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UpdateFormType::class, $user);
 
         $form->handleRequest($request);
 
-        
-        
-
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $submittedPassword = $form->get('plainPassword')->getData();
+            
+            if (!$passwordHasher->isPasswordValid($user, $submittedPassword)) {
+                $this->addFlash('error', 'The password you entered is incorrect.');
+                return $this->redirectToRoute('app_profile');
+            }
+    
 
             $user->setModifiedAt(new \DateTimeImmutable());
             $profilePictureFile = $form->get('profilePicture')->getData();
             if ($profilePictureFile instanceof UploadedFile) {
                 $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePictureFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
 
                 $profilePictureFile->move(
                     $this->getParameter('profile_picture_directory'),
@@ -92,5 +97,32 @@ class SecurityController extends AbstractController
             'user' => $user
         ]);
     }
-    
+
+    #[Route('/admin/users', name: 'admin_users')]
+    public function users(UserRepository $repo): Response
+    {
+        
+        $users = $repo->findAll();
+
+        return $this->render('BackOffice/users.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    #[Route('/admin/users/delete/{id}', name: 'admin_delete_user')]
+public function deleteUser(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
+{
+    $user = $userRepository->find($id);
+
+    if (!$user) {
+        throw $this->createNotFoundException('User not found');
+    }
+
+    $entityManager->remove($user);
+    $entityManager->flush();
+
+    $this->addFlash('success', 'User deleted successfully');
+
+    return $this->redirectToRoute('admin_users');
+}
 }

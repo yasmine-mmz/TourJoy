@@ -37,7 +37,11 @@
                         <div class="col-md-6">
                             {{ form_row(form.profilePicture, {'attr': {'class': 'form-control-file mb-3', 'tabindex': '7'}}) }}
                         </div>
+                        <div class="col-md-12">
+                            {{ form_row(form.plainPassword, {'attr': {'class': 'form-control mb-3', 'tabindex': '8'}}) }}
+                        </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary btn-block" tabindex="10">Update Profile</button>
                     {{ form_end(form) }}
                 </div>
@@ -47,9 +51,9 @@
             <div class="card border-0"> 
                 <div class="card-body " style="height: 100%;"> 
                     {% if user.profilePicture %}
-                        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 100%; max-height: 100%;"> 
+                        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 350px; max-height: 350px;"> 
                     {% else %}
-                        <p>No profile picture available</p>
+                        <img src="{{ asset('img/noProfilePicture.png') }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 350px; max-height: 350px;"> 
                     {% endif %}
                 </div>
             </div>

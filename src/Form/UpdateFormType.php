@@ -40,7 +40,12 @@ class UpdateFormType extends AbstractType
                 'disabled' => true,
                  'html5' => true,
                 'attr' => ['style' => 'display: none;'],
-            ]);
+            ])
+            ->add('plainPassword', PasswordType::class,
+        [ 
+            'mapped' => false,
+            'label' => 'Confirm password',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
