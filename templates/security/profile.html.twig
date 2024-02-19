@@ -1,75 +1,82 @@
-
 {% extends 'FrontOffice/navbar.html.twig' %}
 
 {% block body %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<br>
-<br>
-<br>
-<br>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 
-<div class="container" style="margin-left: 30%">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Update Profile</h2>
-                </div>
-                <div class="card-body">
-                    {{ form_start(form) }}
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ form_row(form.email, {'attr': {'class': 'form-control mb-3', 'tabindex': '1'}}) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.firstName, {'attr': {'class': 'form-control mb-3', 'tabindex': '3'}}) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.lastName, {'attr': {'class': 'form-control mb-3', 'tabindex': '4'}}) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.country, {'attr': {'class': 'form-control mb-3', 'tabindex': '5'}}) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.phoneNumber, {'attr': {'class': 'form-control mb-3', 'tabindex': '6'}}) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.profilePicture, {'attr': {'class': 'form-control-file mb-3', 'tabindex': '7'}}) }}
-                        </div>
-                        <div class="col-md-12">
-                            {{ form_row(form.plainPassword, {'attr': {'class': 'form-control mb-3', 'tabindex': '8'}}) }}
-                        </div>
-                    </div>
 
-                    <button type="submit" class="btn btn-primary btn-block" tabindex="10">Update Profile</button>
-                    {{ form_end(form) }}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card border-0"> 
-                <div class="card-body " style="height: 100%;"> 
-                    {% if user.profilePicture %}
-                        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 350px; max-height: 350px;"> 
-                    {% else %}
-                        <img src="{{ asset('img/noProfilePicture.png') }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 350px; max-height: 350px;"> 
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-<br>
-<br>
-<br>
+	<div class="container" style="margin-left: 25%; max-width: 200%">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h2>Update Profile</h2>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							
+							<div class="col-md-6">
+								{{ form_start(form) }}
+								<div class="row">
+									<div class="col-md-12">
+										{{ form_row(form.email, {'attr': {'class': 'form-control mb-3', 'tabindex': '1'}}) }}
+									</div>
+									<div class="col-md-6">
+										{{ form_row(form.firstName, {'attr': {'class': 'form-control mb-3', 'tabindex': '3'}}) }}
+									</div>
+									<div class="col-md-6">
+										{{ form_row(form.lastName, {'attr': {'class': 'form-control mb-3', 'tabindex': '4'}}) }}
+									</div>
+									<div class="col-md-6">
+										{{ form_row(form.country, {'attr': {'class': 'form-control mb-3', 'tabindex': '5'}}) }}
+									</div>
+									<div class="col-md-6">
+										{{ form_row(form.phoneNumber, {'attr': {'class': 'form-control mb-3', 'tabindex': '6'}}) }}
+									</div>
+									<div class="col-md-6">
+										{{ form_row(form.profilePicture, {'attr': {'class': 'form-control-file mb-3', 'tabindex': '7'}}) }}
+									</div>
+									<div class="col-md-12">
+										{{ form_row(form.plainPassword, {'attr': {'class': 'form-control mb-3', 'tabindex': '8'}}) }}
+									</div>
+								</div>
+								<div class="mb-3">
+									<a href="{{ path('app_forgot_password_request')}}">Change Password</a>
+								</div>
+								<button type="submit" class="btn btn-primary btn-block" tabindex="10">Update Profile</button>
+								{{ form_end(form) }}
+                                
+							</div>
+                            <div class="col-md-6" style="padding-top: 3vh; padding-left: 14vh" > 
+								{% if user.profilePicture %}
+									<img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="rounded-circle" style="max-width: 150px; max-height: 150px;">
+								{% else %}
+									<img src="{{ asset('img/noProfilePicture.png') }}" alt="Profile Picture" class="rounded-circle" style="max-width: 150px; max-height: 150px;">
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
 {% endblock %}
 
 {% block footer %}
-    <script>
-        $(document).ready(function() {
-            $('#countrySelect').select2();
-        });
-    </script>
+	<script>
+		$(document).ready(function () {
+$('#countrySelect').select2();
+});
+	</script>
 {% endblock %}
