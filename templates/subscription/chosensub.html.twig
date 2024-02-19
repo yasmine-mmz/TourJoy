@@ -1,19 +1,37 @@
 {% extends 'FrontOffice/navbar.html.twig' %}
 
 {% block body %}
-    <div class="card-body">
-        <h5 class="card-title">my Subscriptions</h5>
-        
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <p><strong>Plan:</strong> {{ selectedSubscription.plan }}</p>
-                    <p><strong>Duration (Days):</strong> {{ selectedSubscription.duration }}</p>
-                    <p><strong>Type:</strong> {{ selectedSubscription.typeT }}</p>
-                    {# Add more subscription details as needed #}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title text-center text-white mb-0">My Subscriptions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row justify-content-center"> {# Center content horizontally #}
+                            <div class="col-md-8"> {# Adjust the width here #}
+                                <div class="subscription-details">
+                                    <p><strong>Plan:</strong> {{ selectedSubscription.plan }}</p>
+                                    <p><strong>Duration (Days):</strong> {{ selectedSubscription.duration }}</p>
+                                    <p><strong>Type:</strong> {{ selectedSubscription.typeT }}</p>
+                                    {# Add more subscription details as needed #}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
+</div>
+
+<style>
+    .subscription-details {
+        background-color: #f8f9fa; /* Light background color */
+        padding: 20px; /* Padding for spacing within the container */
+        border-radius: 10px; /* Rounded corners */
+    }
+</style>
 {% endblock %}

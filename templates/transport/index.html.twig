@@ -2,7 +2,8 @@
 
 {% block main %}
 <div class="card-body">
-    <h5 class="card-title">Transportation Table</h5>
+    <h5 class="card-title"><strong>Transportation Table</strong></h5>
+
 
     <!-- Add Transportation Button -->
     <div class="d-flex justify-content-end mb-3">
@@ -25,8 +26,8 @@
                 <th scope="row">{{ loop.index }}</th>
                 <td>{{ transport.typeT }}</td>
                 <td class="text-right"> {# Apply text-right class to align buttons to the right #}
-                    <a href ="{{ path('updateT', {'id': transport.id}) }}" class="btn btn-primary">Update</a> |
-                    <a href ="{{ path('deleteT', {'id': transport.id}) }}" class="btn btn-danger">Delete</a>
+                    <a href ="{{ path('updateT', {'id': transport.id}) }}" class="btn btn-custom-primary">Update</a> |
+                    <a href ="{{ path('deleteT', {'id': transport.id}) }}" class="btn btn-custom-danger">Delete</a>
                 </td>
             </tr>
             {% endfor %}
@@ -34,4 +35,27 @@
     </table>
     <!-- End Default Table Example -->
 </div>
+<style>
+    .btn-custom-primary {
+        color: #fff;
+        background-color: #98ed6d;
+        border-color: #98ed6d;
+    }
+     .btn-custom-primary:hover {
+        color: #fff;
+        background-color: #6bab4b;
+        border-color: #6bab4b;
+    }
+    .btn-custom-danger {
+        color: #fff;
+        background-color: #ed6d6d;
+        border-color: #ed6d6d;
+
+    }
+    .btn-custom-danger:hover {
+        color: #fff;
+        background-color: #fa3c3c;
+        border-color: #fa3c3c;
+    }
+</style>
 {% endblock %}

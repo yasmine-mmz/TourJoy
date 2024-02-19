@@ -1,42 +1,44 @@
 {% extends 'FrontOffice/navbar.html.twig' %}
 
 {% block body %}
-{% block status %} 
-{% endblock %}
-<div class="card-body">
-    <h5 class="card-title">Subscriptions</h5>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title text-white mb-0">Subscriptions</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Add subscription Button -->
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{{ path('mySubscriptions') }}" class="btn btn-primary">Choose Subscription</a>
+                    </div>
 
-    <!-- Add subscriptionation Button -->
-    <div class="d-flex justify-content-end mb-3">
-        <a href="{{ path('mySubscriptions') }}" class="btn btn-primary">Choose subscription</a>
+                    <!-- Default Table -->
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Plan</th>
+                                    <th scope="col">Duration (Days)</th>
+                                    <th scope="col">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for subscription in subscriptionList %}
+                                <tr>
+                                    <td>{{ subscription.plan }}</td>
+                                    <td>{{ subscription.duration }}</td>
+                                    <td>{{ subscription.typeT }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End Default Table Example -->
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Default Table -->
-    <table class="table">
-        <thead>
-            <tr>
-                
-                <th scope="col">Plan</th>
-                
-                <th scope="col">Duration(Days)</th> 
-                <th scope="col">Type</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            {% for subscription in subscriptionList %}
-            <tr>
-                
-                <td>{{ subscription.plan }}</td>
-                <td>{{ subscription.duration }}</td>
-                <td>{{ subscription.typeT }}</td>
-                
-            </tr>
-            {% endfor %}
-            
-        </tbody>
-    </table>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <!-- End Default Table Example -->
 </div>
 {% endblock %}
