@@ -51,12 +51,18 @@ class CategoriesController extends AbstractController
         ]);
     }
     #[Route('/Categoriesupdate{id}', name: 'Categories_update')]
-    public function UpdateCategories(ManagerRegistry $doctrine, Request $request, CategoriesRepository $rep, $id): Response
+    public function UpdateCategories(ManagerRegistry $doctrine, Request $request, CategoriesRepository $rep, $id,ValidatorInterface $validator): Response
     {
        $Categories = $rep->find($id);
        $form=$this->createForm(CategoriesUpdateType::class,$Categories);
        $form->handleRequest($request);
        if($form->isSubmitted()){
+        $errors = $validator->validate($Categories); 
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+    
+            return new Response($errorsString);
+        }
            $em= $doctrine->getManager();
            $em->persist($Categories);
            $em->flush();

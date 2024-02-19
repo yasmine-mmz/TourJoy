@@ -8,9 +8,11 @@
 <table class="table">
   <thead>
     <tr>
-    <a href ="{{path('Categories_add')}}">Add category</a>
+    <a href ="{{path('Categories_add')}}"class="btn btn-primary">Add category</a>
+    
       <th scope="col">#</th>
-      <th scope="col">name</th>
+      <th scope="col">Name</th>
+    <th scope="col">Actions</th>
 
     </tr>
   </thead>
@@ -22,8 +24,8 @@
     
 <td>{{ Categories.name }}</td>
   <td>
-<a href ="{{path('Categories_update',{'id':Categories.id})}}">Update</a> |
-<a href ="{{path('Categories_delete',{'id':Categories.id})}}">Delete</a> |
+<a href ="{{path('Categories_update',{'id':Categories.id})}}"class="btn btn-primary">Update</a> |
+<a href ="{{path('Categories_delete',{'id':Categories.id})}}"class="btn btn-danger">Delete</a> 
 
 </td>
 </tr>

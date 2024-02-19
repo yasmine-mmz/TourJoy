@@ -7,8 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'There is already a category with this name')]
 class Categories
 {
     #[ORM\Id]
@@ -16,10 +17,10 @@ class Categories
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 16)]
+    #[ORM\Column(length: 16,nullable: true,unique:true)]
     #[Assert\NotBlank]
     #[Assert\Regex('/^[a-zA-Z]+$/')]
-    #[Assert\Length(max: 16)]
+    #[Assert\Length(max: 16,min: 3)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'fkC', targetEntity: Claims::class)]

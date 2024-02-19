@@ -13,10 +13,12 @@ use App\Form\ClaimsUpdateType;
 use App\Entity\Claims;
 use App\Repository\ClaimsRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class ClaimsController extends AbstractController
 {
+   
     #[Route('/claims', name: 'app_claims')]
     public function index(): Response
     {
@@ -31,17 +33,40 @@ class ClaimsController extends AbstractController
         return $this->render('Claims/index.html.twig', ['Claimss'=>$Claimss]);
     }
     #[Route('/Claimsadd', name: 'Claims_add')]
-    public function AddClaims(ManagerRegistry $doctrine, Request $request): Response
+    public function AddClaims(ManagerRegistry $doctrine, Request $request,ValidatorInterface $validator,
+    MailerInterface $mailer): Response
     {
+
         $Claims =new Claims();
         $form=$this->createForm(ClaimsAddType::class,$Claims);
         $form->handleRequest($request);
         if($form->isSubmitted()){
+            $errors = $validator->validate($Claims); 
+            if (count($errors) > 0) {
+                $errorsString = (string) $errors;
+        
+                return new Response($errorsString);
+            }
+$claims = [
+        'title' => $request->request->get('title'),
+        'description' => $request->request->get('description'),
+        
+        // Add more claim data as needed
+    ];
 
             $Claims->setCreateDate(new \DateTimeImmutable());
             $em= $doctrine->getManager();
             $em->persist($Claims);
             $em->flush();
+             // Send email notification to admin
+             $email = (new Email())
+             ->from('no-reply@tourjoy.com')
+             ->to('admin@tourjoy.com')
+             ->subject('New Claim Submitted')
+             ->text('A new claim has been submitted. title: ' . $claims['title'] . '. description: ' . $claims['description']);
+ 
+$mailer->send($email);
+
             return $this-> redirectToRoute('app_test');
         }
         return $this->render('Claims/Add.html.twig',[
@@ -49,12 +74,18 @@ class ClaimsController extends AbstractController
         ]);
     }
     #[Route('/Claimsupdate{id}', name: 'Claims_update')]
-    public function UpdateClaims(ManagerRegistry $doctrine, Request $request, ClaimsRepository $rep, $id): Response
+    public function UpdateClaims(ManagerRegistry $doctrine, Request $request, ClaimsRepository $rep, $id,ValidatorInterface $validator): Response
     {
        $Claims = $rep->find($id);
        $form=$this->createForm(ClaimsUpdateType::class,$Claims);
        $form->handleRequest($request);
        if($form->isSubmitted()){
+        $errors = $validator->validate($Claims); 
+            if (count($errors) > 0) {
+                $errorsString = (string) $errors;
+        
+                return new Response($errorsString);
+            }
            $em= $doctrine->getManager();
            $em->persist($Claims);
            $em->flush();

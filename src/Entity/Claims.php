@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ClaimsRepository;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClaimsRepository::class)]
 class Claims
@@ -14,27 +17,27 @@ class Claims
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 24,nullable: true)]
     #[Assert\NotBlank]
-    #[Assert\Length(max: 255)]
+    #[Assert\Length(max: 24,min: 3)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     #[Assert\NotBlank]
-    #[Assert\Length(max: 1255)]
+    #[Assert\Length(max: 255,min: 5)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createDate = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     #[Assert\NotBlank]
     private ?string $state = null;
 
     #[ORM\ManyToOne(inversedBy: 'claims')]
     private ?Categories $fkC = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
     private ?string $reply = null;
@@ -115,4 +118,6 @@ class Claims
 
         return $this;
     }
+
+   
 }
