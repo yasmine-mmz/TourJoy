@@ -1,0 +1,91 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <h1 class="text-center mb-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-size: 36px;">Explore Our Luxurious Accommodations</h1>
+    <br>
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-12 text-center">
+            <div class="btn-group" role="group" aria-label="Accommodation Categories">
+                <button type="button" class="btn btn-secondary btn-lg mr-2 filter-btn rounded-pill" data-filter="*">Show All</button>
+                <button type="button" class="btn btn-secondary btn-lg mr-2 filter-btn rounded-pill" data-filter=".resort">Resort</button>
+                <button type="button" class="btn btn-secondary btn-lg mr-2 filter-btn rounded-pill" data-filter=".villa">Villa</button>
+                <button type="button" class="btn btn-secondary btn-lg filter-btn rounded-pill" data-filter=".apartment">Apartment</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row accommodations">
+        {% for t in response %}
+        <div class="col-lg-4 col-md-6 mb-4 {{ t.type }}">
+            <div class="card h-100 border-light bg-light-gray rounded-circle-border">
+                <img src="{{ vich_uploader_asset(t, 'imageFile') }}" class="card-img-top rounded-circle img-fluid" alt="{{ t.name }}" style="height: 200px; object-fit: cover; transition: transform 0.3s ease-in-out;">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">{{ t.name }}</h5>
+                    <p class="card-text text-orange font-weight-bold">Price of one night : {{ t.price }} TND</p>
+                    <p class="card-text">Rooms: {{ t.nbRooms }}</p>
+                    <div class="text-center mt-auto">
+                        <div class="d-flex justify-content-center align-items-end">
+                            <a href="{{ path('book_accommodation', {'refA': t.refA}) }}" class="btn btn-info btn-lg rounded-pill mx-2">Book</a>
+                            <a href="{{ path('favorites_add', {'refA': t.refA}) }}" class="btn btn-info btn-lg rounded-pill mx-2">Favorites</a>
+                            <button class="btn btn-success btn-lg rounded-pill mx-2" onclick="showMap('{{ t.location }}')" style="font-size: 24px; background-color: transparent; border: none;"><span style="color: #28a745;">📍</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+    .bg-light-gray {
+        background-color: #f5f5f5;
+    }
+    .rounded-circle-border {
+        border-radius: 20px;
+    }
+    .rounded-circle {
+        border-radius: 20px 20px 20px 20px;
+    }
+    .btn {
+        border-radius: 20px;
+    }
+    /* Ajouter une animation de zoom sur les images au survol */
+    .card-img-top:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const accommodations = document.querySelector('.accommodations');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filterValue = this.getAttribute('data-filter');
+                accommodations.querySelectorAll('.col-lg-4').forEach(item => {
+                    if (filterValue === '*' || item.classList.contains(filterValue.slice(1))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+
+    function showMap(location) {
+        const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location);
+        window.open(googleMapsUrl, '_blank');
+    }
+
+    
+</script>
+{% endblock %}

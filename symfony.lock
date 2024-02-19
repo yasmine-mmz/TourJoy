@@ -1,4 +1,7 @@
 {
+    "carlos-mg89/symfony-captcha-bundle": {
+        "version": "4.2.21"
+    },
     "doctrine/annotations": {
         "version": "2.0",
         "recipe": {
@@ -291,5 +294,17 @@
     },
     "twig/extra-bundle": {
         "version": "v3.8.0"
+    },
+    "vich/uploader-bundle": {
+        "version": "2.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.13",
+            "ref": "1b3064c2f6b255c2bc2f56461aaeb76b11e07e36"
+        },
+        "files": [
+            "./config/packages/vich_uploader.yaml"
+        ]
     }
 }

@@ -1,0 +1,62 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <h1 class="text-center mb-4">Add a Reservation</h1>
+            {{ form_start(f, {'attr': {'class': 'form-horizontal'}}) }}
+            <div class="form-group">
+                {{ form_label(f.name) }}
+                {{ form_widget(f.name, {'attr': {'class': 'form-control', 'value': f.vars.value.name }}) }}
+            </div>
+            <div class="form-group">
+            {{ form_errors (f.startDate, {'attr': {'class': 'form-danger'}}) }}
+                {{ form_label(f.startDate) }}
+                <div class="input-group date" data-provide="datepicker">
+                    {{ form_widget(f.startDate, {'attr': {'class': 'form-control datepicker'}}) }}
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+            {{ form_errors (f.endDate, {'attr': {'class': 'form-danger'}}) }}
+                {{ form_label(f.endDate) }}
+                <div class="input-group date" data-provide="datepicker">
+                    {{ form_widget(f.endDate, {'attr': {'class': 'form-control datepicker'}}) }}
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                {# Add captcha label and widget #}
+                {{ form_label(f.captchaCode) }}
+                {{ form_widget(f.captchaCode) }}
+            </div>
+            <div class="form-group text-center">
+                {{ form_widget(f.BOOK, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+            {{ form_end(f) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        // Initialize datepicker for elements with class "datepicker"
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+        });
+    </script>
+{% endblock %}

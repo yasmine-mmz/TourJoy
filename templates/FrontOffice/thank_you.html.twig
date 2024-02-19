@@ -1,0 +1,26 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4 text-primary">Thank You For Your Reservation</h1>
+                    <p class="lead text-center">Your reservation has been successfully submitted. We appreciate your booking.</p>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ path('showF') }}" class="btn btn-outline-success btn-lg rounded-pill px-5">Back to Accommodations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}
