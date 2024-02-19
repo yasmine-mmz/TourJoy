@@ -7,8 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: TransportRepository::class)]
+#[UniqueEntity(fields: ['typeT'], message: 'There is already a transport with this name')]
 class Transport
 {
     #[ORM\Id]
@@ -16,7 +17,7 @@ class Transport
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,unique:true)]
     #[Assert\NotBlank]
     #[Assert\Regex('/^[a-zA-Z]+$/')]
     #[Assert\Length(max: 255)]

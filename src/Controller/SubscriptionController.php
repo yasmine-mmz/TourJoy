@@ -10,6 +10,8 @@ use App\Repository\SubscriptionRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SubscriptionType;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 class SubscriptionController extends AbstractController
 {
@@ -51,12 +53,19 @@ class SubscriptionController extends AbstractController
 
 
     #[Route('/updateS{id}', name: 'updateS')]
-    public function UpdateS(ManagerRegistry $doctrine, Request $request, SubscriptionRepository $rep, $id): Response
+    public function UpdateS(ManagerRegistry $doctrine, Request $request, SubscriptionRepository $rep, $id,ValidatorInterface $validator): Response
     {
        $subscription = $rep->find($id);
        $form=$this->createForm(SubscriptionType::class,$subscription);
        $form->handleRequest($request);
        if($form->isSubmitted()){
+        $errors = $validator->validate($subscription);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+    
+            return new Response($errorsString);
+        }
+
            $em= $doctrine->getManager();
            $em->persist($subscription);
            $em->flush();
