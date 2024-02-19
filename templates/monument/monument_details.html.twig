@@ -1,0 +1,89 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Mapbox CSS -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        /* Customize map container */
+        .map-container {
+            height: 400px;
+            margin-top: 20px;
+        }
+        /* Adjust layout for card and map */
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .card-header,
+        .card-footer {
+            padding: 1rem;
+        }
+        .card-body {
+            flex: 1;
+            padding: 0;
+        }
+        .monument-image {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h1>{{ monument.getNameM() }}</h1>
+                </div>
+
+                <div class="card-body">
+                    <img src="{{ vich_uploader_asset(monument, 'imageFile') }}" alt="{{ monument.getNameM() }}" class="img-fluid mb-3 monument-image">
+                    <div class="monument-details p-3">
+                        <p><strong>Type:</strong> {{ monument.getType() }}</p>
+                        <p><strong>Entry Price:</strong> {{ monument.getEntryPrice() }} TND</p>
+                        <p><strong>Status:</strong> {{ monument.getStatus() }}</p>
+                        <p><strong>Description:</strong> {{ monument.getDescription() }}</p>
+                        <p><strong>Country:</strong> {{ monument.getFkcountry().getName() }}</p>
+                    </div>
+                </div>
+
+                <!-- Embedded Mapbox Map -->
+                <div id="map" class="map-container"></div>
+
+                <div class="card-footer">
+                    <small class="text-muted">Map showing the location of {{ monument.getNameM() }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Mapbox JavaScript -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            mapboxgl.accessToken = 'pk.eyJ1Ijoia291c3NheWJlbmhhZGpzYWxlbTEwIiwiYSI6ImNsc3E1MWk2aDB3dG0yanFxdG5seWIzeXEifQ.q7YseB8VOmSaGyXldgX3tA';
+            var latitude = {{ monument.getLatitude() }};
+            var longitude = {{ monument.getLongitude() }};
+
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [longitude, latitude],
+                zoom: 13
+            });
+
+            // Add a marker for the monument
+            new mapboxgl.Marker()
+                .setLngLat([longitude, latitude])
+                .addTo(map);
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+{% block main %}
+    <h1>All Countries</h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Region</th>
+                    <th>Actions</th> <!-- Added a header for actions -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in Country %}
+                    <tr>
+                        <td>{{ c.getName() }}</td>
+                        <td>{{ c.getRegion() }}</td>
+                        <td>
+                            <a href="{{ path('updatec', {'id': c.getId()}) }}" class="btn btn-primary">Modify</a>
+                            <a href="{{ path('removec', {'id': c.getId()}) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
