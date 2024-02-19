@@ -8,11 +8,11 @@
 
     <!-- Add subscription Button -->
     <div class="d-flex justify-content-center mb-3"> {# Center the button #}
-        <form action="{{ path('choose_subscription') }}" method="post">
+        <form action="{{ path('choose_subscription') }}" method="post" id="subscriptionForm">
             {% for subscription in subscriptionList %}
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="selected_subscription" value="{{ subscription.id }}">
-                    <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="selected_subscription" value="{{ subscription.id }}" id="subscription_{{ subscription.id }}">
+                    <label class="form-check-label" for="subscription_{{ subscription.id }}">
                         {{ subscription.plan }} - {{ subscription.duration }} Days - {{ subscription.typeT }}
                     </label>
                 </div>
@@ -21,4 +21,18 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Ensure only one checkbox can be selected
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            checkboxes.forEach(cb => {
+                if (cb !== this) {
+                    cb.checked = false;
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
