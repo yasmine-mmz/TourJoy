@@ -1,0 +1,51 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+
+
+{% block main %}
+<h2>Subscription Plan Duration Counts</h2>
+<div id="container"></div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const chartData = {{ data|raw }};
+
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Count of Subscription Plans by Duration'
+        },
+        xAxis: {
+            type: 'category',
+            title: {
+                text: 'Duration (days)'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Number of Plans'
+            },
+            allowDecimals: false
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Number of plans: <b>{point.y}</b>'
+        },
+        series: [{
+            name: 'Plans',
+            data: chartData,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y}'
+            }
+        }]
+    });
+});
+</script>
+{% endblock %}

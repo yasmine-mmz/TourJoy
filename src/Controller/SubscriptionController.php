@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SubscriptionType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Knp\Snappy\Pdf;
 
 
 class SubscriptionController extends AbstractController
@@ -85,4 +86,59 @@ class SubscriptionController extends AbstractController
         $em->flush();
         return $this-> redirectToRoute('showS');
     }
+    #[Route('/chart', name: 'chart')]
+    public function chartData(SubscriptionRepository $repository): Response
+{
+    $subscriptions = $repository->findAll();
+    $durationCounts = [];
+
+    // Count the number of plans for each duration
+    foreach ($subscriptions as $subscription) {
+        $duration = $subscription->getDuration();
+        if (!isset($durationCounts[$duration])) {
+            $durationCounts[$duration] = 0;
+        }
+        $durationCounts[$duration]++;
+    }
+
+    // Prepare data for the chart
+    $chartData = [];
+    foreach ($durationCounts as $duration => $count) {
+        $chartData[] = ['name' => $duration . ' days', 'y' => $count];
+    }
+
+    return $this->render('subscription/chart.html.twig', [
+        'data' => json_encode(array_values($chartData)),
+    ]);
+}
+#[Route('/subscription/pdf/{id}', name: 'subscription_pdf')]
+public function generatePdf(Pdf $snappy, SubscriptionRepository $repository, int $id): Response
+{
+    $subscription = $repository->find($id);
+    
+    if (!$subscription) {
+        throw $this->createNotFoundException('The subscription does not exist');
+    }
+    
+    $html = $this->renderView('subscription/pdf.html.twig', [
+        'subscription' => $subscription
+    ]);
+
+    $pdfContent = $snappy->getOutputFromHtml($html);
+
+    // Replace any characters in the plan name that are not valid for a filename
+    $safePlanName = preg_replace('/[^a-zA-Z0-9-_\.]/', '', $subscription->getPlan());
+    $filename = sprintf('Subscription-%s.pdf', $safePlanName);
+
+    return new Response(
+        $pdfContent,
+        Response::HTTP_OK,
+        [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename)
+        ]
+    );
+}
+
+
 }
