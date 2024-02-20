@@ -59,13 +59,8 @@ class SubscriptionController extends AbstractController
        $subscription = $rep->find($id);
        $form=$this->createForm(SubscriptionType::class,$subscription);
        $form->handleRequest($request);
-       if($form->isSubmitted()){
-        $errors = $validator->validate($subscription);
-        if (count($errors) > 0) {
-            $errorsString = (string) $errors;
-    
-            return new Response($errorsString);
-        }
+       if ($form->isSubmitted() && $form->isValid()) {
+       
 
            $em= $doctrine->getManager();
            $em->persist($subscription);
