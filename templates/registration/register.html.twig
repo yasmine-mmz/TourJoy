@@ -1,70 +1,169 @@
 {% extends 'FrontOffice/navbar.html.twig' %}
 
+{% block navbar %}
+
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    
+{% endblock %}
+
+
 {% block body %}
 
+
+
 <style>
-.custom-file-input::-webkit-file-upload-button {
-    visibility: hidden;
+body, html {
+    cursor: none;
 }
 
-.custom-file-input::before {
-    content: 'Choose file';
-    color: #fff;
-    background-color: #007bff;
-    display: inline-block;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.custom-file-input:hover::before {
-    background-color: #0056b3;
+/* Main styles */
+.container {
+    font-family: 'Arial', sans-serif; /* Change as per your preference */
 }
 
-.custom-file-input:active::before {
-    background-color: #0056b3;
+.card {
+    background: transparent;
+    border-radius: 15px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    color: #333;
 }
 
-.custom-file-input:focus::before {
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+.card-header {
+    background-color: transparent;
+    border-bottom: none;
+    color: #f86c52; /* You can adjust this color */
+    font-size: 30px; /* Adjusted for balance */
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 20px;
 }
 
-.custom-file-input::-webkit-file-upload-button {
-    visibility: hidden;
+.back-to-previous {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px; /* Space between the back arrow and the text */
+    color: #007bff; /* Color of the arrow, adjust as needed */
+    text-decoration: none; /* Removes underline from the link */
 }
 
-.form-check-input {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    cursor: pointer;
+.back-to-previous:hover {
+    color: #0056b3; /* Darker shade on hover */
 }
 
-/* Custom label styling */
+/* Input field styles */
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #36454F;
+   /* A light grey bottom border */
+    padding: 18px;
+    background: transparent;
+    margin-bottom: 15px; /* Space between fields */
+}
+
+.form-control::placeholder { /* Change placeholder color */
+    color: #36454F; /* Example placeholder color, you can change this */
+    opacity: 1; /* Firefox lowers the opacity by default */
+}
+
+/* Label styles */
 .form-check-label {
-    font-size: 16px;
-    margin-left: 5px;
-    color: #007BFF; 
-    margin-left: -4%;
-    margin-top: 1%;
+    display: block; /* Makes label take the full width */
+    text-align: center;
+    margin-bottom: 15px;
+    color: #fff; /* Adjust if needed */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin: 0 20px; /* Adds some margin on smaller screens */
+    }
+}
+
+/* Button styles */
+#submit-btn {
+    background-color: #007bff;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#submit-btn:hover {
+    background-color: #0056b3;
+}
+
+#plane {
+    pointer-events: none; /* Ignore the cursor itself for click events */
+    width: 50px; /* Adjust based on your icon size */
+    transition: transform 0.1s ease-out; /* Smooth movement */
+    color: #fff;
+
+    
+}
+
+@keyframes trail {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.video-background {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0; /* Cover the entire viewport */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: -1000; /* Ensure it stays behind other content */
+    overflow: hidden;
+}
+
+.video-background video {
+    max-width: 100%; /* Maximum width of the video */
+    max-height: 120vh; /* Maximum height of the video */
+    object-fit: cover; /* Maintain aspect ratio */
+}
+
+.form-check-input{
+    margin-left:38%;
+}
+
+::-ms-input-placeholder{
+    color: #5D3FD3;
+    opacity: 0;
 }
 
 </style>
 
-<section class="banner-area" id="home">
-    <!-- Start Header Area -->
-    <header class="default-header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-            <div class="container">
-                <a class="navbar-brand" href="{{ path('app_test') }}">
-                    <img src="img/logo.png" alt="" style="">
-                </a>
-            </div>
-        </nav>
-    </header>
-</section>
+<div class="video-background">
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="img/airplane.mp4" type="video/mp4">
+    </video>
+</div>
+
+
 
 <br><br><br>
+<br><br><br>
+
 
 
 
@@ -73,75 +172,57 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4>Sign Up</h4>
-                </div>
+                <a href="javascript:history.back()" class="back-to-previous" aria-label="Back to previous page">
+        <!-- This is a simple SVG for a left arrow. Replace with an icon from a library if preferred. -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 000-1H2.707l3.147-3.146a.5.5 0 000-.708l-.708-.708a.5.5 0 01-.708 0l-4 4a.5.5 0 010 .708l4 4a.5.5 0 01.708 0l.708-.708a.5.5 0 000-.708L2.707 8H15z"/>
+        </svg>
+    </a>CREATE ACCOUNT</div>
                 <div class="card-body">
-                    {{ form_start(registrationForm) }}
-                    <div class="row">
-                        <div class="col-md-6" style="margin-top: 1%">
-                            <div class="form-group">
-                                {{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'tabindex': '1'}}) }}
-                                {{ form_errors(registrationForm.email) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'type': 'password', 'tabindex': '3'}}) }}
-                                {{ form_errors(registrationForm.plainPassword) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(registrationForm.firstName, 'First Name', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control', 'tabindex': '5'}}) }}
-                                {{ form_errors(registrationForm.firstName) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(registrationForm.phoneNumber, 'Phone Number', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.phoneNumber, {'attr': {'class': 'form-control', 'tabindex': '7'}}) }}
-                                {{ form_errors(registrationForm.phoneNumber) }}
-                            </div>
-                            <div class="form-group" style="margin-left: 10%">
-                                <div class="form-check">
-                                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'agreeTerms'}}) }}
-                                    {{ form_label(registrationForm.agreeTerms, 'I agree to the terms', {'label_attr': {'class': 'form-check-label', 'for': 'agreeTerms'}}) }}
-                                    {{ form_errors(registrationForm.agreeTerms) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group" style="margin-top :2vh">
-                                {{ form_label(registrationForm.profilePicture, 'Profile Picture', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.profilePicture, {'attr': {'class': 'form-control-file', 'tabindex': '2'}}) }}
-                                {{ form_errors(registrationForm.profilePicture) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(registrationForm.confirmPassword, 'Confirm Password', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control', 'type': 'password', 'tabindex': '4'}}) }}
-                                {{ form_errors(registrationForm.confirmPassword) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(registrationForm.lastName, 'Last Name', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control', 'tabindex': '6'}}) }}
-                                {{ form_errors(registrationForm.lastName) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(registrationForm.country, 'Country', {'label_attr': {'class': 'mb-2'}}) }}
-                                {{ form_widget(registrationForm.country, {'attr': {'class': 'form-control', 'tabindex': '8'}}) }}
-                                {{ form_errors(registrationForm.country) }}
-                            </div>
-                             
+                    {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                    <!-- Registration form fields -->
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Your Email'}}) }}
+                    {{ form_errors(registrationForm.email) }}
+                    {{ form_widget(registrationForm.phoneNumber, {'attr': {'class': 'form-control', 'placeholder': 'Phone Number'}}) }}
+                    {{ form_errors(registrationForm.phoneNumber) }}
+                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+                    {{ form_errors(registrationForm.plainPassword) }}
+                    {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control', 'placeholder': 'Repeat your password'}}) }}
+                    {{ form_errors(registrationForm.confirmPassword) }}
+                    <div class="form-check">
+                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                        {{ form_label(registrationForm.agreeTerms, 'I agree to the terms', {'label_attr': {'class': 'form-check-label'}}) }}
+                        {{ form_errors(registrationForm.agreeTerms) }}
                     </div>
-                    <button id="submit-btn" type="submit" class="btn btn-primary btn-block" tabindex="9">Sign Up</button>
+                    <button id="submit-btn" type="submit" class="btn btn-primary">SIGN UP</button>
                     {{ form_end(registrationForm) }}
-                    <div id="error-message" style="display: none;">Invalid email address</div>
+                </div>
+                <div class="card-footer text-center " >
+                    Have already an account? <a href="/login" style="color: #f86c52">Login here</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <br><br><br><br><br>
+<img id="plane" src="img/plane2.svg" alt="Plane" style="position: absolute; display: none; width: 50px; pointer-events: none;">
+
 {% endblock %}
 
 {% block footer %}
+
+<script>
+    document.addEventListener('mousemove', function(e) {
+        const plane = document.getElementById('plane');
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        plane.style.left = mouseX + 'px';
+        plane.style.top = mouseY + 'px';
+        plane.style.display = 'block';
+    });
+</script>
+
     
 {% endblock %}

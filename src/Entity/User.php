@@ -23,6 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -32,6 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?string $password = null;
 
     #[ORM\Column(length: 25)]
@@ -53,9 +55,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     private ?int $phoneNumber = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    
     private ?string $profilePicture = null;
 
     #[ORM\Column]

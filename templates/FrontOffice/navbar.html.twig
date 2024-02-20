@@ -44,7 +44,7 @@
 				class="banner-area" id="home">
 				<!-- Start Header Area -->
 				<header class="default-header">
-					<nav class="navbar navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'app_profile' or app.request.attributes.get('_route') == 'app_check_email' %}bg-secondary{% endif %}">
+					<nav class="navbar navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'app_profile' or app.request.attributes.get('_route') == 'app_check_email'%}bg-secondary{% endif %}">
 						<div class="container">
 							<a class="navbar-brand" href="{{ path('app_test')}}">
 								<img src="img/logo.png" alt="">

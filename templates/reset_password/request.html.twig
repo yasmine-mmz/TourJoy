@@ -18,9 +18,10 @@
                         {% for flash_error in app.flashes('reset_password_error') %}
                             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
                         {% endfor %}
-                        {{ form_start(requestForm) }}
+                        {{ form_start(requestForm, {'attr': {'novalidate': 'novalidate'}}) }}
                             <div class="form-group">
                                 {{ form_row(requestForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter your email address'}}) }}
+                                {{ form_errors(requestForm.email) }}
                             </div>
                             <div class="form-group text-center">
                                 <small class="text-muted">

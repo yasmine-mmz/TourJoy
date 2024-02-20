@@ -11,7 +11,7 @@
                     <h1 class="text-center">Reset Your Password</h1>
                 </div>
                 <div class="card-body">
-                    {{ form_start(resetForm, {'attr': {'class': 'form'}}) }}
+                    {{ form_start(resetForm, {'attr': {'novalidate': 'novalidate'}}) }}
                         <div class="mb-3">
                             {{ form_label(resetForm.plainPassword, 'New Password', {'label_attr': {'class': 'form-label'}}) }}
                             {{ form_widget(resetForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Enter your new password'}}) }}

@@ -23,28 +23,35 @@
 						<div class="row">
 							
 							<div class="col-md-6">
-								{{ form_start(form) }}
+								{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 								<div class="row">
 									<div class="col-md-12">
 										{{ form_row(form.email, {'attr': {'class': 'form-control mb-3', 'tabindex': '1'}}) }}
+										{{ form_errors(form.email) }}
 									</div>
 									<div class="col-md-6">
 										{{ form_row(form.firstName, {'attr': {'class': 'form-control mb-3', 'tabindex': '3'}}) }}
+										{{ form_errors(form.firstName) }}
 									</div>
 									<div class="col-md-6">
 										{{ form_row(form.lastName, {'attr': {'class': 'form-control mb-3', 'tabindex': '4'}}) }}
+										{{ form_errors(form.lastName) }}
 									</div>
 									<div class="col-md-6">
 										{{ form_row(form.country, {'attr': {'class': 'form-control mb-3', 'tabindex': '5'}}) }}
+										{{ form_errors(form.country) }}
 									</div>
 									<div class="col-md-6">
 										{{ form_row(form.phoneNumber, {'attr': {'class': 'form-control mb-3', 'tabindex': '6'}}) }}
+										{{ form_errors(form.phoneNumber) }}
 									</div>
 									<div class="col-md-6">
 										{{ form_row(form.profilePicture, {'attr': {'class': 'form-control-file mb-3', 'tabindex': '7'}}) }}
+										{{ form_errors(form.profilePicture) }}
 									</div>
 									<div class="col-md-12">
 										{{ form_row(form.plainPassword, {'attr': {'class': 'form-control mb-3', 'tabindex': '8'}}) }}
+										{{ form_errors(form.plainPassword) }}
 									</div>
 								</div>
 								<div class="mb-3">

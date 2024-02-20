@@ -48,17 +48,17 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('firstName')
-            ->add('lastName')
+            // ->add('firstName')
+            // ->add('lastName')
             ->add('phoneNumber')
-            ->add('country', ChoiceType::class, [
-                'choices' => $this->getCountries(),
-            ])
-            ->add('profilePicture', FileType::class, [
-                'label' => 'Profile Picture',
-                'mapped' => false, 
-                'required' => false, 
-            ])
+            // ->add('country', ChoiceType::class, [
+            //     'choices' => $this->getCountries(),
+            // ])
+            // ->add('profilePicture', FileType::class, [
+            //     'label' => 'Profile Picture',
+            //     'mapped' => false, 
+            //     'required' => false, 
+            // ])
             ->add('createdAt', DateTimeType::class, [
                 'label' => false,
                 'required' => false,
