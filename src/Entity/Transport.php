@@ -49,7 +49,7 @@ class Transport
         return $this->typeT;
     }
 
-    public function setTypeT(string $typeT): static
+    public function setTypeT(?string $typeT): static
     {
         $this->typeT = $typeT;
 

@@ -40,7 +40,7 @@ class Subscription
         return $this->plan;
     }
 
-    public function setPlan(string $plan): static
+    public function setPlan(?string $plan): static
     {
         $this->plan = $plan;
 
@@ -52,7 +52,7 @@ class Subscription
         return $this->duration;
     }
 
-    public function setDuration(int $duration): static
+    public function setDuration(?int $duration): static
     {
         $this->duration = $duration;
 
