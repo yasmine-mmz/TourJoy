@@ -11,7 +11,7 @@
                     <h4>Update Subscription</h4>
                 </div>
                 <div class="card-body">
-                    {{ form_start(form) }}
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
                     <div class="mb-3">
                         {{ form_label(form.plan) }}
                         {{ form_widget(form.plan, {'attr': {'class': 'form-control'}}) }}

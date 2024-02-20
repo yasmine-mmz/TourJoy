@@ -25,6 +25,7 @@ class Subscription
 
     #[ORM\Column]
     #[Assert\LessThanOrEqual(value: 356)]
+    #[Assert\NotBlank]
     private ?int $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'subscriptions')]
