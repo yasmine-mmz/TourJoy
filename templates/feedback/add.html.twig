@@ -1,0 +1,223 @@
+  {% extends 'FrontOffice/navbar.html.twig' %}
+
+
+
+{% block body %}
+<style>
+    /* Your existing styles */
+    .form-container {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .rating-buttons {
+        margin-bottom: 20px;
+    }
+
+    .rating-button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 5px 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .rating-button.active {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .form-submit {
+        margin-top: 20px;
+        text-align: center; /* Center align the submit button */
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .feedback-box {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        width: 300px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-box {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        width: 400px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        margin-bottom: 20px;
+        text-align: center; /* Center align the title */
+    }
+
+    /* Style for Symfony's Save button */
+    .btn.btn-primary {
+        background-color: black;
+        border-color: black;
+        color: white; /* Text color */
+    }
+
+    .btn.btn-primary:hover {
+        background-color: #333;
+        border-color: #333;
+    }
+
+    /* Style for stars */
+    .rating-stars {
+        color: #FFD700; /* gold */
+    }
+</style>
+
+<div class="container">
+    <div class="form-box">
+        <h2 class="form-title">Feedback Form</h2>
+        {% if f is not null %}
+            {{ form_start(f, {'attr': {'novalidate': 'novalidate'}}) }}
+            
+            <div class="form-group">
+                {{ form_row(f.fkGuide, {'label': 'Guide'}) }}
+            </div>
+            
+            <!-- Custom Rating Buttons -->
+            <div class="form-group rating-buttons">
+                <label for="rating">Rating</label><br>
+                <div class="btn-group" role="group" aria-label="Rating">
+                    {% for i in 1..5 %}
+                        <button type="button" class="rating-button" data-rating="{{ i }}">{{ i }}</button>
+                    {% endfor %}
+                </div>
+                <!-- Hidden input to store the selected rating -->
+                <input type="hidden" id="rating" name="{{ f.rating.vars.full_name }}">
+            </div>
+          
+            <div class="form-group">
+                {{ form_row(f.comment) }}
+            </div>
+
+            <!-- Submission Button -->
+            <div class="form-submit">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            
+            {{ form_end(f, {'render_rest': false}) }}
+            
+            {% set flashMessages = app.session.flashBag.get('success') %}
+            {% if flashMessages is not empty %}
+                <div class="prompt-message">
+                    {{ flashMessages|first }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<br><br> 
+
+<h2 class="form-title">Clients feedbacks</h2> 
+
+<div class="container">
+    {% for feedback in feedbacks %}
+        <div class="feedback-box">
+            <p><strong>Guide Name:</strong> {{ feedback.fkGuide.firstnameG }} {{ feedback.fkGuide.lastnameG }}</p>
+            <p><strong>Rating:</strong> {% for i in 1..feedback.rating %}<i class="fa fa-star rating-stars"></i>{% endfor %}</p>
+            <p><strong>Comment:</strong> {{ feedback.comment }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.rating-button').forEach(button => {
+        button.addEventListener('click', function() {
+            // Update the hidden input with the selected rating value
+            document.querySelector('input[name="{{ f.rating.vars.full_name }}"]').value = this.getAttribute('data-rating');
+            
+            // Visual feedback for active rating
+            document.querySelectorAll('.rating-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+
+    // Adjusted to use 'type="submit"' button for form submission
+    document.querySelector('form').addEventListener('submit', function(event) {
+        var ratingInput = document.querySelector('input[name="{{ f.rating.vars.full_name }}"]').value;
+        var commentInput = document.querySelector('#{{ f.comment.vars.id }}').value;
+        var inappropriateWords = ['bhim', 'bhima', 'ew']; // List of inappropriate words
+
+        // Check if comment contains inappropriate words
+        var containsInappropriateWord = inappropriateWords.some(function(word) {
+            return commentInput.toLowerCase().includes(word);
+        });
+
+        if (!ratingInput) {
+            alert('Please select a rating.');
+            event.preventDefault(); // Prevent form submission
+            return false;
+        }
+
+        if (containsInappropriateWord) {
+            alert('Your comment contains inappropriate words. Please remove them before submitting.');
+            event.preventDefault(); // Prevent form submission
+            return false;
+        }
+        this.reset();
+        // If checks pass, form will submit
+    });
+});
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

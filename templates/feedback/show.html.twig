@@ -1,0 +1,51 @@
+  {% extends 'FrontOffice/navbar.html.twig' %}
+
+
+{% block body %}
+    <h1 style="text-align: center; margin-top: 50px; margin-bottom: 20px;">Feedbacks</h1>
+
+    <div style="margin-bottom: 20px;">
+        <label for="rating-filter" style="margin-right: 10px;">Filter by Rating:</label>
+        <select id="rating-filter" onchange="filterFeedbacks(this.value)" style="padding: 6px 10px; border-radius: 5px; background-color: #f0f0f0;">
+            <option value="">All</option>
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+        </select>
+    </div>
+
+    <div id="feedbacks-container" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+        {% for feedback in feedbacks %}
+            <div class="feedback-box" style="border: 1px solid black; padding: 5px; margin: 5px; flex: 0 0 calc(25% - 10px);" data-rating="{{ feedback.rating }}">
+                <div style="border: none; padding: 5px;">
+                    <p><strong>Guide Name:</strong> {{ feedback.fkGuide.firstnameG }} {{ feedback.fkGuide.lastnameG }}</p>
+                    <p><strong>Rating:</strong>
+                        {% for _ in range(1, feedback.rating ) %}
+                            <span style="color: yellow;">★</span>
+                        {% endfor %}
+                    </p>
+                    <p><strong>Comment:</strong> {{ feedback.comment }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function filterFeedbacks(rating) {
+            const feedbackBoxes = document.querySelectorAll('.feedback-box');
+            feedbackBoxes.forEach(box => {
+                const boxRating = parseInt(box.dataset.rating);
+                if (rating === '' || boxRating === parseInt(rating)) {
+                    box.style.display = 'block';
+                } else {
+                    box.style.display = 'none';
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+
+

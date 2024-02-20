@@ -1,0 +1,46 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+
+{% block title %}Booking Success{% endblock %}
+
+{% block body %}
+<style>
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url('public/images/successback.jpg') no-repeat center center;
+        background-size: cover;
+    }
+    .modal-content {
+        background: rgba(255, 255, 255, 0.85); /* Adjusted for opacity */
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        width: 400px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<div class="modal-overlay">
+    <div class="modal-content">
+        <!-- ... rest of your modal content ... -->
+        <h2 class="modal-title" style="color: #28a745; font-weight: bold;">Success</h2>
+        <p class="modal-body" style="font-size: 1rem; margin-bottom: 2rem;">Check your email for a booking confirmation. We'll see you soon!</p>
+        <a href="{{ path('fetch2') }}" class="btn btn-success" style="text-decoration: none; color: white; background-color: #28a745; padding: 0.5rem 1rem; border-radius: 5px;">OK</a>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}
+

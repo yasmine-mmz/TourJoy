@@ -1,0 +1,9 @@
+ <div class="container">
+        {% for feedback in feedbacks %}
+            <div class="feedback-box">
+                <p><strong>Guide Name:</strong> {{ feedback.fkGuide }}</p>
+                <p><strong>Comment:</strong> {{ feedback.comment }}</p>
+                <p><strong>Rating:</strong> {{ feedback.rating }}</p>
+            </div>
+        {% endfor %}
+    </div>

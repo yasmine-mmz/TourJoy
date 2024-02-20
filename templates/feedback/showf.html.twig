@@ -1,0 +1,27 @@
+  {% extends 'FrontOffice/navbar.html.twig' %}
+
+
+
+{% block body %}
+    <h1 style="text-align: center; margin-top: 50px; margin-bottom: 20px;">Feedbacks</h1>
+
+    <div style="display: flex; justify-content: center; align-items: center; height: 70vh;">
+        <table border="1" style="width: 70%; margin-top: 10px; border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid black;">Guide Name</th>
+                <th style="border: 1px solid black;">Rating</th>
+                <th style="border: 1px solid black;">Comment</th>
+            </tr>
+            {% for feedback in feedbacks %}
+            <tr>
+                <td style="border: 1px solid black;">{{ feedback.fkGuide.firstnameG }} {{ feedback.fkGuide.lastnameG }}</td>
+                <td style="border: 1px solid black;">{{ feedback.rating }}</td>
+                <td style="border: 1px solid black;">{{ feedback.comment }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+
+    

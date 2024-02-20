@@ -1,0 +1,28 @@
+  {% extends 'FrontOffice/navbar.html.twig' %}
+
+  {% block body %}
+
+<!-- Booking Form -->
+<section class="mt-5 mb-5"> <!-- Added mb-5 class for bottom margin -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="text-center">Book Guide</h1>
+                <form id="bookingForm" action="{{ path('addB', {'guide_cin': guide.CIN}) }}" method="post">
+                    {{ form_start(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.date) }}
+                        {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'id': 'date', 'min': '+1 day'|date('Y-m-d')} }) }}
+                    </div>
+           <button type="submit" class="btn btn-black btn-block">Book</button>
+                    {{ form_end(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</section>
+<!-- End Booking Form -->
+
+  {% endblock %}
+

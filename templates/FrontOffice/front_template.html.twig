@@ -45,11 +45,12 @@
 							  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
 							    <ul class="navbar-nav">
 									<li><a href="#home">Home</a></li>
-									<li><a href="#about">About</a></li>									
+									<li><a href="#about">About</a></li>			
+									<li><a href="/fetch2">Guides</a></li>									
 									<li><a href="#secvice">Service</a></li>
 									<li><a href="#gallery">Gallery</a></li>
 									<li><a href="#faq">Faq</a></li>
-									<li><a href="#contact">Contact</a></li>
+                                    <li><a href="#contact">Feedback</a></li>
 									<!-- Dropdown -->
 								    <li class="dropdown">
 								      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -419,37 +420,67 @@
 			<!-- End logo Area -->
 			
 							
-			<!-- start contact Area -->		
-			<section class="contact-area section-gap" id="contact">
-				<div class="container">
-					<div class="row d-flex justify-content-center">
-						<div class="menu-content pb-60 col-lg-8">
-							<div class="title text-center">
-								<h1 class="mb-10">If you need, Just drop us a line</h1>
-								<p>Who are in extremely love with eco friendly system.</p>
-							</div>
-						</div>
-					</div>										
-					<form class="form-area " id="myForm" action="mail.php" method="post" class="contact-form text-right">
-						<div class="row">	
-						<div class="col-lg-6 form-group">
-							<input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" required="" type="text">
-						
-							<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" required="" type="email">
+<!-- ======= Feedback Section ======= -->
+<section id="contact" class="contact">
+  <div class="container" data-aos="fade-up">
 
-							<input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" required="" type="text">
-						</div>
-						<div class="col-lg-6 form-group">
-							<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-							<button class="primary-btn mt-20">Send Message<span class="lnr lnr-arrow-right"></span></button>
-							<div class="alert-msg">								
-						</div>
-						</div></div>
-					</form>						
-					
-				</div>	
-			</section>
-			<!-- end contact Area -->		
+    <div class="section-title">
+      <h2>Feedback</h2>
+      <p>Leave your feedback</p>
+    </div>
+
+    <!-- Button to redirect to the 'addfb' function -->
+    <a href="{{ path('addfb') }}" class="btn btn-black">Give Feedback</a>
+
+  </div>
+</section><!-- End Feedback Section -->
+
+<style>
+  #contact {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 80px 0; /* Padding around the content */
+  }
+
+  .section-title {
+    text-align: center; /* Center align the text */
+    margin-bottom: 40px; /* Add some space below the section title */
+  }
+
+  .section-title h2 {
+    font-size: 36px; /* Larger font size for the section title */
+    color: #333; /* Dark gray text color */
+  }
+
+  .section-title p {
+    font-size: 18px; /* Font size for the section description */
+    color: #666; /* Medium gray text color */
+  }
+
+  .btn {
+    display: block; /* Make the button a block element */
+    width: 200px; /* Set a fixed width for the button */
+    margin: 20px auto 0 auto; /* Center the button horizontally and add more space below */
+    text-align: center; /* Center the text within the button */
+    background-color: #000; /* Black button color */
+    color: #fff; /* White text color */
+    padding: 12px 24px; /* Padding inside the button */
+    border-radius: 4px; /* Rounded corners */
+    text-decoration: none; /* Remove underline from links */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+
+  .btn:hover {
+    background-color: #333; /* Darker black color on hover */
+  }
+</style>
+
+
+
+
+
+
+
+	
 			
 			<!-- start footer Area -->		
 			<footer class="footer-area section-gap">

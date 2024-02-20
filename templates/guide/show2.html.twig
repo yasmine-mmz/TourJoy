@@ -1,0 +1,42 @@
+  {% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+   <h1 style="font-size: 28px; margin-bottom: 10px; margin-top: 30px; text-align: center;">All Guides</h1> <!-- Centering the title -->
+    <div style="margin-top: 10px; text-align: center;"> <!-- Centering the table -->
+        <table class="table table-bordered" style="width: 80%; border-collapse: collapse; border: 2px solid #ddd; margin: 0 auto;"> <!-- Centering the table -->
+            <thead>
+                <tr>
+				     <th style="border: 1px solid #ddd;"></th>
+                    <th style="border: 1px solid #ddd;">First Name</th>
+                    <th style="border: 1px solid #ddd;">Last Name</th>
+                    <th style="border: 1px solid #ddd;">Email Address</th>
+                    <th style="border: 1px solid #ddd;">Country</th>
+                    <th style="border: 1px solid #ddd;">Gender</th>
+                    <th style="border: 1px solid #ddd;">Actions</th> <!-- New column for actions -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for guide in guides %}
+                    <tr>
+<td>
+    <img src="{{ vich_uploader_asset(guide, 'imageFile') }}" alt="Guide Image" style="max-width: 100px; max-height: 100px; width: auto; height: auto; object-fit: cover;">
+</td>                        <td style="border: 1px solid #ddd;">{{ guide.firstnameG }}</td> <!-- Displaying first name -->
+                        <td style="border: 1px solid #ddd;">{{ guide.lastnameG }}</td> <!-- Displaying last name -->
+                        <td style="border: 1px solid #ddd;">{{ guide.emailaddressG }}</td> <!-- Displaying email -->
+                        <td style="border: 1px solid #ddd;">{{ guide.countryG }}</td> <!-- Displaying country -->
+                        <td style="border: 1px solid #ddd;">{{ guide.genderG }}</td> <!-- Displaying gender -->
+                        <td style="border: 1px solid #ddd;">
+                            <a href="{{ path('addB', {'guide_cin': guide.CIN}) }}" class="btn btn-primary" style="padding: 6px 10px; text-decoration: none; border-radius: 5px; background-color: #000; color: #fff;">Book</a>
+                            <a href="{{ path('fetchb2', {'id': guide.CIN}) }}" class="btn btn-info" style="padding: 6px 10px; text-decoration: none; border-radius: 5px;">See Feedbacks</a>
+                        </td> <!-- Buttons for update and delete -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+
+
+
