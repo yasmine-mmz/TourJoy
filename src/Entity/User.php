@@ -33,16 +33,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank]
     private ?string $password = null;
 
-    #[ORM\Column(length: 25)]
+    #[ORM\Column(length: 25, nullable : true)]
     #[Assert\NotBlank]
     #[Assert\Regex('/^[a-zA-Z]+$/')]
     #[Assert\Length(max: 25)]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 25)]
+    #[ORM\Column(length: 25, nullable : true)]
     #[Assert\NotBlank]
     #[Assert\Regex('/^[a-zA-Z]+$/')]
     #[Assert\Length(max: 25)]
@@ -55,11 +54,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     private ?int $phoneNumber = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    
     private ?string $profilePicture = null;
 
     #[ORM\Column]

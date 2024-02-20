@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+// use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class RegistrationFormType extends AbstractType
 {
@@ -48,17 +51,29 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('firstName')
-            // ->add('lastName')
+            ->add('firstName', TextType::class,[
+                'data' => 'firstname',
+                'label' => false,
+                'attr' => [
+                    'style' => 'display: none',]
+                ])
+            ->add('lastName', TextType::class,[
+                'data' => 'lastname',
+                'label' => false,
+                'attr' => [
+                    'style' => 'display: none',]
+                ])
             ->add('phoneNumber')
             // ->add('country', ChoiceType::class, [
             //     'choices' => $this->getCountries(),
             // ])
-            // ->add('profilePicture', FileType::class, [
-            //     'label' => 'Profile Picture',
-            //     'mapped' => false, 
-            //     'required' => false, 
-            // ])
+            ->add('profilePicture', FileType::class, [
+                'label' => false,
+                'mapped' => false, 
+                'required' => false, 
+                'attr' => [
+                'style' => 'display: none',]
+            ])
             ->add('createdAt', DateTimeType::class, [
                 'label' => false,
                 'required' => false,
