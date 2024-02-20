@@ -64,6 +64,11 @@ class TransportController extends AbstractController
     {
         $em= $doctrine->getManager();
         $transport= $rep->find($id);
+
+        foreach ($transport->getSubscriptions() as $subscription){
+            $em->remove($subscription);
+        }
+
         $em->remove($transport);
         $em->flush();
         return $this-> redirectToRoute('showT');
