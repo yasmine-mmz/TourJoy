@@ -17,25 +17,20 @@ class Reservation
     #[ORM\Column(name:'idR')]
     private ?int $idR = null;
 
-    /** 
-     * 
-    *#[ORM\Column(type: Types::DATE_MUTABLE)]
-    * @Assert\GreaterThan("today", message="Start date must be after the present day")
-    * @Assert\NotBlank(message="Start Date is required")
-    */
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan("today", message:"Start date must be after the present day")]
+    #[Assert\NotBlank(message:"Start Date is required")]
     private ?\DateTimeInterface $startDate = null;
 
-    /**
-    *#[ORM\Column(type: Types::DATE_MUTABLE)]
-    * @Assert\GreaterThan(propertyPath="startDate", message="End date must be after the start date")
-    * @Assert\NotBlank(message="End Date is required")
-    */
+ 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan(propertyPath:"startDate", message:"End date must be after the start date")]
+    #[Assert\NotBlank(message:"End Date is required")]
+    
     private ?\DateTimeInterface $endDate = null;
-    /**
-     * @CaptchaAssert\ValidCaptcha(
-     *      message = "CAPTCHA validation failed, try again."
-     * )
-     */
+    
+    #CaptchaAssert\ValidCaptcha(  message : "CAPTCHA validation failed, try again." )
     protected $captchaCode;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
@@ -52,7 +47,7 @@ class Reservation
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeInterface $startDate): static
+    public function setStartDate(?\DateTimeInterface $startDate): static
     {
         $this->startDate = $startDate;
 
@@ -64,7 +59,7 @@ class Reservation
         return $this->endDate;
     }
 
-    public function setEndDate(\DateTimeInterface $endDate): static
+    public function setEndDate(?\DateTimeInterface $endDate): static
     {
         $this->endDate = $endDate;
 

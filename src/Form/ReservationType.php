@@ -20,34 +20,28 @@ class ReservationType extends AbstractType
         $builder
             ->add('startDate', DateType::class, [
                 'widget' => 'single_text',
-                'html5' => true, // Set to true to use HTML5 date input
+                'html5' => true, 
                 'attr' => [
-                    'class' => 'form-control', // Bootstrap class for styling
-                    'placeholder' => 'Select Date', // Placeholder text
-                    'autocomplete' => 'off', // Disable autocomplete
+                    'class' => 'form-control', 
+                    'placeholder' => 'Select Date', 
+                    'autocomplete' => 'off', 
                 ],
             ])
-
             ->add('endDate', DateType::class, [
                 'widget' => 'single_text',
-                'html5' => true, // Set to true to use HTML5 date input
+                'html5' => true, 
                 'attr' => [
-                    'class' => 'form-control', // Bootstrap class for styling
-                    'placeholder' => 'Select Date', // Placeholder text
-                    'autocomplete' => 'off', // Disable autocomplete
+                    'class' => 'form-control', 
+                    'placeholder' => 'Select Date', 
+                    'autocomplete' => 'off', 
                 ],
             ])
-
             ->add('name')
-            ->add('captchaCode', CaptchaType::class, array(
+            ->add('captchaCode', CaptchaType::class, [
                 'captchaConfig' => 'ExampleCaptcha'
-              ))
-            ->add('BOOK', SubmitType::class) 
-           ;
-            
-
+            ])
+            ->add('BOOK', SubmitType::class);
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

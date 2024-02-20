@@ -68,7 +68,7 @@ class Accomodation
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
@@ -80,7 +80,7 @@ class Accomodation
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(?string $type): static
     {
         $this->type = $type;
 
@@ -114,7 +114,7 @@ class Accomodation
         return $this->nbRooms;
     }
 
-    public function setNbRooms(int $nbRooms): static
+    public function setNbRooms(?int $nbRooms): static
     {
         $this->nbRooms = $nbRooms;
 
@@ -126,7 +126,7 @@ class Accomodation
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(?float $price): static
     {
         $this->price = $price;
 

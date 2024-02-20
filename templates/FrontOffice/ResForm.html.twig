@@ -9,13 +9,12 @@
     <div class="row justify-content-center mt-5">
         <div class="col-md-6">
             <h1 class="text-center mb-4">Add a Reservation</h1>
-            {{ form_start(f, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_start(f, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
             <div class="form-group">
                 {{ form_label(f.name) }}
                 {{ form_widget(f.name, {'attr': {'class': 'form-control', 'value': f.vars.value.name }}) }}
             </div>
             <div class="form-group">
-            {{ form_errors (f.startDate, {'attr': {'class': 'form-danger'}}) }}
                 {{ form_label(f.startDate) }}
                 <div class="input-group date" data-provide="datepicker">
                     {{ form_widget(f.startDate, {'attr': {'class': 'form-control datepicker'}}) }}
@@ -25,7 +24,6 @@
                 </div>
             </div>
             <div class="form-group">
-            {{ form_errors (f.endDate, {'attr': {'class': 'form-danger'}}) }}
                 {{ form_label(f.endDate) }}
                 <div class="input-group date" data-provide="datepicker">
                     {{ form_widget(f.endDate, {'attr': {'class': 'form-control datepicker'}}) }}

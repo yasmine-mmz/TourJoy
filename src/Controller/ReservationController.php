@@ -98,10 +98,9 @@ class ReservationController extends AbstractController
             return $this->redirectToRoute('fetch');
         }
     
-        return $this->render('FrontOffice/ResForm.html.twig', [
+        return $this->render('BackOffice/ResUpd.html.twig', [
             'f' => $form->createView()
         ]);
     }
     
-
 }

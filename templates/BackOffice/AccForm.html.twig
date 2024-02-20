@@ -8,37 +8,22 @@
             <div class="border p-4 rounded">
                 {{ form_start(f, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
                 <div class="form-group">
-                {{ form_errors (f.name, {'attr': {'class': 'form-danger'}}) }}
                     {{ form_label(f.name, null, {'label_attr': {'class': 'small'}}) }}
                     {{ form_widget(f.name, {'attr': {'class': 'form-control'}}) }}
-                    {% if f.vars.errors|length > 0 %}
-                        <div class="text-danger">
-                            {{ f.vars.errors|first.message }}
-                        </div>
-                    {% endif %}
                 </div>
                 <div class="form-group">
-                {{ form_errors (f.type, {'attr': {'class': 'form-danger'}}) }}
                     {{ form_label(f.type, null, {'label_attr': {'class': 'small'}}) }}
                     {{ form_widget(f.type, {'attr': {'class': 'form-control custom-select'}}) }}
                 </div>
                 <div class="form-group">
-                {{ form_errors (f.nbRooms, {'attr': {'class': 'form-danger'}}) }}
                     {{ form_label(f.nbRooms, null, {'label_attr': {'class': 'small'}}) }}
                     {{ form_widget(f.nbRooms, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                {{ form_errors (f.price, {'attr': {'class': 'form-danger'}}) }}
                     {{ form_label(f.price, null, {'label_attr': {'class': 'small'}}) }}
                     {{ form_widget(f.price, {'attr': {'class': 'form-control'}}) }}
-                    {% if f.vars.errors|length > 0 %}
-                        <div class="text-danger">
-                            {{ f.vars.errors|first.message }}
-                        </div>
-                    {% endif %}
                 </div>
                 <div class="form-group"> 
-                {{ form_errors (f.location, {'attr': {'class': 'form-danger'}}) }}
                     {{ form_label(f.location, 'Location', {'label_attr': {'class': 'small'}}) }}
                     {{ form_widget(f.location, {'attr': {'class': 'form-control'}}) }}
                 </div>
