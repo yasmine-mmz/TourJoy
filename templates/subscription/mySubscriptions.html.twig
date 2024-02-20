@@ -56,13 +56,8 @@
     // Add click event listener to each subscription label
     document.querySelectorAll('.subscription-label').forEach(label => {
         label.addEventListener('click', function() {
-            // Remove 'selected' class from all labels
-            document.querySelectorAll('.subscription-label').forEach(label => {
-                label.classList.remove('selected');
-            });
-
-            // Add 'selected' class to the clicked label
-            this.classList.add('selected');
+            // Toggle 'selected' class on the clicked label
+            this.classList.toggle('selected');
         });
     });
 </script>
