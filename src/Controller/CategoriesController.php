@@ -34,13 +34,8 @@ class CategoriesController extends AbstractController
         $Categories =new Categories();
         $form=$this->createForm(CategoriesAddType::class,$Categories);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            $errors = $validator->validate($Categories); 
-            if (count($errors) > 0) {
-                $errorsString = (string) $errors;
-        
-                return new Response($errorsString);
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            
             $em= $doctrine->getManager();
             $em->persist($Categories);
             $em->flush();
@@ -56,13 +51,7 @@ class CategoriesController extends AbstractController
        $Categories = $rep->find($id);
        $form=$this->createForm(CategoriesUpdateType::class,$Categories);
        $form->handleRequest($request);
-       if($form->isSubmitted()){
-        $errors = $validator->validate($Categories); 
-        if (count($errors) > 0) {
-            $errorsString = (string) $errors;
-    
-            return new Response($errorsString);
-        }
+       if ($form->isSubmitted() && $form->isValid()) {
            $em= $doctrine->getManager();
            $em->persist($Categories);
            $em->flush();

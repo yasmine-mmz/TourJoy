@@ -11,17 +11,17 @@
                     <h4>Add claim</h4>
                 </div>
                 <div class="card-body">
-                    {{ form_start(Claims) }}
+                {{ form_start(Claims, {'attr': {'novalidate': 'novalidate', 'id': 'claimForm'}}) }}
                     <div class="mb-3">
                         {{ form_label(Claims.title) }}
                         {{ form_widget(Claims.title, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(Claims.title) }}
                     </div>
                     <div class="mb-3">
-    {{ form_label(Claims.description) }}
-    {{ form_widget(Claims.description, {'attr': {'class': 'form-control', 'style': 'height: 200px'}}) }}
-    {{ form_errors(Claims.description) }}
-</div>
+                        {{ form_label(Claims.description) }}
+                        {{ form_widget(Claims.description, {'attr': {'class': 'form-control', 'style': 'height: 200px'}}) }}
+                        {{ form_errors(Claims.description) }}
+                    </div>
                    
                     <div class="mb-3">
                         {{ form_label(Claims.createDate) }}
@@ -42,11 +42,20 @@
                     
                     <button id="submit-btn" type="submit" class="btn btn-primary btn-block">Add</button>
                     {{ form_end(Claims) }}
-                    
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div id="mailSentMessage" style="display: none;" class="alert alert-success mt-3">An email has been sent to the moderation team. They will answer you shortly after!</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('claimForm').addEventListener('submit', function() {
+            // Show the "Email Sent" message
+            document.getElementById('mailSentMessage').style.display = 'block';
+        });
+    });
+    </script>
 
 {% endblock %}
 {% block footer %}

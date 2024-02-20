@@ -17,12 +17,13 @@ class Claims
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 24,nullable: true)]
+    #[ORM\Column(length: 24)]
     #[Assert\NotBlank]
+    #[Assert\Regex('/^[a-zA-Z0-9]+$/')]
     #[Assert\Length(max: 24,min: 3)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 255,min: 5)]
     private ?string $description = null;
@@ -30,14 +31,15 @@ class Claims
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createDate = null;
 
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $state = null;
 
     #[ORM\ManyToOne(inversedBy: 'claims')]
+    #[Assert\NotBlank]
     private ?Categories $fkC = null;
 
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
     private ?string $reply = null;
@@ -52,7 +54,7 @@ class Claims
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -64,7 +66,7 @@ class Claims
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -88,7 +90,7 @@ class Claims
         return $this->state;
     }
 
-    public function setState(string $state): static
+    public function setState(?string $state): static
     {
         $this->state = $state;
 
@@ -112,7 +114,7 @@ class Claims
         return $this->reply;
     }
 
-    public function setReply(string $reply): static
+    public function setReply(?string $reply): static
     {
         $this->reply = $reply;
 

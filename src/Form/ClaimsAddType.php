@@ -48,6 +48,7 @@ class ClaimsAddType extends AbstractType
                 'class' => Categories::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Select a category',
+                
             ])
             ->add('reply', TextType::class, [
                 'label' => false,

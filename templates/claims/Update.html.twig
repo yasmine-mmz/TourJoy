@@ -11,7 +11,7 @@
                     <h4>Update claim</h4>
                 </div>
                 <div class="card-body">
-                    {{ form_start(Claims) }}
+                {{ form_start(Claims, {'attr': {'novalidate': 'novalidate'}}) }}
                     <div class="mb-3">
                         {{ form_label(Claims.title) }}
                         {{ form_widget(Claims.title, {'attr': {'class': 'form-control'}}) }}

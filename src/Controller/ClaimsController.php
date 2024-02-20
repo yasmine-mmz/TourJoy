@@ -15,9 +15,22 @@ use App\Repository\ClaimsRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Twig\Environment as TwigEnvironment;
+use Twig\Environment;
+
 
 class ClaimsController extends AbstractController
 {
+
+    private $mailer;
+    private $twig;
+
+    public function __construct(MailerInterface $mailer, Environment $twig)
+    {
+        $this->mailer = $mailer;
+        $this->twig = $twig;
+    }
+
    
     #[Route('/claims', name: 'app_claims')]
     public function index(): Response
@@ -40,19 +53,16 @@ class ClaimsController extends AbstractController
         $Claims =new Claims();
         $form=$this->createForm(ClaimsAddType::class,$Claims);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            $errors = $validator->validate($Claims); 
-            if (count($errors) > 0) {
-                $errorsString = (string) $errors;
-        
-                return new Response($errorsString);
-            }
-$claims = [
-        'title' => $request->request->get('title'),
-        'description' => $request->request->get('description'),
-        
-        // Add more claim data as needed
-    ];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $title = $Claims->getTitle(); // Assuming getTitle method exists in your Claims entity
+        $description = $Claims->getDescription(); // Assuming getDescription method exists in your Claims entity
+
+        $claims = [
+            'title' => $request->request->get('title'),
+            'description' => $request->request->get('description'),
+            
+            // Add more claim data as needed
+        ];
 
             $Claims->setCreateDate(new \DateTimeImmutable());
             $em= $doctrine->getManager();
@@ -64,8 +74,10 @@ $claims = [
              ->to('admin@tourjoy.com')
              ->subject('New Claim Submitted')
              ->text('A new claim has been submitted. title: ' . $claims['title'] . '. description: ' . $claims['description']);
- 
-$mailer->send($email);
+
+         // Step 3: Send the email
+         $mailer->send($email);
+     
 
             return $this-> redirectToRoute('app_test');
         }
@@ -79,13 +91,7 @@ $mailer->send($email);
        $Claims = $rep->find($id);
        $form=$this->createForm(ClaimsUpdateType::class,$Claims);
        $form->handleRequest($request);
-       if($form->isSubmitted()){
-        $errors = $validator->validate($Claims); 
-            if (count($errors) > 0) {
-                $errorsString = (string) $errors;
-        
-                return new Response($errorsString);
-            }
+       if ($form->isSubmitted() && $form->isValid()) {
            $em= $doctrine->getManager();
            $em->persist($Claims);
            $em->flush();

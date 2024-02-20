@@ -11,7 +11,7 @@
                     <h4>Add category</h4>
                 </div>
                 <div class="card-body">
-                    {{ form_start(Categories) }}
+                {{ form_start(Categories, {'attr': {'novalidate': 'novalidate'}}) }}
                     <div class="mb-3">
                         {{ form_label(Categories.name) }}
                         {{ form_widget(Categories.name, {'attr': {'class': 'form-control'}}) }}

@@ -17,7 +17,7 @@ class Categories
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 16,nullable: true,unique:true)]
+    #[ORM\Column(length: 16,unique:true)]
     #[Assert\NotBlank]
     #[Assert\Regex('/^[a-zA-Z]+$/')]
     #[Assert\Length(max: 16,min: 3)]
@@ -41,7 +41,7 @@ class Categories
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
