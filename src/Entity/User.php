@@ -71,6 +71,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    // #[ORM\Column(type: 'boolean')]
+    // private $is2faEnabled = false;
+
 
     public function getId(): ?int
     {
@@ -274,6 +277,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
        return $this;
    }
+
+//    public function is2faEnabled(): bool
+//    {
+//        return $this->is2faEnabled;
+//    }
+
+//    public function setIs2faEnabled(bool $is2faEnabled): self
+//    {
+//        $this->is2faEnabled = $is2faEnabled;
+
+//        return $this;
+//    }
 
 
 }

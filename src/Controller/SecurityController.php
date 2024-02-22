@@ -44,14 +44,23 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/2fa', name: '2fa_login')]
-    public function check2fa(GoogleAuthenticatorInterface $authentificator, TokenStorageInterface $storage)
+    public function check2fa(GoogleAuthenticatorInterface $authenticator, TokenStorageInterface $storage)
     {
-        $code = $authentificator->getQRContent($storage->getToken()->getUser());
-        $qrcode = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" . $code;
+        $user = $storage->getToken()->getUser();
+        $otpAuthUrl = $authenticator->getQRContent($user);
+        $qrcodeUrl = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" . urlencode($otpAuthUrl);
+
+        // Extract the secret from the otpAuthUrl
+        $parsedUrl = parse_url($otpAuthUrl);
+        parse_str($parsedUrl['query'], $queryParams);
+        $secret = $queryParams['secret'] ?? '';
+
         return $this->render('Security/2fa_login.html.twig', [
-            'qrcode' => $qrcode
+            'qrcodeUrl' => $qrcodeUrl,
+            'secret' => $secret // Pass only the secret to the template
         ]);
     }
+
     #[Route('/profile', name: 'app_profile')]
     public function profile(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger,  UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -63,12 +72,12 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $submittedPassword = $form->get('plainPassword')->getData();
-            
+
             if (!$passwordHasher->isPasswordValid($user, $submittedPassword)) {
                 $this->addFlash('error', 'The password you entered is incorrect.');
                 return $this->redirectToRoute('app_profile');
             }
-    
+
 
             $user->setModifiedAt(new \DateTimeImmutable());
             $profilePictureFile = $form->get('profilePicture')->getData();
@@ -101,7 +110,7 @@ class SecurityController extends AbstractController
     #[Route('/admin/users', name: 'admin_users')]
     public function users(UserRepository $repo): Response
     {
-        
+
         $users = $repo->findAll();
 
         return $this->render('BackOffice/users.html.twig', [
@@ -110,19 +119,19 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/admin/users/delete/{id}', name: 'admin_delete_user')]
-public function deleteUser(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
-{
-    $user = $userRepository->find($id);
+    public function deleteUser(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
+    {
+        $user = $userRepository->find($id);
 
-    if (!$user) {
-        throw $this->createNotFoundException('User not found');
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'User deleted successfully');
+
+        return $this->redirectToRoute('admin_users');
     }
-
-    $entityManager->remove($user);
-    $entityManager->flush();
-
-    $this->addFlash('success', 'User deleted successfully');
-
-    return $this->redirectToRoute('admin_users');
-}
 }
