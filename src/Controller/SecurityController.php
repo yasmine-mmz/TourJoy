@@ -136,22 +136,21 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/admin/users/stats', name: 'user_stats')]
-public function userStats(UserRepository $userRepository): Response
-{
-    $userStats = $userRepository->countUsersByCreationDate();
+    public function userStats(UserRepository $userRepository): Response
+    {
+        $userStats = $userRepository->countUsersByCreationDate();
 
-    $labels = [];
-    $data = [];
-    foreach ($userStats as $stat) {
-        $labels[] = $stat['createdAt']; // Assuming 'createdAt' is in 'Y-m-d' format
-        $data[] = $stat['userCount'];
+        $labels = [];
+        $data = [];
+        foreach ($userStats as $stat) {
+            $labels[] = $stat['createdAt'];
+            $data[] = $stat['userCount'];
+        }
+
+        return $this->render('BackOffice/user_stats.html.twig', [
+            'userStats' => $userStats,
+            'labels' => $labels,
+            'data' => $data,
+        ]);
     }
-
-    return $this->render('BackOffice/user_stats.html.twig', [
-        'userStats' => $userStats,
-        'labels' => $labels,
-        'data' => $data,
-    ]);
-}
-
 }

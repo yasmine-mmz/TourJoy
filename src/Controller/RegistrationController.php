@@ -38,12 +38,16 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $email = $user->getEmail();
+            // $email = $user->getEmail();
             $secretKeyInput = $form->get('secretKey')->getData();
-            $correctSecretKey = 'YRrHk6W8ymOZg01RELEMQfFrQhLGVZZX'; // Define your secret key here
+            $correctSecretKey = $this->getParameter('admin_secret_key');
 
-            if (strpos($email, '@admin') !== false && $secretKeyInput !== $correctSecretKey) {
-                $form->get('secretKey')->addError(new \Symfony\Component\Form\FormError('Invalid secret key for admin email.'));
+            if ($secretKeyInput === $correctSecretKey) {
+                // Assign ROLE_ADMIN to the user
+                $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+            } elseif (!empty($secretKeyInput)) {
+                // The secret key is provided but incorrect
+                $form->get('secretKey')->addError(new \Symfony\Component\Form\FormError('Invalid secret key.'));
                 return $this->render('registration/register.html.twig', [
                     'registrationForm' => $form->createView(),
                 ]);

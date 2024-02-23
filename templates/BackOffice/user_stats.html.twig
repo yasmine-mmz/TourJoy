@@ -6,25 +6,19 @@
 
     <h1>User Creation Statistics</h1>
     <canvas id="userStatsChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 359px; width: 719px;" width="719" height="359"></canvas>
-    {# <ul>
-        {% for stat in userStats %}
-            <li>{{ stat.createdAt|date('Y-m-d') }}: {{ stat.userCount }} users created</li>
-        {% endfor %}
-    </ul> #}
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
         var ctx = document.getElementById('userStatsChart').getContext('2d');
         var userStatsChart = new Chart(ctx, {
-            type: 'line', // or 'bar', 'pie', etc., depending on your needs
+            type: 'line', 
             data: {
-                labels: {{ labels|json_encode|raw }}, // Convert labels array to JSON
+                labels: {{ labels|json_encode|raw }},
                 datasets: [{
                     label: 'Users Created',
-                    data: {{ data|json_encode|raw }}, // Convert data array to JSON
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Customize as needed
-                    borderColor: 'rgba(54, 162, 235, 1)', // Customize as needed
+                    data: {{ data|json_encode|raw }}, 
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', 
+                    borderColor: 'rgba(54, 162, 235, 1)', 
                     borderWidth: 1
                 }]
             },

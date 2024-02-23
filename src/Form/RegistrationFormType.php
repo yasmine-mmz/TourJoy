@@ -35,8 +35,6 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -46,7 +44,6 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
@@ -99,7 +96,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Secret Key (for admin registration only)',
             ])
             ->add('isAdmin', CheckboxType::class, [
-                'mapped' => false, // not mapped to entity property
+                'mapped' => false,
                 'required' => false,
                 'label' => 'Register as admin?',
                 'attr' => ['id' => 'registration_form_isAdmin'], // ensure you have a unique ID

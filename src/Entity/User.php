@@ -37,13 +37,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column(length: 25, nullable : true)]
     #[Assert\NotBlank]
-    #[Assert\Regex('/^[a-zA-Z]+$/')]
+    #[Assert\Regex('/^[a-zA-Z\-]+$/')]
     #[Assert\Length(max: 25)]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 25, nullable : true)]
     #[Assert\NotBlank]
-    #[Assert\Regex('/^[a-zA-Z]+$/')]
+    #[Assert\Regex('/^[a-zA-Z\-]+$/')]
     #[Assert\Length(max: 25)]
     private ?string $lastName = null;
 
