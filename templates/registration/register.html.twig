@@ -3,6 +3,7 @@
 {% block navbar %}
 
  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+ 
 
     
 {% endblock %}
@@ -151,6 +152,29 @@ input::-webkit-inner-spin-button {
     opacity: 0;
 }
 
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-field {
+    flex: 1; /* Ensure input field takes up the full width of its container */
+    padding-right: 30px; /* Make space for the icon inside the field */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #007bff; /* Adjust color as needed */
+    font-size: 18px; /* Adjust the size as needed */
+    margin-top: -1vh;
+}
+
+
+
 </style>
 
 <div class="video-background">
@@ -181,15 +205,30 @@ input::-webkit-inner-spin-button {
                 <div class="card-body">
                     {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
                     <!-- Registration form fields -->
-                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Your Email'}}) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Your Email', 'id': 'registration_form_email'}}) }}
                     {{ form_errors(registrationForm.email) }}
                     {{ form_widget(registrationForm.phoneNumber, {'attr': {'class': 'form-control', 'placeholder': 'Phone Number'}}) }}
                     {{ form_errors(registrationForm.phoneNumber) }}
-                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
-                    {{ form_errors(registrationForm.plainPassword) }}
-                    {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control', 'placeholder': 'Repeat your password'}}) }}
-                    {{ form_errors(registrationForm.confirmPassword) }}
+                    <div class="password-container">
+    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control password-field', 'placeholder': 'Password', 'id': 'registration_form_plainPassword'}}) }}
+    <span class="toggle-password fa fa-eye-slash fa-lg"></span> <!-- Use fa-lg for larger icon -->
+    {{ form_errors(registrationForm.plainPassword) }}
+</div>
+<div class="password-container">
+    {{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control password-field', 'placeholder': 'Repeat your password', 'id': 'registration_form_confirmPassword'}}) }}
+    <span class="toggle-password fa fa-eye-slash fa-lg"></span> <!-- Use fa-lg for larger icon -->
+    {{ form_errors(registrationForm.confirmPassword) }}
+</div>
+
+                    <div id="secretKeyContainer" style="display:none;">
+                    {{ form_widget(registrationForm.secretKey, {'attr': {'class': 'form-control', 'placeholder': 'Secret key provided by the HR team'}}) }}
+                    {{ form_errors(registrationForm.secretKey) }}
+                    </div>
+
                     <div class="form-check">
+                        {{ form_widget(registrationForm.isAdmin, {'attr': {'class': 'form-check-input'}}) }}
+                        {{ form_label(registrationForm.isAdmin, 'Register as admin?' , {'label_attr': {'class': 'form-check-label'}}) }}
+                        
                         {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
                         {{ form_label(registrationForm.agreeTerms, 'I agree to the terms', {'label_attr': {'class': 'form-check-label'}}) }}
                         {{ form_errors(registrationForm.agreeTerms) }}
@@ -222,6 +261,41 @@ input::-webkit-inner-spin-button {
         plane.style.top = mouseY + 'px';
         plane.style.display = 'block';
     });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const isAdminCheckbox = document.getElementById('registration_form_isAdmin');
+    const secretKeyContainer = document.getElementById('secretKeyContainer');
+    
+    // Event listener for checkbox change
+    isAdminCheckbox.addEventListener('change', function() {
+        // Check if the checkbox is checked
+        if (this.checked) {
+            secretKeyContainer.style.display = 'block';
+        } else {
+            secretKeyContainer.style.display = 'none';
+        }
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggle-password').forEach(function(toggleButton) {
+        toggleButton.addEventListener('click', function() {
+            const passwordField = this.previousElementSibling; // Assumes the icon is right after the input field
+            const isPasswordVisible = passwordField.type === 'text';
+
+            // Toggle field visibility
+            passwordField.type = isPasswordVisible ? 'password' : 'text';
+
+            // Inverse the icon: show open eye when visible, closed eye when hidden
+            this.classList.toggle('fa-eye', !isPasswordVisible); // Show eye when password is hidden
+            this.classList.toggle('fa-eye-slash', isPasswordVisible); // Show eye-slash when password is visible
+        });
+    });
+});
+
+   
 </script>
 
     

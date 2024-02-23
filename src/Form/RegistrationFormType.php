@@ -89,7 +89,21 @@ class RegistrationFormType extends AbstractType
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'homepage',
             ])
-            ;
+            ->add('secretKey', PasswordType::class, [
+                'mapped' => false, // Assuming you don't want to save this directly to your User entity
+                'required' => false,
+                'attr' => [ // Initially hide it
+                    'placeholder' => 'Secret Key',
+                    'id' => 'registration_form_secretKey' // Ensure this ID matches what your JS targets
+                ],
+                'label' => 'Secret Key (for admin registration only)',
+            ])
+            ->add('isAdmin', CheckboxType::class, [
+                'mapped' => false, // not mapped to entity property
+                'required' => false,
+                'label' => 'Register as admin?',
+                'attr' => ['id' => 'registration_form_isAdmin'], // ensure you have a unique ID
+            ]);
             
     }
 

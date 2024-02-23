@@ -25,9 +25,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_test');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -134,4 +134,24 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute('admin_users');
     }
+
+    #[Route('/admin/users/stats', name: 'user_stats')]
+public function userStats(UserRepository $userRepository): Response
+{
+    $userStats = $userRepository->countUsersByCreationDate();
+
+    $labels = [];
+    $data = [];
+    foreach ($userStats as $stat) {
+        $labels[] = $stat['createdAt']; // Assuming 'createdAt' is in 'Y-m-d' format
+        $data[] = $stat['userCount'];
+    }
+
+    return $this->render('BackOffice/user_stats.html.twig', [
+        'userStats' => $userStats,
+        'labels' => $labels,
+        'data' => $data,
+    ]);
+}
+
 }

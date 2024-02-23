@@ -30,14 +30,25 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(SluggerInterface $slugger ,Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, GoogleAuthenticatorInterface $authenticator): Response
+    public function register(SluggerInterface $slugger, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, GoogleAuthenticatorInterface $authenticator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
+            $email = $user->getEmail();
+            $secretKeyInput = $form->get('secretKey')->getData();
+            $correctSecretKey = 'YRrHk6W8ymOZg01RELEMQfFrQhLGVZZX'; // Define your secret key here
+
+            if (strpos($email, '@admin') !== false && $secretKeyInput !== $correctSecretKey) {
+                $form->get('secretKey')->addError(new \Symfony\Component\Form\FormError('Invalid secret key for admin email.'));
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+
             $password = $form->get('plainPassword')->getData();
             $confirmPassword = $form->get('confirmPassword')->getData();
 
@@ -55,31 +66,33 @@ class RegistrationController extends AbstractController
 
             if ($password !== $confirmPassword) {
                 $form->get('confirmPassword')->addError(new \Symfony\Component\Form\FormError('The passwords must match.'));
-                return $this->render('FrontOffice/signup.html.twig', [
+                return $this->render('FrontOffice/register.html.twig', [
                     'form' => $form->createView(),
                 ]);
             }
 
             $profilePictureFile = $form->get('profilePicture')->getData();
             if ($profilePictureFile instanceof UploadedFile) {
-            $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePictureFile->guessExtension();
+                $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
 
-            
+
                 $profilePictureFile->move(
                     $this->getParameter('profile_picture_directory'),
                     $newFilename
                 );
-           
 
-            $user->setProfilePicture($newFilename);
-        }
+
+                $user->setProfilePicture($newFilename);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@tourjoy.com', 'NoReply'))
                     ->to($user->getEmail())
@@ -109,7 +122,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        
+
         $this->addFlash('success', 'Your email address has been verified.');
 
         return $this->redirectToRoute('app_test');

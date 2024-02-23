@@ -39,6 +39,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function countUsersByCreationDate()
+{
+    $qb = $this->createQueryBuilder('u')
+        ->select("SUBSTRING(u.createdAt, 1, 10) AS createdAt, COUNT(u.id) AS userCount")
+        ->groupBy('createdAt')
+        ->orderBy('createdAt', 'ASC');
+
+    return $qb->getQuery()->getResult();
+}
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
