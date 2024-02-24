@@ -18,18 +18,21 @@
 		}
 
 		.table thead th {
-			color: #333;
-			border-color: #dee2e6;
-			font-weight: bold;
-			padding: 1px;
-		}
+        color: #333;
+        border-color: #dee2e6;
+        font-weight: bold;
+        padding: 1rem;
+        text-align: center; /* Center align table headers */
+    }
 
 		.table tbody tr:nth-child(even) {
 			background-color: #f8f9fa;
+			text-align: center; 
 		}
 
 		.table-striped tbody tr:nth-child(odd) {
 			background-color: #f2f2f2;
+			text-align: center; 
 		}
 
 		.delete-btn,
@@ -81,6 +84,7 @@
 						<th>Created At</th>
 						<th>Modified At</th>
 						<th>isVerified</th>
+						<th>isBanned</th>
 						<th>Roles</th>
 						<th>Actions</th>
 					</tr>
@@ -97,16 +101,27 @@
 							<td>{{ user.createdAt ? user.createdAt.format('H:i  d-m-Y') : '' }}</td>
 							<td>{{ user.modifiedAt ? user.modifiedAt.format('H:i  d-m-Y') : '' }}</td>
 							<td>{{ user.isVerified }}</td>
+							<td>{{ user.isBanned }}</td>
 							<td>
 								{% for role in user.roles %}
-									{{ role }}
-									{% if not loop.last %},
-									{% endif %}
-								{% endfor %}
+                    {% if role == 'ROLE_ADMIN' %}
+                        Admin
+                    {% elseif role == 'ROLE_USER' %}
+                        Client
+                    {% else %}
+                        {{ role }}
+                    {% endif %}
+                    {% if not loop.last %}, {% endif %}
+                {% endfor %}
 							</td>
 
 							<td>
 								<a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-sm delete-btn">Delete</a>
+								{% if user.isBanned %}
+        <a href="{{ path('admin_revoke_user', {'id': user.id}) }}" class="btn btn-success btn-sm">Revoke</a>
+    {% else %}
+        <a href="{{ path('admin_ban_user', {'id': user.id}) }}" class="btn btn-warning btn-sm">Ban</a>
+    {% endif %}
 								{# <button type="button" class="btn btn-primary btn-sm manage-btn" data-id="{{ user.id }}">Manage</button> #}
 							</td>
 

@@ -71,6 +71,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isBanned = false;
+
+
     // #[ORM\Column(type: 'boolean')]
     // private $is2faEnabled = false;
 
@@ -277,6 +281,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
        return $this;
    }
+
+   public function getIsBanned(): bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned): self
+    {
+        $this->isBanned = $isBanned;
+        return $this;
+    }
+
 
 //    public function is2faEnabled(): bool
 //    {

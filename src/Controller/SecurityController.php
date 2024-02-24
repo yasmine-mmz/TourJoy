@@ -28,7 +28,6 @@ class SecurityController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('app_test');
         }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
@@ -46,6 +45,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/2fa', name: '2fa_login')]
     public function check2fa(GoogleAuthenticatorInterface $authenticator, TokenStorageInterface $storage)
     {
+        
         $user = $storage->getToken()->getUser();
         $otpAuthUrl = $authenticator->getQRContent($user);
         $qrcodeUrl = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" . urlencode($otpAuthUrl);
@@ -57,7 +57,7 @@ class SecurityController extends AbstractController
 
         return $this->render('Security/2fa_login.html.twig', [
             'qrcodeUrl' => $qrcodeUrl,
-            'secret' => $secret // Pass only the secret to the template
+            'secret' => $secret
         ]);
     }
 
@@ -77,7 +77,6 @@ class SecurityController extends AbstractController
                 $this->addFlash('error', 'The password you entered is incorrect.');
                 return $this->redirectToRoute('app_profile');
             }
-
 
             $user->setModifiedAt(new \DateTimeImmutable());
             $profilePictureFile = $form->get('profilePicture')->getData();
@@ -119,7 +118,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/admin/users/delete/{id}', name: 'admin_delete_user')]
-    public function deleteUser(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
+    public function deleteUser(EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
     {
         $user = $userRepository->find($id);
 
@@ -152,5 +151,39 @@ class SecurityController extends AbstractController
             'labels' => $labels,
             'data' => $data,
         ]);
+    }
+
+    #[Route('/admin/users/ban/{id}', name: 'admin_ban_user')]
+    public function banUser(EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
+    {
+        $user = $userRepository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        $user->setIsBanned(true);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'User banned successfully');
+
+        return $this->redirectToRoute('admin_users');
+    }
+
+    #[Route('/admin/users/revoke/{id}', name: 'admin_revoke_user')]
+    public function revokeBanUser(EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
+    {
+        $user = $userRepository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        $user->setIsBanned(false);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'User unbanned successfully');
+
+        return $this->redirectToRoute('admin_users');
     }
 }
