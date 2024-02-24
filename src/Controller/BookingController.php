@@ -79,11 +79,12 @@ public function calendarData(Request $request, ?int $year = null, ?int $month = 
     ]);
 }
 
-
 #[Route('/addB{guide_cin}', name: 'addB')]
 public function addB(Request $request, string $guide_cin, ManagerRegistry $managerRegistry, BookingRepository $bookingRepository): Response
 {    
-    $guide = $this->getDoctrine()->getRepository(Guide::class)->findOneBy(['CIN' => $guide_cin]);
+    $entityManager = $managerRegistry->getManager();
+    
+    $guide = $entityManager->getRepository(Guide::class)->findOneBy(['CIN' => $guide_cin]);
     if (!$guide) {
         throw $this->createNotFoundException('Guide not found');
     }
@@ -100,12 +101,14 @@ public function addB(Request $request, string $guide_cin, ManagerRegistry $manag
     $form = $this->createForm(BookType::class, $booking);
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Retrieve the selected date from the form
-        $selectedDate = $form->get('selectedDate')->getData();
-        $booking->setDate(new \DateTime($selectedDate));
+    $selectedDate = $booking->getDate() ?? new \DateTime(); // Initialize with today's date if null
 
-        $entityManager = $managerRegistry->getManager();
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Get the selected date from the form
+        $selectedDate = $form->get('date')->getData();
+        // Set the selected date to the booking entity
+        $booking->setDate($selectedDate);
+
         $entityManager->persist($booking);
         $entityManager->flush();
 
@@ -116,8 +119,11 @@ public function addB(Request $request, string $guide_cin, ManagerRegistry $manag
         'guide' => $guide,
         'form' => $form->createView(),
         'bookedDates' => json_encode($bookedDates),
+        'selectedDate' => $selectedDate->format('Y-m-d'), // Pass the selected date in string format to the template
     ]);
 }
+
+
 
 
 

@@ -1,5 +1,7 @@
 {% extends 'FrontOffice/navbar.html.twig' %}
 
+
+
 {% block stylesheets %}
 {{ parent() }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css" integrity="sha512-4rPgyv5iG0PZw8E+Pv6+stB+K2XJFDDx0e4qB7r6Jz0H6wStkEe7TMaCUp92nb2LxAYVJv2HlmL3Jkn3K8UXVcw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -105,10 +107,17 @@
                         </tbody>
                     </table>
                 </div>
-                <form id="bookingForm" action="{{ path('addB', {'guide_cin': guide.cin}) }}" method="post">
-                    <input type="hidden" id="selectedDate" name="selectedDate" value="">
-                    <button type="button" class="btn btn-black btn-block" id="bookBtn">Book</button>
-                </form>
+      
+{{ form_start(form) }}
+    {{ form_row(form.date, {
+        'attr': {
+            'min': "now"|date_modify("+1 day")|date("Y-m-d")
+        }
+    }) }}
+                        <button type="submit" class="btn btn-black btn-block" id="bookBtn">Book</button>
+
+{{ form_end(form) }}
+
             </div>
         </div>
     </div>
@@ -139,9 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add the empty cells for previous month's days
         for (let x = 0; x < firstDayIndex; x++) {
-            const cell = document.createElement('td');
-            cell.classList.add('empty');
-            calendarBody.appendChild(cell);
+            calendarBody.appendChild(document.createElement('td')).classList.add('empty');
         }
 
         // Fill the calendar with the current month's days
@@ -149,35 +156,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const cell = document.createElement('td');
             cell.innerText = day;
             const cellDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-            if (cellDate < today) {
-                // Disable selection for past dates
-                cell.classList.add('empty');
+            if (cellDate < today || isDateBooked(currentDate.getFullYear(), currentDate.getMonth(), day)) {
+                cell.classList.add('booked');
             } else {
-                if (isDateBooked(currentDate.getFullYear(), currentDate.getMonth(), day)) {
-                    cell.classList.add('booked');
-                } else {
-                    cell.classList.add('selectable');
-                    cell.addEventListener('click', function() {
-                        // Clear previous selection
-                        document.querySelector('.selected')?.classList.remove('selected');
-                        // Mark the clicked cell as selected
-                        cell.classList.add('selected');
-                        // Update the hidden input field value with the selected date
-                        document.getElementById('selectedDate').value = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    });
-                }
+                cell.classList.add('empty'); // Use 'empty' or another class to indicate non-selectability
             }
             calendarBody.appendChild(cell);
         }
 
         // Add the empty cells for next month's days
         for (let j = 1; j <= nextDays; j++) {
-            const cell = document.createElement('td');
-            cell.classList.add('empty');
-            calendarBody.appendChild(cell);
+            calendarBody.appendChild(document.createElement('td')).classList.add('empty');
         }
 
-        // Wrap all cells into rows of 7 (one row per week)
+        // Organize cells into rows for a structured calendar view
+        organizeCalendarRows();
+
+        updateMonthYearDisplay();
+    }
+
+    function organizeCalendarRows() {
         const allCells = Array.from(calendarBody.getElementsByTagName('td'));
         calendarBody.innerHTML = ''; // Clear the calendar to reinsert the organized rows
         let weekRow = document.createElement('tr');
@@ -193,8 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (weekRow.hasChildNodes()) {
             calendarBody.appendChild(weekRow);
         }
-
-        updateMonthYearDisplay();
     }
 
     function updateMonthYearDisplay() {
@@ -213,20 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
         generateCalendar();
     });
 
-    // Add event listener to the "Book" button
-    document.getElementById('bookBtn').addEventListener('click', function() {
-        // Get the selected date
-        const selectedDate = document.getElementById('selectedDate').value;
-        if (selectedDate) {
-            // If a date is selected, submit the form
-            document.getElementById('bookingForm').submit();
-        } else {
-            // If no date is selected, display an alert to the user
-            alert('Please select a date.');
-        }
-    });
-
     generateCalendar(); // Initial call to set the calendar month and generate days
 });
+
 </script>
+
 {% endblock %}

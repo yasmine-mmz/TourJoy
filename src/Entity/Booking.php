@@ -61,4 +61,8 @@ class Booking
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->date;
+    }
 }

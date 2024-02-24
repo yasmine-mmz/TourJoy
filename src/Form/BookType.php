@@ -14,15 +14,18 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-       ->add('date', DateType::class, [
+        ->add('date', DateType::class, [
             'widget' => 'single_text',
             'html5' => true, // Set to true to use HTML5 date input
             'attr' => [
                 'class' => 'form-control', // Bootstrap class for styling
                 'placeholder' => 'Select Date', // Placeholder text
                 'autocomplete' => 'off', // Disable autocomplete
+                'value' => $options['data']->getDate() ? $options['data']->getDate()->format('Y-m-d') : '', // Populate the field with the selected date
             ],
         ]);
+        
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
