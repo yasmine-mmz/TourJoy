@@ -38,7 +38,6 @@ class AccomodationController extends AbstractController
     #[Route('/showF', name: 'showF')] 
     public function showF(AccomodationRepository $repo): Response
     {
-        // Retrieve all accommodations
         $result = $repo->findAll();
 
         return $this->render('FrontOffice/acc.html.twig', [
@@ -61,12 +60,10 @@ class AccomodationController extends AbstractController
             $errors = $validator->validate($accomodation);
     
             if (count($errors) > 0) {
-                // If there are validation errors, display them
                 $errorsString = (string) $errors;
                 return new Response($errorsString);
             }
     
-            // If validation passed, persist and flush the entity
             $em = $mr->getManager();
             $em->persist($accomodation);
             $em->flush();
@@ -75,7 +72,6 @@ class AccomodationController extends AbstractController
              return $this->redirectToRoute('showF');
         }
     
-        // If form is not submitted or not valid, render the form again
         return $this->render('BackOffice/AccForm.html.twig', [
             'f' => $form->createView()
         ]);
@@ -87,6 +83,10 @@ class AccomodationController extends AbstractController
     {
         $accomodation = $repo->find($refA);
         $em = $mr->getManager();
+        foreach ($accomodation->getReservations() as $reservation)
+        {
+            $em->remove($reservation);
+        }
         $em->remove($accomodation);
         $em->flush(); 
 
@@ -94,7 +94,7 @@ class AccomodationController extends AbstractController
         return $this ->redirectToRoute('showF');    
 
     }
-    #[Route('/update1/{refA}', name: 'update1')]
+    #[Route('/update1{refA}', name: 'update1')]
     public function updateAccomodation(int $refA, ManagerRegistry $mr, Request $req, AccomodationRepository $repo): Response
     {
         $p = $repo->find($refA); 
@@ -141,7 +141,6 @@ class AccomodationController extends AbstractController
         $entityManager->persist($reservation);
         $entityManager->flush();
 
-        // Redirect to a success page or route
         return $this->redirectToRoute('thank_you');
     }
 
