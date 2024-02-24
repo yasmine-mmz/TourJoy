@@ -1,33 +1,80 @@
-{% extends 'FrontOffice/navbar.html.twig' %}
-
-{% block stylesheets %}
-    {{ parent() }}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="colorlib">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Adventure</title>
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/linearicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <!-- Mapbox CSS -->
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
     <style>
-    .play-description-btn {
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-}
+        .default-header {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            background: url('/img/header-background.jpg') no-repeat center center scroll;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+        }
 
-.play-description-btn i {
-    margin-right: 5px;
-}
-         .map-container {
+        .navbar-light .navbar-nav .nav-link,
+        .navbar-light .navbar-brand {
+            color: #fff; /* Adjust the color to ensure readability */
+        }
+
+        /* Fix for the navbar-toggler icon color */
+        .navbar-light .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;..."); /* Here should be your navbar-toggler icon svg path */
+        }
+
+        .play-description-btn {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            transition: background-color 0.3s ease; /* Add transition effect for smoother hover */
+        }
+
+        .play-description-btn i {
+            margin-right: 5px;
+        }
+
+        /* Mapbox CSS */
+        .map-container {
             height: 400px;
             margin-top: 20px;
         }
+
         /* Adjust layout for card and map */
         .card {
             display: flex;
@@ -37,14 +84,17 @@
             border-radius: 15px; /* If you want rounded corners */
             box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow to your cards */
         }
+
         .card-header,
         .card-footer {
             padding: 1rem;
         }
+
         .card-body {
             flex: 1;
             padding: 0;
         }
+
         .monument-image {
             width: 100%;
             height: auto;
@@ -57,7 +107,8 @@
             background-size: cover;
             min-height: 100vh; /* Minimum height of viewport */
         }
-          /* Setting the background image */
+
+        /* Setting the background image */
         .container {
             background: url('/img/background.webp') no-repeat center center;
             background-size: cover;
@@ -87,7 +138,8 @@
             padding: 0;
             background-color: #fff; /* Set the card body's background to white */
         }
- body, html {
+
+        body, html {
             height: 100%;
             margin: 0;
             background: url('/img/background.webp') no-repeat center center fixed;
@@ -96,6 +148,7 @@
             -moz-background-size: cover;
             -o-background-size: cover;
         }
+
         .body-background {
             /* Use this class for the main background of the page */
             background-image: url('/img/background.webp');
@@ -105,13 +158,70 @@
             background-attachment: fixed;
             height: 100%;
         }
+
         /* Ensure full coverage */
         .container-fluid, .container {
             min-height: 100%;
             padding: 0 !important; /* Override any existing padding */
         }
+
+        .navbar {
+            width: 100%; /* Ensure the navbar takes full width */
+            height: 100%;
+            background: none; /* Clear any existing background */
+            margin: 0;
+            padding: 0;
+        }
     </style>
-{% endblock %}
+    {% endblock %}
+</head>
+<body>
+        {% block navbar %}
+            
+        
+			 <!-- start banner Area -->
+    <section class="banner-area" id="home">
+        <!-- Start Header Area -->
+        <header class="default-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                
+						<div class="container">
+							  <a class="navbar-brand" href="index.html">
+							  	<img src="img/logo.png" alt="">
+							  </a>
+							  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							    <span class="text-white lnr lnr-menu"></span>
+							  </button>
+
+							  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+							    <ul class="navbar-nav">
+									<li><a href="{{ path('app_test') }}">Home</a></li>
+									<li><a href="#about">About</a></li>									
+									<li><a href="#secvice">Monuments</a></li>
+									<li><a href="#gallery">Gallery</a></li>
+									<li><a href="#faq">Faq</a></li>
+									<li><a href="#contact">Contact</a></li>
+									<!-- Dropdown -->
+								    <li class="dropdown">
+								      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+								        Pages
+								      </a>
+								      <div class="dropdown-menu">
+								        <a class="dropdown-item" href="generic.html">Generic</a>
+								        <a class="dropdown-item" href="elements.html">Elements</a>
+								      </div>
+								    </li>
+							    </ul>
+							  </div>						
+						</div>
+					</nav>
+				</header>
+				<!-- End Header Area -->				
+			</section>
+			<br>
+        {% endblock %}
+
+
 
 {% block body %}
 <div class="content-area">
@@ -149,7 +259,17 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
+<script src="{{ asset('frontoffice/js/vendor/jquery-2.2.4.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="{{ asset('frontoffice/js/vendor/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/slick.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/main.js') }}"></script>
 <!-- Mapbox JavaScript -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
 <script>

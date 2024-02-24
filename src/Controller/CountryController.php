@@ -20,9 +20,16 @@ class CountryController extends AbstractController
         ]);
     }
     #[Route('/fetchc', name: 'country_show')]
-    public function fetch(CountryRepository $repo): Response
+    public function fetch(CountryRepository $repo, Request $request): Response
     {
-        $result = $repo->findAll();
+        $searchValue = $request->query->get('search_value');
+    
+        if ($searchValue) {
+            $result = $repo->searchByName($searchValue);
+        } else {
+            // If no search value provided, retrieve all countries
+            $result = $repo->findAll();
+        }
     
         return $this->render('BackOffice/showc.html.twig', [
             'Country' => $result,

@@ -20,7 +20,14 @@ class CountryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Country::class);
     }
-
+    public function searchByName($name)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Country[] Returns an array of Country objects
 //     */

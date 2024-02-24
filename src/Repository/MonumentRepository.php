@@ -53,7 +53,7 @@ class MonumentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->innerJoin('m.fkcountry', 'c')
-            ->andWhere('c.name = :country')
+            ->andWhere('c.name LIKE :country')
             ->setParameter('country', $country)
             ->getQuery()
             ->getResult();
