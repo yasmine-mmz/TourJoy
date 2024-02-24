@@ -5,6 +5,17 @@ namespace App\Entity;
 use App\Repository\BookingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+/**
+ * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"date"},
+ *     message="This date is already in use."
+ * )
+ */
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
@@ -18,7 +29,8 @@ class Booking
     #[ORM\JoinColumn(name: 'guide_id', referencedColumnName:'CIN')]
     private ?Guide $guide_id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, unique:true)]
+    #[Assert\NotBlank(message:"date is required")]
     private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int
@@ -43,7 +55,7 @@ class Booking
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
 

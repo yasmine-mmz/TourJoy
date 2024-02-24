@@ -9,6 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Guide; // Make sure to import the Guide entity
 use Symfony\Bridge\Doctrine\Form\Type\EntityType; // Import EntityType
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 
 
 
@@ -25,9 +28,22 @@ class FeedbackType extends AbstractType
             // You can customize other options of EntityType as needed
         ])
         
-            ->add('rating')
-            ->add('comment')
-            
+        ->add('rating', ChoiceType::class, [
+            'choices' => [
+                '1' => 1,
+                '2' => 2,
+                '3' => 3,
+                '4' => 4,
+                '5' => 5,
+            ],
+            'expanded' => true, // To render as buttons
+            'multiple' => false, // Single choice
+        ])
+        ->add('comment', TextareaType::class, [
+            'attr' => ['rows' => 5], // Increase the size of the textarea
+        ])
+            ->add('save',SubmitType::class)
+
         ;
     }   
 

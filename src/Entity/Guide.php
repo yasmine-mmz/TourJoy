@@ -10,15 +10,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 #[ORM\Entity(repositoryClass: GuideRepository::class)]
 #[Vich\Uploadable]
+/**
+ * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"CIN"},
+ *     message="This CIN is already in use."
+ * )
+ */
 
 class Guide
 {
+
+    
     #[ORM\Id]
-    #[ORM\Column(name: 'CIN')]
-    #[Assert\NotBlank(message:"CIN is required")]
+    #[ORM\Column(name: 'CIN', unique:true)]
+    #[Assert\NotBlank(message:"CIN is required")]   
    #[Assert\Length( min:8,max: 8)]
     private ?int $CIN = null;
 

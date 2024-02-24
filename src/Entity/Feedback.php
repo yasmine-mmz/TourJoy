@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FeedbackRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]
 class Feedback
@@ -14,6 +16,7 @@ class Feedback
     private ?int $id = null;
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message:"Comment is required")]   
     private ?string $comment = null;
 
     #[ORM\Column]
@@ -22,6 +25,12 @@ class Feedback
     #[ORM\ManyToOne(inversedBy: 'feedback')]
     #[ORM\JoinColumn(name: 'fk_guide_id', referencedColumnName:'CIN')]
     private ?Guide $fkGuide = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $useful = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $not_useful = null;
 
     public function getId(): ?int
     {
@@ -66,5 +75,29 @@ class Feedback
 
     public function __toString(){
         return $this->comment;
+    }
+
+    public function getUseful(): ?int
+    {
+        return $this->useful;
+    }
+
+    public function setUseful(?int $useful): static
+    {
+        $this->useful = $useful;
+
+        return $this;
+    }
+
+    public function getNotUseful(): ?int
+    {
+        return $this->not_useful;
+    }
+
+    public function setNotUseful(?int $not_useful): static
+    {
+        $this->not_useful = $not_useful;
+
+        return $this;
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240217214100 extends AbstractMigration
+final class Version20240221091646 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,8 +20,8 @@ final class Version20240217214100 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE booking (id INT AUTO_INCREMENT NOT NULL, guide_id INT DEFAULT NULL, date DATE NOT NULL, INDEX IDX_E00CEDDED7ED1D4B (guide_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE feedback (id INT AUTO_INCREMENT NOT NULL, fk_guide_id INT DEFAULT NULL, comment VARCHAR(500) NOT NULL, rating INT NOT NULL, INDEX IDX_D2294458E5C55E95 (fk_guide_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE booking (id INT AUTO_INCREMENT NOT NULL, guide_id INT DEFAULT NULL, date DATE NOT NULL, UNIQUE INDEX UNIQ_E00CEDDEAA9E377A (date), INDEX IDX_E00CEDDED7ED1D4B (guide_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE feedback (id INT AUTO_INCREMENT NOT NULL, fk_guide_id INT DEFAULT NULL, comment VARCHAR(500) NOT NULL, rating INT NOT NULL, useful INT DEFAULT NULL, not_useful INT DEFAULT NULL, INDEX IDX_D2294458E5C55E95 (fk_guide_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE guide (CIN INT NOT NULL, image_name VARCHAR(255) DEFAULT NULL, firstname_g VARCHAR(255) NOT NULL, lastname_g VARCHAR(255) NOT NULL, emailaddress_g VARCHAR(255) NOT NULL, phonenumber_g VARCHAR(255) NOT NULL, country_g VARCHAR(255) NOT NULL, gender_g VARCHAR(255) NOT NULL, PRIMARY KEY(CIN)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL, available_at DATETIME NOT NULL, delivered_at DATETIME DEFAULT NULL, INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE booking ADD CONSTRAINT FK_E00CEDDED7ED1D4B FOREIGN KEY (guide_id) REFERENCES guide (CIN)');

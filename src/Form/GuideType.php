@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+
 
 
 
@@ -23,11 +25,15 @@ class GuideType extends AbstractType
             ->add('lastnameG')
             ->add('emailaddressG')
             ->add('phonenumberG')
-            ->add('countryG')
+            ->add('countryG', CountryType::class, [
+                'label' => 'Country',
+                'preferred_choices' => ['US', 'GB', 'CA'], // Optional: Set preferred choices
+                'placeholder' => 'Choose a country', // Optional: Placeholder text
+            ])          
             ->add('genderG', ChoiceType::class, [
                 'choices' => [
-                    'Homme' => 'Homme',
-                    'Femme' => 'Femme',
+                    'Male' => 'Male',
+                    'Female' => 'Female',
                 ],
             ])
             ->add('imageFile', VichImageType::class, [

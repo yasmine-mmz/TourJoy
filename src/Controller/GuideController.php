@@ -60,7 +60,7 @@ class GuideController extends AbstractController
         ]);
     }
 
-   
+
 
     #[Route('/update{id}', name: 'update')]
     public function updateGuide(int $id, ManagerRegistry $mr, Request $req, GuideRepository $repo): Response
@@ -70,13 +70,13 @@ class GuideController extends AbstractController
         if (!$s) {
             throw $this->createNotFoundException('Guide not found.');
         }
-        $form = $this->createForm(GuideType::class, $s); // Use the found student for the form
+        $form = $this->createForm(GuideType::class, $s); 
         $form->handleRequest($req);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $mr->getManager();
-            // You don't need to persist an existing entity, just flush
+           
             $em->flush();
-            return $this->redirectToRoute('fetch'); // Redirect to your list of students
+            return $this->redirectToRoute('fetch'); 
         }
         return $this->render('guide/add.html.twig', [
             'f' => $form->createView()
@@ -92,18 +92,14 @@ class GuideController extends AbstractController
         }
     
         $em = $mr->getManager();
-    
-        // Remove associated feedbacks
-        foreach ($guide->getFeedback() as $feedback) {
+            foreach ($guide->getFeedback() as $feedback) {
             $em->remove($feedback);
         }
     
-        // Remove associated bookings
         foreach ($guide->getBookings() as $booking) {
             $em->remove($booking);
         }
     
-        // Remove the guide itself
         $em->remove($guide);
         $em->flush();
     

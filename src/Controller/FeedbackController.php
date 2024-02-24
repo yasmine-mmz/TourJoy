@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\FeedbackRepository;
 use App\Repository\GuideRepository;
-
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\FeedbackType;
@@ -22,33 +22,31 @@ class FeedbackController extends AbstractController
             'controller_name' => 'FeedbackController',
         ]);
     }
-    #[Route('/addfb', name: 'addfb')] 
+    #[Route('/addfb', name: 'addfb')]
     public function addAndFetchFeedbacks(ManagerRegistry $mr, FeedbackRepository $repo, Request $req): Response
     {
-        // Handle adding feedback
-        $f = new Feedback();
-        $form = $this->createForm(FeedbackType::class, $f);
+        $feedback = new Feedback();
+        $form = $this->createForm(FeedbackType::class, $feedback);
         $form->handleRequest($req);
-        
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $mr->getManager();
-            $em->persist($f);
+            $em->persist($feedback);
             $em->flush();
-            
-            // Recreate the form to clear it
-            $f = new Feedback();
-            $form = $this->createForm(FeedbackType::class, $f);
+        
+            return $this->redirectToRoute('addfb'); // Redirect to prevent resubmission
         }
         
-        // Fetch feedbacks
+    
         $feedbacks = $repo->findAll();
     
-        // Render the add.html.twig template with feedbacks and form
         return $this->render('feedback/add.html.twig', [
             'feedbacks' => $feedbacks,
-            'f' => $form->createView(), // Pass the form to the template
+            'form' => $form->createView(),
         ]);
     }
+    
+
     
     
 
@@ -70,6 +68,23 @@ class FeedbackController extends AbstractController
         ]);
     }
     
+    #[Route('/feedback/{id}/add-useful', name: 'feedback_add_useful', methods: ['POST'])]
+    public function addUseful(Feedback $feedback, EntityManagerInterface $entityManager): Response
+    {
+        $feedback->setUseful(($feedback->getUseful() ?? 0) + 1);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('addfb'); // Redirect to your feedback listing page
+    }
+
+    #[Route('/feedback/{id}/add-not-useful', name: 'feedback_add_not_useful', methods: ['POST'])]
+    public function addNotUseful(Feedback $feedback, EntityManagerInterface $entityManager): Response
+    {
+        $feedback->setNotUseful(($feedback->getNotUseful() ?? 0) + 1);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('addfb'); // Redirect to your feedback listing page
+    }
     
     
 }
