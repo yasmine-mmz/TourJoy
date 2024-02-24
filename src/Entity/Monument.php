@@ -69,7 +69,7 @@ class Monument
         return $this->nameM;
     }
 
-    public function setNameM(string $nameM): self
+    public function setNameM(?string $nameM): self
     {
         $this->nameM = $nameM;
 
@@ -92,7 +92,7 @@ class Monument
         return $this->entryprice;
     }
 
-    public function setEntryprice(int $entryprice): static
+    public function setEntryprice(?int $entryprice): static
     {
         $this->entryprice = $entryprice;
 
@@ -104,7 +104,7 @@ class Monument
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(?string $status): static
     {
         $this->status = $status;
 
@@ -152,8 +152,6 @@ class Monument
         $this->imageFile = $imageFile;
 
         if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTimeImmutable();
         }
     }

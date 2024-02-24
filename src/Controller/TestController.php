@@ -38,9 +38,25 @@ class TestController extends AbstractController
     public function allMonumentsPage(MonumentRepository $repo, CountryRepository $countryRepository, Request $request): Response
     {
         $sortByPrice = $request->query->get('sort_by_price');
+        $searchType = $request->request->get('search_type');
+        $searchValue = $request->request->get('search_value');
         
         if ($sortByPrice === 'true') {
             $result = $repo->findAllSortedByPrice();
+        } elseif ($searchType && $searchValue) {
+            switch ($searchType) {
+                case 'name':
+                    $result = $repo->searchByName($searchValue);
+                    break;
+                case 'country':
+                    $result = $repo->searchByCountry($searchValue);
+                    break;
+                case 'price':
+                    $result = $repo->searchByEntryPrice($searchValue);
+                    break;
+                default:
+                    $result = $repo->findAll();
+            }
         } else {
             $result = $repo->findAll();
         }
@@ -52,6 +68,7 @@ class TestController extends AbstractController
             'countries' => $countries,
         ]);
     }
+    
     #[Route('/details{id}', name: 'details')]
     public function details(MonumentRepository $monumentRepository, $id): Response
     {

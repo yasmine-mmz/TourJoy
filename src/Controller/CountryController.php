@@ -29,7 +29,7 @@ class CountryController extends AbstractController
         ]);
     }
     #[Route('/addc', name: 'addc')] 
-    public function addc(ManagerRegistry $mr, CountryRepository $repo, Request $req): Response
+    public function addc(ManagerRegistry $mr, Request $req): Response
     {
         $s = new Country();
         $form = $this->createForm(CountryType::class, $s);
@@ -40,7 +40,7 @@ class CountryController extends AbstractController
             $em->persist($s);
             $em->flush();
             
-            return $this->redirectToRoute('country_show'); // Corrected route name
+            return $this->redirectToRoute('country_show'); 
         }
         
         return $this->render('monument/addc.html.twig', [
@@ -48,25 +48,23 @@ class CountryController extends AbstractController
         ]);
     }
     
-    #[Route('/updatec/{id}', name: 'updatec')]
+    #[Route('/updatec{id}', name: 'updatec')]
     public function updateCountry(int $id, ManagerRegistry $mr, Request $req, CountryRepository $repo): Response
     {
-        $s = $repo->find($id); // Find the student to update
+        $s = $repo->find($id); 
     
         if (!$s) {
             throw $this->createNotFoundException('Country not found.');
         }
     
-        $form = $this->createForm(CountryType::class, $s); // Use the found student for the form
-    
+        $form = $this->createForm(CountryType::class, $s);     
         $form->handleRequest($req);
     
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $mr->getManager();
-            // You don't need to persist an existing entity, just flush
             $em->flush();
     
-            return $this->redirectToRoute('country_show'); // Redirect to your list of students
+            return $this->redirectToRoute('country_show'); 
         }
     
         return $this->render('monument/addc.html.twig', [
@@ -76,9 +74,15 @@ class CountryController extends AbstractController
 #[Route('/removec/{id}', name: 'removec')]
 public function remove(CountryRepository $repo, $id, ManagerRegistry $mr):Response
 {
-    $monument = $repo->find($id);
+    $country = $repo->find($id);
+
+
     $em = $mr->getManager();
+        foreach($country->getMonuments() as $monument)
+        {
     $em->remove($monument);
+        }
+    $em->remove($country);
     $em->flush();
 
     return $this ->redirectToRoute('country_show');

@@ -6,6 +6,7 @@ use App\Entity\Country;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class CountryType extends AbstractType
 {
@@ -13,7 +14,17 @@ class CountryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('region')
+            ->add('region', ChoiceType::class, [
+                'choices' => [
+                    'Africa' => 'Africa',
+                    'Antarctica' => 'Antarctica',
+                    'Asia' => 'Asia',
+                    'Europe' => 'Europe',
+                    'North America' => 'North America',
+                    'Oceania' => 'Oceania',
+                    'South America' => 'South America',
+                ],
+            ])
             ->add('save', SubmitType::class)
         ;
     }

@@ -80,9 +80,9 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="{{ path('app_back') }}" class="logo d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center">
         <img src="img/logo-back.png" alt="">
-        <span class="d-none d-lg-block">TourJoy</span>
+        <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -117,7 +117,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{{ path('app_back') }}">
+        <a class="nav-link " href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -191,69 +191,40 @@
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
+{% block title %}Monuments per Country{% endblock %}
+
 {% block body %}
-    <h1>All Countries</h1>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Region</th>
-                    <th>Actions</th> <!-- Added a header for actions -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in Country %}
-                    <tr>
-                        <td>{{ c.getName() }}</td>
-                        <td>{{ c.getRegion() }}</td>
-                        <td>
-                            <a href="{{ path('updatec', {'id': c.getId()}) }}" class="btn btn-primary">Modify</a>
-                            <a href="{{ path('removec', {'id': c.getId()}) }}" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <h1>Monument Statistics by Country</h1>
+    <canvas id="monumentsChart" style="max-height: 400px; display: block;"></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('monumentsChart').getContext('2d');
+            var monumentsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {{ labels | json_encode | raw }},
+                    datasets: [{
+                        label: 'Number of Monuments',
+                        data: {{ data | json_encode | raw }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 {% endblock %}
-
-
-
-
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="backoffice/assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="backoffice/assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="backoffice/assets/vendor/echarts/echarts.min.js"></script>
-  <script src="backoffice/assets/vendor/quill/quill.min.js"></script>
-  <script src="backoffice/assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="backoffice/assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="backoffice/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="backoffice/assets/js/main.js"></script>
-
-</body>
-
-</html>
-

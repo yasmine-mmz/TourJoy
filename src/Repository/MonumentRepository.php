@@ -58,6 +58,19 @@ class MonumentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function countMonumentsByCountry()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select("c.name AS country, COUNT(m.ref) AS monumentCount")
+            ->innerJoin('m.fkcountry', 'c')
+            ->groupBy('c.name')
+            ->orderBy('c.name', 'ASC');
+    
+        return $qb->getQuery()->getResult();
+    }
+    
+
+    
 //    /**
 //     * @return Monument[] Returns an array of Monument objects
 //     */

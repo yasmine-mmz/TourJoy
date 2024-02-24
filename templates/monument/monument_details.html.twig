@@ -2,11 +2,29 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <!-- Mapbox CSS -->
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
     <style>
-        /* Customize map container */
-        .map-container {
+    .play-description-btn {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.play-description-btn i {
+    margin-right: 5px;
+}
+         .map-container {
             height: 400px;
             margin-top: 20px;
         }
@@ -15,6 +33,9 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            background: #fff; /* Assuming you want a white background for cards */
+            border-radius: 15px; /* If you want rounded corners */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow to your cards */
         }
         .card-header,
         .card-footer {
@@ -28,34 +49,98 @@
             width: 100%;
             height: auto;
         }
+
+        /* Only apply the background to the content area below the navbar */
+        .content-area {
+            padding-top: 70px; /* Adjust this value to match the height of your navbar */
+            background: url('/img/background.webp') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh; /* Minimum height of viewport */
+        }
+          /* Setting the background image */
+        .container {
+            background: url('/img/background.webp') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .overlay {
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+        }
+
+        /* Adjust layout for card and map */
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #fff; /* Set the card's background to white */
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: -70px; /* Pull card up to cover image behind navbar */
+            z-index: 10; /* Ensure card is above the background image */
+        }
+
+        /* Remove transparency from the card */
+        .card-body {
+            flex: 1;
+            padding: 0;
+            background-color: #fff; /* Set the card body's background to white */
+        }
+ body, html {
+            height: 100%;
+            margin: 0;
+            background: url('/img/background.webp') no-repeat center center fixed;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+        }
+        .body-background {
+            /* Use this class for the main background of the page */
+            background-image: url('/img/background.webp');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100%;
+        }
+        /* Ensure full coverage */
+        .container-fluid, .container {
+            min-height: 100%;
+            padding: 0 !important; /* Override any existing padding */
+        }
     </style>
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h1>{{ monument.getNameM() }}</h1>
-                </div>
-
-                <div class="card-body">
-                    <img src="{{ vich_uploader_asset(monument, 'imageFile') }}" alt="{{ monument.getNameM() }}" class="img-fluid mb-3 monument-image">
-                    <div class="monument-details p-3">
-                        <p><strong>Type:</strong> {{ monument.getType() }}</p>
-                        <p><strong>Entry Price:</strong> {{ monument.getEntryPrice() }} TND</p>
-                        <p><strong>Status:</strong> {{ monument.getStatus() }}</p>
-                        <p><strong>Description:</strong> {{ monument.getDescription() }}</p>
-                        <p><strong>Country:</strong> {{ monument.getFkcountry().getName() }}</p>
+<div class="content-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <br><br>
+                <div class="card">
+                    <div class="card-header">
+                        <h1>{{ monument.getNameM() }}</h1>
                     </div>
-                </div>
+                    <div class="card-body">
+                        <img src="{{ vich_uploader_asset(monument, 'imageFile') }}" alt="{{ monument.getNameM() }}" class="img-fluid mb-3 monument-image">
+                        <div class="monument-details p-3">
+                            <p><strong>Type:</strong> {{ monument.getType() }}</p>
+                            <p><strong>Entry Price:</strong> {{ monument.getEntryPrice() }} TND</p>
+                            <p><strong>Status:</strong> {{ monument.getStatus() }}</p>
+                            <p><strong>Description:</strong> {{ monument.getDescription() }}</p>
+                            <p><strong>Country:</strong> {{ monument.getFkcountry().getName() }}</p>
+                            
+                        </div>
+                    </div>
 
-                <!-- Embedded Mapbox Map -->
-                <div id="map" class="map-container"></div>
+                    <!-- Embedded Mapbox Map -->
+                    <div id="map" class="map-container"></div>
 
-                <div class="card-footer">
-                    <small class="text-muted">Map showing the location of {{ monument.getNameM() }}</small>
+                    <div class="card-footer">
+                        <small class="text-muted">Map showing the location of {{ monument.getNameM() }}</small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,26 +149,41 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <!-- Mapbox JavaScript -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            mapboxgl.accessToken = 'pk.eyJ1Ijoia291c3NheWJlbmhhZGpzYWxlbTEwIiwiYSI6ImNsc3E1MWk2aDB3dG0yanFxdG5seWIzeXEifQ.q7YseB8VOmSaGyXldgX3tA';
-            var latitude = {{ monument.getLatitude() }};
-            var longitude = {{ monument.getLongitude() }};
+{{ parent() }}
+<!-- Mapbox JavaScript -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia291c3NheWJlbmhhZGpzYWxlbTEwIiwiYSI6ImNsc3E1MWk2aDB3dG0yanFxdG5seWIzeXEifQ.q7YseB8VOmSaGyXldgX3tA';
+    var latitude = {{ monument.getLatitude() }};
+    var longitude = {{ monument.getLongitude() }};
+    
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [longitude, latitude],
+        zoom: 13
+    });
 
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                center: [longitude, latitude],
-                zoom: 13
-            });
+    new mapboxgl.Marker()
+        .setLngLat([longitude, latitude])
+        .addTo(map);
 
-            // Add a marker for the monument
-            new mapboxgl.Marker()
-                .setLngLat([longitude, latitude])
-                .addTo(map);
-        });
-    </script>
+   // Enhanced Play Description button with FontAwesome icon
+    var playButton = document.createElement('button');
+    playButton.innerHTML = '<i class="fas fa-play"></i> Play Description';
+    playButton.classList.add('play-description-btn'); // Add a class for styling
+    playButton.onclick = function() {
+        var textToSpeak = "{{ monument.getDescription() | escape('js') }}";
+        var utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.lang = 'en-US'; // Set the language to English
+
+        speechSynthesis.speak(utterance);
+    };
+
+    // Append the button to a specific element
+    document.querySelector('.monument-details').appendChild(playButton);
+});
+</script>
 {% endblock %}
+
