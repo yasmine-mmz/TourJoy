@@ -18,6 +18,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
 
+
 class LoginCustomAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;

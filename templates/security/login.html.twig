@@ -143,17 +143,18 @@
           <div class="text-center mb-3">
             <p class="mb-0">Connect with:</p>
           </div>
-          <button class="btn social-btn-fb w-100 mb-2  " type="button" style="margin-top: 10%">
+          {# <button class="btn social-btn-fb w-100 mb-2  " type="button" style="margin-top: 10%">
     <i class="fab fa-facebook-f"></i> Continue with Facebook
-</button>
+</button> #}
 <hr>
-<button class="btn social-btn-gg w-100 mb-2" type="button">
+<a class="btn social-btn-gg w-100 mb-2" role="button" href="{{ path('connect_google_start') }}">
     <i class="fab fa-google"></i> Continue with Google
-</button>
+</a>
+
 <hr>
-<button class="btn social-btn-x w-100" type="button">
+{# <button class="btn social-btn-x w-100" type="button">
     <i class="fab fa-twitter"></i> Continue with Twitter
-</button>
+</button> #}
         </div>
       </div>
     </div>

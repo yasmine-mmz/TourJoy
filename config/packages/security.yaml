@@ -17,7 +17,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\LoginCustomAuthenticator
+            custom_authenticator: 
+             - App\Security\LoginCustomAuthenticator
+             - App\Security\GoogleCustomAuthenticator
+            entry_point: App\Security\LoginCustomAuthenticator
             logout:
                 path: app_logout
 # This code snippet sets the authentication form path and check path for a two-factor authentication feature, using the route names specified in the routes.yaml file.

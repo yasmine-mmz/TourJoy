@@ -32,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(length: 25, nullable : true)]
@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[Assert\Length(max: 25)]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 8)]
+    #[ORM\Column(length: 8, nullable : true)]
     #[Assert\NotBlank]
     #[Assert\Regex('/^\d{8}$/')]
     #[Assert\Length(max: 8)]
@@ -73,6 +73,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column(type: 'boolean')]
     private bool $isBanned = false;
+
+    #[ORM\Column(type:'string', nullable:true)]
+    private ?string $googleId;
 
 
     // #[ORM\Column(type: 'boolean')]
@@ -136,7 +139,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -239,9 +242,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
 
     public function isGoogleAuthenticatorEnabled(): bool
-   {
-       return null !== $this->googleAuthenticatorSecret;
-   }
+{
+    return isset($this->googleAuthenticatorSecret) && null !== $this->googleAuthenticatorSecret;
+}
+
 
    public function getGoogleAuthenticatorUsername(): string
    {
@@ -290,6 +294,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function setIsBanned(bool $isBanned): self
     {
         $this->isBanned = $isBanned;
+        return $this;
+    }
+
+   public function getGoogleId(): bool
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(bool $googleId): self
+    {
+        $this->googleId = $googleId;
         return $this;
     }
 
