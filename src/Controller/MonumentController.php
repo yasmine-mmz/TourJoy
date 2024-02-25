@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\MonumentType;
@@ -11,7 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MonumentRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 class MonumentController extends AbstractController
 {
@@ -25,7 +26,7 @@ class MonumentController extends AbstractController
     
   
     #[Route('/add', name: 'addF')] 
-    public function addF(ManagerRegistry $mr, Request $req): Response
+    public function addF(FlashyNotifier $flashy,ManagerRegistry $mr, Request $req): Response
     {
         $monument = new Monument();
         $form = $this->createForm(MonumentType::class, $monument);
@@ -36,7 +37,8 @@ class MonumentController extends AbstractController
             $em = $mr->getManager();
             $em->persist($monument);
             $em->flush();
-            
+            $flashy->success('Monument added succesfully','http://your-awesome-link.com');
+
             return $this->redirectToRoute('monument_show');    
         }
         
@@ -45,7 +47,7 @@ class MonumentController extends AbstractController
         ]);
     }
     #[Route('/update{id}', name: 'update')]
-    public function updateMonument(int $id, ManagerRegistry $mr, Request $req, MonumentRepository $repo): Response
+    public function updateMonument(FlashyNotifier $flashy,int $id, ManagerRegistry $mr, Request $req, MonumentRepository $repo): Response
     {
         $s = $repo->find($id); 
     
@@ -60,7 +62,8 @@ class MonumentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $mr->getManager();
             $em->flush();
-    
+            $flashy->success('Monument updated succesfully','http://your-awesome-link.com');
+
             return $this->redirectToRoute('monument_show'); 
         }
     
@@ -69,17 +72,17 @@ class MonumentController extends AbstractController
         ]);
     }
 #[Route('/remove/{id}', name: 'remove')]
-public function remove(MonumentRepository $repo, $id, ManagerRegistry $mr):Response
+public function remove(FlashyNotifier $flashy,MonumentRepository $repo, $id, ManagerRegistry $mr):Response
 {
     $monument = $repo->find($id);
     $em = $mr->getManager();
     $em->remove($monument);
     $em->flush();
-
+    $flashy->success('Monument deleted succesfully','http://your-awesome-link.com');
     return $this ->redirectToRoute('monument_show');
 }
 #[Route('/fetch', name: 'monument_show')]
-public function fetch(MonumentRepository $repo, CountryRepository $countryRepository, Request $request): Response
+public function fetch(MonumentRepository $repo, CountryRepository $countryRepository, Request $request,PaginatorInterface $paginator): Response
 {
     $searchType = $request->query->get('search_type');
     $searchValue = $request->query->get('search_value');
@@ -99,10 +102,16 @@ public function fetch(MonumentRepository $repo, CountryRepository $countryReposi
     }
 
     $countries = $countryRepository->findAll();
-
+    $pagination = $paginator->paginate(
+        $result, // The query or array to paginate.
+        $request->query->getInt('page', 1), // Current page number, default to 1.
+        5 // Limit per page.
+    );
+    
+    // Pass the pagination object to the template.
     return $this->render('monument/show.html.twig', [
-        'Monuments' => $result,
-        'countries' => $countries,
+        'pagination' => $pagination,
+        'countries' => $countries, // Assuming you are also passing a list of countries.
     ]);
 }
 

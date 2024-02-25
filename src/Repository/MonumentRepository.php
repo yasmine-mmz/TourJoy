@@ -68,8 +68,17 @@ class MonumentRepository extends ServiceEntityRepository
     
         return $qb->getQuery()->getResult();
     }
-    
+    public function createQueryBuilderForAll()
+    {
+        return $this->createQueryBuilder('m');
+    }
 
+    public function createQueryBuilderForSearchByName($name)
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.name LIKE :name')
+            ->setParameter('name', '%' . $name . '%');
+    }
     
 //    /**
 //     * @return Monument[] Returns an array of Monument objects

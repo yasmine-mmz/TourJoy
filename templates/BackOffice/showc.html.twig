@@ -13,6 +13,9 @@
 			<link rel="stylesheet" href="frontoffice/css/magnific-popup.css">
 			<link rel="stylesheet" href="frontoffice/css/bootstrap.css">
 			<link rel="stylesheet" href="frontoffice/css/main.css">
+      <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
 		</head>
 		<body>
 					
@@ -30,7 +33,10 @@
 			<script src="frontoffice/js/parallax.min.js"></script>
 			<script src="frontoffice/js/jquery.magnific-popup.min.js"></script>
 			<script src="frontoffice/js/main.js"></script>	
-		</body>
+       <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+     </body>
 	</html>
     <!DOCTYPE html>
 <html lang="en">
@@ -187,7 +193,7 @@
     <div class="pagetitle">
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ path('app_back') }}">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
@@ -215,7 +221,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for c in Country %}
+                {% for c in pagination %}
                     <tr>
                         <td>{{ c.getName() }}</td>
                         <td>{{ c.getRegion() }}</td>
@@ -227,7 +233,27 @@
                 {% endfor %}
             </tbody>
         </table>
+              <!-- Bootstrap Pagination -->
+   <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {{ pagination.currentPageNumber <= 1 ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ path('country_show', {'page': pagination.currentPageNumber - 1}) }}">Previous</a>
+        </li>
+        
+        {% for i in 1..pagination.pageCount %}
+            <li class="page-item {{ i == pagination.currentPageNumber ? 'active' : '' }}">
+                <a class="page-link" href="{{ path('country_show', {'page': i}) }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+        
+        <li class="page-item {{ pagination.currentPageNumber >= pagination.pageCount ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ path('country_show', {'page': pagination.currentPageNumber + 1}) }}">Next</a>
+        </li>
+    </ul>
+</nav>
+
     </div>
+    
 {% endblock %}
 
 
