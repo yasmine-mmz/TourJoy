@@ -18,6 +18,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use App\Entity\User;
+
 
 
 
@@ -241,5 +244,51 @@ class SecurityController extends AbstractController
             var_dump($e->getMessage()); die;
         }
     }
+
+
+    #[Route('/admin/users/export-csv', name: 'admin_export_users_csv')]
+public function exportUsersCsv(EntityManagerInterface $entityManager): Response
+{
+    $users = $entityManager->getRepository(User::class)->findAll();
+
+    $output = fopen('php://temp', 'w+'); // File pointer to 'temp' memory
+
+    // Add CSV headers
+    fputcsv($output, ['ID', 'Email', 'First Name', 'Last Name', 'Phone Number', 'Country', 'Created At', 'Modified At', 'isVerified', 'isBanned', 'Roles']);
+
+    // Add user data
+    foreach ($users as $user) {
+        fputcsv($output, [
+            $user->getId(),
+            $user->getEmail(),
+            $user->getFirstName(),
+            $user->getLastName(),
+            $user->getPhoneNumber(),
+            $user->getCountry(),
+            $user->getCreatedAt()->format('Y-m-d H:i:s'),
+            $user->getModifiedAt() ? $user->getModifiedAt()->format('Y-m-d H:i:s') : '',
+            $user->isVerified() ? 'Yes' : 'No',
+            $user->getIsBanned() ? 'Yes' : 'No',
+            implode(', ', $user->getRoles())
+        ]);
+    }
+
+    rewind($output); // Set the pointer back to the start of the file
+
+    $csv = stream_get_contents($output); // Get the contents of 'temp' memory
+    fclose($output); // Close the "file" pointer
+
+    $response = new Response($csv);
+
+    $disposition = $response->headers->makeDisposition(
+        ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        'users.csv'
+    );
+
+    $response->headers->set('Content-Disposition', $disposition);
+    $response->headers->set('Content-Type', 'text/csv');
+
+    return $response;
+}
 
 }

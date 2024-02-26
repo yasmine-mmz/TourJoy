@@ -179,9 +179,20 @@
 		}
 
 		.generate-password {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			margin-top: 10px; /* Space between the button and the password field */
+			padding: 10px; /* Adjust padding to fit the icon */
+			background-color: #17a2b8; /* Bootstrap info color */
+			color: white; /* Icon color */
+			border: none; /* Remove default border */
 		}
 
+		.generate-password:hover {
+			background-color: #138496; /* Slightly darker shade on hover */
+			color: #fff; /* Keep icon color white on hover */
+		}
 		.notification-container {
 			position: fixed;
 			top: 0;
@@ -208,6 +219,32 @@
 			background-color: transparent;
 			color: white;
 			cursor: pointer;
+		}
+
+		.password-strength-meter {
+			height: 10px;
+			background: #ddd;
+			border-radius: 5px;
+			overflow: hidden;
+			margin-bottom: 1.2vh;
+		}
+
+		.password-strength-meter > div {
+			height: 100%;
+			width: 0;
+			transition: width 0.3s ease-in-out;
+		}
+
+		.strength-weak > div {
+			background-color: #ff4757; /* Weak password color */
+		}
+
+		.strength-medium > div {
+			background-color: #ffa502; /* Medium strength color */
+		}
+
+		.strength-strong > div {
+			background-color: #2ed573; /* Strong password color */
 		}
 	</style>
 
@@ -248,12 +285,18 @@
 						{{ form_widget(registrationForm.phoneNumber, {'attr': {'class': 'form-control', 'placeholder': 'Phone Number'}}) }}
 						{{ form_errors(registrationForm.phoneNumber) }}
 
+						<!-- Password Field -->
 						<div class="password-container d-flex justify-content-between">
 							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control password-field', 'placeholder': 'Password', 'id': 'registration_form_plainPassword'}}) }}
 							<span class="toggle-password fa fa-eye-slash fa-lg"></span>
 							{{ form_errors(registrationForm.plainPassword) }}
 						</div>
+						<!-- Password Strength Indicator -->
+						<div class="password-strength-meter" id="password-strength-meter">
+							<div></div>
+						</div>
 
+						<!-- Confirm Password Field -->
 						<div class="password-container">
 							{{ form_widget(registrationForm.confirmPassword, {'attr': {'class': 'form-control password-field', 'placeholder': 'Repeat your password', 'id': 'registration_form_confirmPassword'}}) }}
 							<span class="toggle-password fa fa-eye-slash fa-lg"></span>
@@ -274,13 +317,15 @@
 							{{ form_errors(registrationForm.agreeTerms) }}
 						</div>
 						<div style="position: relative;">
-							<button type="button" class="btn btn-info generate-password position-absolute btn-block">Generate Strong Password</button>
+							<button type="button" class="btn btn-info generate-password position-absolute btn-block" title="Generate Strong Password">
+								<i class="fas fa-key"></i>
+							</button>
 						</div>
 						<button id="submit-btn" type="submit" class="btn btn-primary">SIGN UP</button>
 						{{ form_end(registrationForm) }}
 					</div>
 					<div class="card-footer text-center ">
-						    Already have an account?
+						Already have an account?
 						<a href="/login" style="color: #f86c52">Login here</a>
 					</div>
 				</div>
@@ -312,7 +357,7 @@ const isAdminCheckbox = document.getElementById('registration_form_isAdmin');
 const secretKeyContainer = document.getElementById('secretKeyContainer');
 
 // Event listener for checkbox change
-isAdminCheckbox.addEventListener('change', function () { // Check if the checkbox is checked
+isAdminCheckbox.addEventListener('change', function () {
 if (this.checked) {
 secretKeyContainer.style.display = 'block';
 } else {
@@ -339,21 +384,23 @@ this.classList.toggle('fa-eye-slash', isPasswordVisible);
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
 document.querySelector('.generate-password').addEventListener('click', function () {
 const password = generateStrongPassword();
-document.getElementById('registration_form_plainPassword').value = password;
-document.getElementById('registration_form_confirmPassword').value = password;
+const passwordField = document.getElementById('registration_form_plainPassword');
+const confirmPasswordField = document.getElementById('registration_form_confirmPassword');
 
-navigator.clipboard.writeText(password).then(() => { // Show notification
+passwordField.value = password;
+confirmPasswordField.value = password;
+
+passwordField.dispatchEvent(new Event('input'));
+
+navigator.clipboard.writeText(password).then(() => {
 document.getElementById('copyNotification').style.display = 'block';
 setTimeout(() => {
 document.getElementById('copyNotification').style.display = 'none';
-}, 7000); // Hide after 3 seconds
+}, 3000);
 }).catch(err => {
 console.error('Could not copy password to clipboard: ', err);
-});
-
 });
 });
 
@@ -370,6 +417,76 @@ return retVal;
 function closeNotification() {
 document.getElementById('copyNotification').style.display = 'none';
 }
+
+
+function updatePasswordStrengthIndicator(password) {
+const meter = document.getElementById('password-strength-meter').firstElementChild;
+let width,
+className;
+
+if (password.length === 0) {
+width = '0%';
+className = '';
+} else {
+const strength = getPasswordStrength(password);
+switch (strength) {
+case 'weak': width = '33%';
+className = 'strength-weak';
+break;
+case 'medium': width = '66%';
+className = 'strength-medium';
+break;
+case 'strong': width = '100%';
+className = 'strength-strong';
+break;
+default: width = '0%';
+className = '';
+}
+} meter.style.width = width;
+meter.parentNode.className = `password-strength-meter ${className}`;
+}
+
+function getPasswordStrength(password) {
+let strength = 'weak';
+let score = 0;
+if (password.length > 6) 
+score++;
+
+
+if (password.match(/[a-z]/)) 
+score++;
+
+
+if (password.match(/[A-Z]/)) 
+score++;
+
+
+if (password.match(/\d+/)) 
+score++;
+
+
+if (password.match(/[\!@#$%^&*\(\)_\+~`|}{\[\]:;?><,./\\-]/)) 
+score++;
+
+
+
+if (score > 4) 
+strength = 'strong';
+ else if (score > 2) 
+strength = 'medium';
+
+
+
+return strength;
+}
+
+document.getElementById('registration_form_plainPassword').addEventListener('input', function () {
+updatePasswordStrengthIndicator(this.value);
+});
+
+document.getElementById('registration_form_confirmPassword').addEventListener('input', function () {
+updatePasswordStrengthIndicator(this.value);
+});
 	</script>
 
 
