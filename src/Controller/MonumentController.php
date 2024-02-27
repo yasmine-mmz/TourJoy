@@ -150,24 +150,24 @@ public function searchMonuments(Request $request, MonumentRepository $monumentRe
         $filteredMonuments = array_merge($filteredMonuments, $countryFilteredMonuments);
     }
 
-    // Remove duplicate entries from the merged results
+    
     $filteredMonuments = array_unique($filteredMonuments, SORT_REGULAR);
 
-    // Convert the filtered monuments to JSON and return the response
+
     return $this->json($filteredMonuments);
 }
 #[Route('/back', name: 'monuments_per_country')]
 public function monumentStats(MonumentRepository $monumentRepository): Response
 {
-    // Get the statistics from the repository
+    
     $monumentStats = $monumentRepository->countMonumentsByCountry();
 
-    // Prepare the labels and data for the chart
+
     $labels = [];
     $data = [];
     foreach ($monumentStats as $stat) {
-        $labels[] = $stat['country']; // Make sure 'country' is the correct key
-        $data[] = $stat['monumentCount']; // Make sure 'monumentCount' is the correct key
+        $labels[] = $stat['country']; 
+        $data[] = $stat['monumentCount']; 
     }
 
     return $this->render('BackOffice/back_template.html.twig', [

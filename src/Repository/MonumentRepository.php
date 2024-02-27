@@ -23,7 +23,7 @@ class MonumentRepository extends ServiceEntityRepository
     public function findAllSortedByPrice()
     {
         return $this->createQueryBuilder('m')
-            ->orderBy('m.entryprice', 'ASC') // Assuming 'entryPrice' is the field representing the monument's price
+            ->orderBy('m.entryprice', 'ASC') 
             ->getQuery()
             ->getResult();
     }

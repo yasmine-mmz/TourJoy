@@ -362,9 +362,7 @@
       <div class="row">
 <div class="col-lg-6">
     <div class="card">
-        <div class="card-body">
-  
-        </div>
+        
     </div>
 </div>
  <div style="display: flex; flex-direction: column; width: 100%;">
@@ -383,9 +381,25 @@
                 datasets: [{
                     label: 'Number of Monuments',
                     data: {{ data|raw }},
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',  // Red
+                            'rgba(54, 162, 235, 0.2)',  // Blue
+                            'rgba(255, 206, 86, 0.2)',  // Yellow
+                            'rgba(75, 192, 192, 0.2)',  // Green
+                            'rgba(153, 102, 255, 0.2)', // Purple
+                            'rgba(255, 159, 64, 0.2)',  // Orange
+                            'rgba(255, 99, 132, 0.2)'   // Red (repeated for additional parts)
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',    // Red
+                            'rgba(54, 162, 235, 1)',    // Blue
+                            'rgba(255, 206, 86, 1)',    // Yellow
+                            'rgba(75, 192, 192, 1)',    // Green
+                            'rgba(153, 102, 255, 1)',   // Purple
+                            'rgba(255, 159, 64, 1)',    // Orange
+                            'rgba(255, 99, 132, 1)'     // Red (repeated for additional parts)
+                        ],
+                        borderWidth: 1
                 }]
             },
             options: {
