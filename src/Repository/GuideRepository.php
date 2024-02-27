@@ -45,4 +45,37 @@ class GuideRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findGuidesFiltered($genders, $ratings, $sortByAge = null)
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->select('g, AVG(f.rating) as avgRating')
+            ->leftJoin('g.feedback', 'f')
+            ->groupBy('g.CIN');
+
+        if (!empty($genders)) {
+            $qb->andWhere('g.genderG IN (:genders)')
+               ->setParameter('genders', $genders);
+        }
+
+        $havingConditions = [];
+        if (in_array('1-3', $ratings)) {
+            $havingConditions[] = '(AVG(f.rating) >= 1 AND AVG(f.rating) <= 3)';
+        }
+
+        if (in_array('3-5', $ratings)) {
+            $havingConditions[] = '(AVG(f.rating) > 3 AND AVG(f.rating) <= 5)';
+        }
+
+        if (!empty($havingConditions)) {
+            $qb->having(implode(' OR ', $havingConditions));
+        }
+
+        // Apply sorting by date of birth if requested
+        if ($sortByAge === 'asc' || $sortByAge === 'desc') {
+            $qb->orderBy('g.dob', strtoupper($sortByAge));
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

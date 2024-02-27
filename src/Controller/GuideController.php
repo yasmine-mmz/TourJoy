@@ -10,6 +10,7 @@ use App\Repository\GuideRepository;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\GuideType;
+use Knp\Component\Pager\PaginatorInterface; // Make sure this is included
 
 
 class GuideController extends AbstractController
@@ -22,15 +23,37 @@ class GuideController extends AbstractController
         ]);
     }
 
-    #[Route('/fetch', name: 'fetch')] 
-    public function fetch(GuideRepository $repo): Response
+    #[Route('/fetch', name: 'fetch')]
+    public function fetch(Request $request, GuideRepository $repo, PaginatorInterface $paginator): Response // Inject PaginatorInterface here
     {
-        $result = $repo->findAll();
+        $genders = $request->query->get('gender', []);
+        $ratings = $request->query->get('rating', []);
+        $sortByAge = $request->query->get('sortByAge');
 
+        $results = $repo->findGuidesFiltered($genders, $ratings, $sortByAge);
+        $guides = array_map(function ($result) {
+            return $result[0];
+        }, $results);
+
+        // Use $paginator here correctly, as it's now defined via method injection
+        $pagination = $paginator->paginate(
+            $guides, // query NOT result
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            5 // Number of items per page
+        );
         return $this->render('guide/show.html.twig', [
-            'guides' => $result,
+            'genders' => $genders,
+            'selectedRatings' => $ratings,
+            'sortByAge' => $sortByAge, // Pass the sortByAge parameter to the template
+            'pagination' => $pagination,
+
         ]);
+
+        
     }
+    
+   
+
     #[Route('/fetch2', name: 'fetch2')] 
     public function fetch2(GuideRepository $repo): Response
     {
@@ -105,7 +128,6 @@ class GuideController extends AbstractController
     
         return $this->redirectToRoute('fetch');
     }
-
 
 
 }

@@ -12,6 +12,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\FeedbackType;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+
 
 class FeedbackController extends AbstractController
 {
@@ -22,23 +26,35 @@ class FeedbackController extends AbstractController
             'controller_name' => 'FeedbackController',
         ]);
     }
+    
+    
+
     #[Route('/addfb', name: 'addfb')]
-    public function addAndFetchFeedbacks(ManagerRegistry $mr, FeedbackRepository $repo, Request $req): Response
+    public function addAndFetchFeedbacks(FeedbackRepository $repo, Request $req, Security $security): Response
     {
         $feedback = new Feedback();
+        $user = $security->getUser(); // Get the currently authenticated user
+    
+        if (!$user) {
+            // Optionally handle the case where there's no authenticated user
+            throw $this->createAccessDeniedException('You must be logged in to submit feedback.');
+        }
+    
         $form = $this->createForm(FeedbackType::class, $feedback);
         $form->handleRequest($req);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $mr->getManager();
+            $em = $this->getDoctrine()->getManager();
+            $feedback->setUserId($user); // Associate the authenticated user with the feedback
             $em->persist($feedback);
             $em->flush();
-        
+    
             return $this->redirectToRoute('addfb'); // Redirect to prevent resubmission
         }
-        
     
         $feedbacks = $repo->findAll();
+    
+      
     
         return $this->render('feedback/add.html.twig', [
             'feedbacks' => $feedbacks,
@@ -47,12 +63,10 @@ class FeedbackController extends AbstractController
     }
     
 
-    
-    
 
 
-    #[Route('/fetchb2{id}', name: 'fetchb2')]
-    public function fetchb2(int $id, FeedbackRepository $repo, GuideRepository $guideRepository): Response
+    #[Route('/fetchfg{id}', name: 'fetchfg')]
+    public function fetchfg(int $id, FeedbackRepository $repo, GuideRepository $guideRepository): Response
     {
         $guide = $guideRepository->find($id);
     
@@ -67,24 +81,15 @@ class FeedbackController extends AbstractController
             'feedbacks' => $feedbacks,
         ]);
     }
-    
-    #[Route('/feedback/{id}/add-useful', name: 'feedback_add_useful', methods: ['POST'])]
-    public function addUseful(Feedback $feedback, EntityManagerInterface $entityManager): Response
-    {
-        $feedback->setUseful(($feedback->getUseful() ?? 0) + 1);
-        $entityManager->flush();
 
-        return $this->redirectToRoute('addfb'); // Redirect to your feedback listing page
+
+    private Security $security; // Declare the $security property here
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security; // Initialize $security in the constructor
     }
 
-    #[Route('/feedback/{id}/add-not-useful', name: 'feedback_add_not_useful', methods: ['POST'])]
-    public function addNotUseful(Feedback $feedback, EntityManagerInterface $entityManager): Response
-    {
-        $feedback->setNotUseful(($feedback->getNotUseful() ?? 0) + 1);
-        $entityManager->flush();
 
-        return $this->redirectToRoute('addfb'); // Redirect to your feedback listing page
-    }
-    
-    
+   
 }

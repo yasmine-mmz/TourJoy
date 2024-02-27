@@ -8,15 +8,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
 {
-    #[Route('/test', name: 'app_test')]
+    #[Route('/', name: 'app_test')]
     public function index(): Response
     {
+        $user =$this->getUser();
+        $isVerified = $user && !$user->IsVerified();
+
         return $this->render('FrontOffice/front_template.html.twig', [
             'controller_name' => 'TestController',
+            'isVerified' => $isVerified,
         ]);
         
     }
-    #[Route('/back', name: 'app_back')]
+    #[Route('/admin', name: 'app_back')]
     public function back(): Response
     {
         return $this->render('BackOffice/back_template.html.twig', [

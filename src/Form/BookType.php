@@ -23,9 +23,7 @@ class BookType extends AbstractType
                 'autocomplete' => 'off', // Disable autocomplete
                 'value' => $options['data']->getDate() ? $options['data']->getDate()->format('Y-m-d') : '', // Populate the field with the selected date
             ],
-        ]);
-        
-        
+        ]); 
     }
 
     public function configureOptions(OptionsResolver $resolver): void

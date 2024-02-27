@@ -33,6 +33,9 @@ class Booking
     #[Assert\NotBlank(message:"date is required")]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'bookings')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,5 +67,17 @@ class Booking
 
     public function __toString(){
         return $this->date;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

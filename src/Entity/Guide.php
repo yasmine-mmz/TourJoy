@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\GuideRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Mime\Message;
@@ -73,6 +74,12 @@ class Guide
 
     #[ORM\OneToMany(mappedBy: 'guide_id', targetEntity: Booking::class)]
     private Collection $bookings;
+
+    #[ORM\Column(length: 255)]
+    private ?string $language = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dob = null;
 
     public function __construct()
     {
@@ -278,6 +285,30 @@ class Guide
                 $booking->setGuideId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): static
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    public function getDob(): ?\DateTimeInterface
+    {
+        return $this->dob;
+    }
+
+    public function setDob(\DateTimeInterface $dob): static
+    {
+        $this->dob = $dob;
 
         return $this;
     }

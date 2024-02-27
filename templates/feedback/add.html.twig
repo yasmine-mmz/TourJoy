@@ -1,3 +1,4 @@
+
 {% extends 'FrontOffice/navbar.html.twig' %}
 
 {% block body %}
@@ -19,12 +20,35 @@
         max-width: 900px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+.feedback-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
 
-    .rating-button.active {
-        background-color: #4285f4;
-        color: white;
-        border-color: #4285f4;
-    }
+.feedback-actions .feedback-form {
+    margin-right: 10px;
+}
+.feedback-actions button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: #4285f4; /* Default link color */
+    text-decoration: underline; /* Underline to resemble links */
+    cursor: pointer;
+}
+
+.highlighted {
+    background-color: #4285f4; /* Or any color indicating it's been clicked */
+    color: white;
+}
+
+
+
+.feedback-actions button:hover {
+    color: #0d47a1; /* Change color on hover */
+}
 
     .feedback-container {
         display: flex;
@@ -41,57 +65,138 @@
         width: calc(33.333% - 20px);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-
-    .rating-stars {
-        color: gold;
-    }
-
-    .feedback-title {
-        text-align: center;
-    }
-
     .feedback-actions {
         display: flex;
-        align-items: center; /* Align buttons and counts vertically */
+        align-items: center;
+        justify-content: flex-start; /* Align the items to the start */
+    }
+
+    .feedback-form {
+        display: inline-flex; /* Makes the form display inline */
+        align-items: center;
+        margin-right: 10px; /* Adds some space between the buttons */
+    }
+
+    .feedback-form .count {
+        margin-left: 5px; /* Adds some space after the button */
     }
 
     .useful-button,
     .not-useful-button {
-        padding: 5px 10px;
-        border: none;
+        /* Your existing button styles */
+    }
+
+
+    .user-name {
+        font-weight: bold;
+        color: #4285f4;
+    }
+
+    .profile-picture {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-right: 10px;
+        object-fit: cover;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+.search-container {
+    display: flex;
+    justify-content: center; /* Center the search bar horizontally */
+    margin-bottom: 20px; /* Add some space below the container */
+}
+
+.feedback-title {
+    text-align: center; /* Center the title */
+    font-size: 24px; /* Increase font size */
+    color: #4285f4; /* Change the text color */
+    font-weight: bold; /* Make the text bold */
+    margin-bottom: 30px; /* Add some space below the title */
+}
+
+   .search-bar {
+    width: 30%;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    border: 2px solid #4285f4; /* Change the border color */
+    border-radius: 25px; /* Make the edges rounded */
+    box-sizing: border-box;
+    font-size: 16px; /* Increase font size */
+    color: #4285f4; /* Change the text color */
+    background-color: #f9f9f9; /* Change the background color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    transition: all 0.3s ease; /* Smooth transition for focus effect */
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: #0d47a1; /* Change border color on focus */
+    background-color: white; /* Change background color on focus */
+}
+
+
+
+
+    /* Styles for rating buttons */
+      .rating-option {
+        display: inline-block;
+        margin: 0 5px;
         cursor: pointer;
-        text-decoration: underline; /* Make buttons look like links */
-        margin-right: 5px; /* Add margin for spacing between button and count */
     }
 
-    .count {
-        margin-left: 5px; /* Add margin for spacing between button and count */
+    .rating-option input[type="radio"] {
+        display: none;
     }
 
-    .search-bar {
-        width: 100%;
+    .rating-option label {
+        background-color: #f0f0f0;
+        color: #333;
         padding: 10px;
-        margin-bottom: 20px;
+        border-radius: 50%;
         border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
     }
+
+    .rating-option input[type="radio"]:checked + label {
+        background-color: #4285f4;
+        color: white;
+    }
+
+    /* Style for feedback stars */
+    .star-rating {
+        font-size: 18px;
+        color: #ffd700; /* Gold color */
+    }
+    .star-grey {
+        color: #e4e5e9; /* Light grey color */
+    }
+   
 </style>
-<br><br><br><br><br><br>
 
 <div class="form-container">
     <h2 class="form-title">Add Feedback</h2>
-
     {{ form_start(form) }}
     <div>
         {{ form_label(form.fkGuide, 'Choose Guide') }}
         {{ form_widget(form.fkGuide) }}
     </div>
     <br>
-    <div>
+    <div class="rating-section">
         {{ form_label(form.rating) }}
-        {{ form_widget(form.rating) }}
+        <div class="rating-options">
+            {% for child in form.rating %}
+                <div class="rating-option">
+                    {{ form_widget(child) }}
+                </div>
+            {% endfor %}
+        </div>
     </div>
+    <br>
     <div>
         {{ form_label(form.comment) }}
         {{ form_widget(form.comment, {'attr': {'class': 'comment-textarea'}}) }}
@@ -101,34 +206,84 @@
     </div>
     {{ form_end(form) }}
 </div>
-
-<h2 class="feedback-title">Clients Feedback</h2>
-<input type="text" class="search-bar" id="feedbackSearch" placeholder="Search feedbacks">
+<br><br>
+<h2 class="feedback-title">Clients Feedbacks</h2>
+<div class="search-container">
+    <input type="text" class="search-bar" id="feedbackSearch" placeholder="Search feedbacks">
+</div>
 
 <div class="feedback-container">
     {% for feedback in feedbacks %}
     <div class="feedback-box">
-        <p><strong>Guide Name:</strong> {{ feedback.fkGuide.firstnameG }} {{ feedback.fkGuide.lastnameG }}</p>
-        <p><strong>Rating:</strong> {% for i in 1..feedback.rating %}<span class="fa fa-star rating-stars"></span>{% endfor %}</p>
-        <p><strong>Comment:</strong> {{ feedback.comment }}</p>
-        <div class="feedback-actions">
-            <form action="{{ path('feedback_add_useful', {'id': feedback.id}) }}" method="post">
-                <button type="submit" class="useful-button">Useful</button>
-            </form>
-            <span class="count">{{ feedback.useful ?? 0 }}</span>
-            <form action="{{ path('feedback_add_not_useful', {'id': feedback.id}) }}" method="post">
-                <button type="submit" class="not-useful-button">Not Useful</button>
-            </form>
-            <span class="count">{{ feedback.notUseful ?? 0 }}</span>
+        <div class="user-info">
+            <img src="{{ asset('uploads/profile_pictures/' ~ feedback.userId.profilePicture) }}" alt="Profile Picture" class="profile-picture">
+            <p class="user-name"><strong>User:</strong> {{ feedback.userId.firstName }} {{ feedback.userId.lastName }}</p>
         </div>
+
+      <div class="guide-name" style="display: none;">
+    {{ feedback.fkGuide.firstnameG }} {{ feedback.fkGuide.lastnameG }}
+</div>
+
+
+        <p><strong>Guide Name:</strong> {{ feedback.fkGuide.firstnameG }} {{ feedback.fkGuide.lastnameG }}</p>
+        <p><strong>Rating:</strong>
+            <div class="star-rating">
+                {% for i in 1..5 %}
+                    <span class="{{ i <= feedback.rating ? 'fa fa-star' : 'fa fa-star star-grey' }}"></span>
+                {% endfor %}
+            </div>
+        </p>
+        <p><strong>Comment:</strong> {{ feedback.comment }}</p>
+   <div class="feedback-actions">
+ <form action="{{ path('like_feedback') }}" method="post" class="feedback-form">
+    <input type="hidden" name="feedback_id" value="{{ feedback.id }}">
+    <input type="hidden" name="action" value="useful">
+    <input type="hidden" name="_token" value="{{ csrf_token('like-feedback-useful') }}">
+    <button type="submit" class="btn btn-primary">Useful</button>
+</form>
+
+<form action="{{ path('like_feedback') }}" method="post" class="feedback-form">
+    <input type="hidden" name="feedback_id" value="{{ feedback.id }}">
+    <input type="hidden" name="action" value="not_useful">
+    <input type="hidden" name="_token" value="{{ csrf_token('like-feedback-not-useful') }}">
+    <button type="submit" class="btn btn-secondary">Not Useful</button>
+</form>
+
+
+</div>
+
+
     </div>
     {% endfor %}
+    
 </div>
+
+
 <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('feedbackSearch');
+    const feedbackBoxes = document.querySelectorAll('.feedback-box');
+
+    searchInput.addEventListener('input', function(event) {
+        const searchValue = event.target.value.toLowerCase();
+
+        feedbackBoxes.forEach(box => {
+            // Extract text content for guide name and comment directly
+            const guideNameText = box.querySelector('.guide-name').textContent.toLowerCase();
+            const commentText = box.querySelector('p:nth-of-type(4)').textContent.toLowerCase(); // Assumes comment is always the fourth <p> element
+
+            if (guideNameText.includes(searchValue) || commentText.includes(searchValue)) {
+                box.style.display = ''; // Show the feedback box
+            } else {
+                box.style.display = 'none'; // Hide the feedback box
+            }
+        });
+    });
+
     // List of bad words to check for
     var badWords = ["bad", "badword"];
 
-    document.addEventListener('DOMContentLoaded', function() {
         // Event listener for form submission
         document.querySelector('.form-container form').addEventListener('submit', function(event) {
             var commentField = document.querySelector('.comment-textarea').value.toLowerCase(); // Get the comment text and convert to lowercase
@@ -142,22 +297,13 @@
             // If no bad words are found, allow the form to submit
         });
 
-     // Dynamic search functionality
-        document.getElementById('feedbackSearch').addEventListener('input', function(event) {
-            var searchValue = event.target.value.toLowerCase(); // Get the search value and convert to lowercase
-            var feedbackBoxes = document.querySelectorAll('.feedback-box'); // Get all feedback boxes
-
-            feedbackBoxes.forEach(function(box) {
-                var guideName = box.querySelector('p:first-child').innerText.toLowerCase(); // Get guide name and convert to lowercase
-                var comment = box.querySelector('p:nth-child(3)').innerText.toLowerCase(); // Get comment and convert to lowercase
-                if(guideName.includes(searchValue) || comment.includes(searchValue)) {
-                    box.style.display = 'block'; // Show the box if it contains the search value in guide name or comment
-                } else {
-                    box.style.display = 'none'; // Hide the box if it does not contain the search value
-                }
-            });
-        });
+    
     });
+
 </script>
+
+
+
+
 
 {% endblock %}

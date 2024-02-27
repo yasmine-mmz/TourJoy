@@ -1,0 +1,38 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block title %}User Statistics{% endblock %}
+
+{% block main %}
+
+    <h1>User Creation Statistics</h1>
+    <canvas id="userStatsChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 359px; width: 719px;" width="719" height="359"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('userStatsChart').getContext('2d');
+        var userStatsChart = new Chart(ctx, {
+            type: 'line', 
+            data: {
+                labels: {{ labels|json_encode|raw }},
+                datasets: [{
+                    label: 'Users Created',
+                    data: {{ data|json_encode|raw }}, 
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', 
+                    borderColor: 'rgba(54, 162, 235, 1)', 
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FeedbackRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -31,6 +33,18 @@ class Feedback
 
     #[ORM\Column(nullable: true)]
     private ?int $not_useful = null;
+
+    #[ORM\ManyToOne(inversedBy: 'feedback')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user_id = null;
+
+    #[ORM\OneToMany(mappedBy: 'feedback', targetEntity: Likesystem::class)]
+    private Collection $likesystems;
+
+    public function __construct()
+    {
+        $this->likesystems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,27 +91,49 @@ class Feedback
         return $this->comment;
     }
 
-    public function getUseful(): ?int
+
+
+    public function getUserId(): ?User
     {
-        return $this->useful;
+        return $this->user_id;
     }
 
-    public function setUseful(?int $useful): static
+    public function setUserId(?User $user_id): static
     {
-        $this->useful = $useful;
+        $this->user_id = $user_id;
 
         return $this;
     }
 
-    public function getNotUseful(): ?int
+    /**
+     * @return Collection<int, Likesystem>
+     */
+    public function getLikesystems(): Collection
     {
-        return $this->not_useful;
+        return $this->likesystems;
     }
 
-    public function setNotUseful(?int $not_useful): static
+    public function addLikesystem(Likesystem $likesystem): static
     {
-        $this->not_useful = $not_useful;
+        if (!$this->likesystems->contains($likesystem)) {
+            $this->likesystems->add($likesystem);
+            $likesystem->setFeedback($this);
+        }
 
         return $this;
     }
+
+    public function removeLikesystem(Likesystem $likesystem): static
+    {
+        if ($this->likesystems->removeElement($likesystem)) {
+            // set the owning side to null (unless already changed)
+            if ($likesystem->getFeedback() === $this) {
+                $likesystem->setFeedback(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }

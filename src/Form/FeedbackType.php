@@ -36,8 +36,10 @@ class FeedbackType extends AbstractType
                 '4' => 4,
                 '5' => 5,
             ],
-            'expanded' => true, // To render as buttons
-            'multiple' => false, // Single choice
+            'expanded' => true, // Render each choice as a separate input
+            'multiple' => false, // Allow only one choice to be selected
+            'label' => 'Rating',
+            // Additional options can be set here
         ])
         ->add('comment', TextareaType::class, [
             'attr' => ['rows' => 5], // Increase the size of the textarea

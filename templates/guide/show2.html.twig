@@ -27,7 +27,7 @@
                         <td style="border: 1px solid #ddd;">{{ guide.genderG }}</td> <!-- Displaying gender -->
                         <td style="border: 1px solid #ddd;">
                             <a href="{{ path('addB', {'guide_cin': guide.CIN}) }}" class="btn btn-primary" style="padding: 6px 10px; text-decoration: none; border-radius: 5px; background-color: #000; color: #fff;">Book</a>
-                            <a href="{{ path('fetchb2', {'id': guide.CIN}) }}" class="btn btn-info" style="padding: 6px 10px; text-decoration: none; border-radius: 5px;">See Feedbacks</a>
+                            <a href="{{ path('fetchfg', {'id': guide.CIN}) }}" class="btn btn-info" style="padding: 6px 10px; text-decoration: none; border-radius: 5px;">See Feedbacks</a>
                         </td> <!-- Buttons for update and delete -->
                     </tr>
                 {% endfor %}
