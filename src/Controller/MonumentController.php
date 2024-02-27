@@ -82,11 +82,16 @@ public function remove(FlashyNotifier $flashy,MonumentRepository $repo, $id, Man
     return $this ->redirectToRoute('monument_show');
 }
 #[Route('/fetch', name: 'monument_show')]
-public function fetch(MonumentRepository $repo, CountryRepository $countryRepository, Request $request,PaginatorInterface $paginator): Response
+public function fetch(MonumentRepository $repo, CountryRepository $countryRepository, Request $request, PaginatorInterface $paginator): Response
 {
     $searchType = $request->query->get('search_type');
     $searchValue = $request->query->get('search_value');
-    
+
+    // Sorting parameters
+    // $sortByAttribute = $request->query->get('sortByAttribute', 'nameM');
+    // $sortOrder = $request->query->get('sortOrder', 'asc');
+    // $orderBy = [$sortByAttribute => $sortOrder];
+
     switch ($searchType) {
         case 'name':
             $result = $repo->searchByName($searchValue);
@@ -101,17 +106,18 @@ public function fetch(MonumentRepository $repo, CountryRepository $countryReposi
             $result = $repo->findAll();
     }
 
-    $countries = $countryRepository->findAll();
+    // Apply sorting to the filtered result
+    // $result = $repo->findBy([], $orderBy);
+
     $pagination = $paginator->paginate(
         $result, // The query or array to paginate.
         $request->query->getInt('page', 1), // Current page number, default to 1.
         5 // Limit per page.
     );
-    
+
     // Pass the pagination object to the template.
     return $this->render('monument/show.html.twig', [
         'pagination' => $pagination,
-        'countries' => $countries, // Assuming you are also passing a list of countries.
     ]);
 }
 

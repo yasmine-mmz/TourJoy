@@ -231,28 +231,66 @@
       </nav>
 
 {% block body %}
-     <div class="container">
-        <h1>All Monuments</h1>
-        <form action="{{ path('monument_show') }}" method="get" class="mb-3">
-            <div class="form-row align-items-end">
-                <div class="col-auto">
-                    <select class="form-control" name="search_type">
-                        <option value="name">Search by name</option>
-                        <option value="price">Search by entry price</option>
-                        <option value="country">Search by country</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" name="search_value" placeholder="Enter search value">
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ path('monument_show') }}'">Refresh</button>
-                </div>
+<div class="container">
+    <h1>All Monuments</h1>
+
+    <form action="{{ path('monument_show') }}" method="get" class="mb-3">
+    <div class="form-group">
+    <label>Price Range:</label>
+    <div class="form-check">
+        <input class="form-check-input price-filter" type="checkbox" name="priceRange[]" value="0-20" id="range1">
+        <label class="form-check-label" for="range1">
+            $0 - $20
+        </label>
+        
+    </div>
+     <div class="form-check">
+        <input class="form-check-input price-filter" type="checkbox" name="priceRange[]" value="21-50" id="range2">
+        <label class="form-check-label" for="range2">
+            $21 - $50
+        </label>
+        
+    </div>
+   
+        <div>
+            <label for="sortByAttribute">Sort by Attribute:</label>
+            <select name="sortByAttribute" onchange="this.form.submit()">
+                <option value="nameM" {{ app.request.get('sortByAttribute') == 'nameM' ? 'selected' : '' }}>Name</option>
+                <option value="entryprice" {{ app.request.get('sortByAttribute') == 'entryprice' ? 'selected' : '' }}>Entry Price</option>
+                <option value="type" {{ app.request.get('sortByAttribute') == 'type' ? 'selected' : '' }}>Type</option>
+                <!-- Add more options for other attributes if needed -->
+            </select>
+        </div>
+        <div>
+            <label for="sortOrder">Sort Order:</label>
+            <select name="sortOrder" onchange="this.form.submit()">
+                <option value="asc" {{ app.request.get('sortOrder') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                <option value="desc" {{ app.request.get('sortOrder') == 'desc' ? 'selected' : '' }}>Descending</option>
+            </select>
+        </div>
+    </form>
+
+    <form action="{{ path('monument_show') }}" method="get" class="mb-3">
+        <div class="form-row align-items-end">
+            <div class="col-auto">
+                <select class="form-control" name="search_type">
+                    <option value="name">Search by name</option>
+                    <option value="price">Search by entry price</option>
+                    <option value="country">Search by country</option>
+                </select>
             </div>
-        </form>
+            <div class="col">
+                <input type="text" class="form-control" name="search_value" placeholder="Enter search value">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ path('monument_show') }}'">Refresh</button>
+            </div>
+        </div>
+    </form>
+
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -307,6 +345,42 @@
         </li>
     </ul>
 </nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const monuments = document.querySelector('.monuments');
+        const priceCheckboxes = document.querySelectorAll('.price-filter');
+
+        priceCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', applyFilters);
+        });
+
+        function applyFilters() {
+            const selectedPrices = Array.from(document.querySelectorAll('.price-filter:checked')).map(checkbox => checkbox.value);
+            console.log('Selected Prices:', selectedPrices);
+
+            monuments.querySelectorAll('.monument-item').forEach(item => {
+                const price = parseFloat(item.getAttribute('data-price'));
+                console.log('Monument Price:', price);
+
+                const priceMatch = selectedPrices.length === 0 || selectedPrices.some(priceRange => {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    return price >= min && price <= max;
+                });
+                console.log('Price Match:', priceMatch);
+
+                if (selectedPrices.length === 0) {
+                    item.style.display = 'block';
+                } else {
+                    if (priceMatch) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+    });
+</script>
 
 
     </div>

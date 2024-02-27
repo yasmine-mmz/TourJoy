@@ -79,7 +79,28 @@ class MonumentRepository extends ServiceEntityRepository
             ->where('m.name LIKE :name')
             ->setParameter('name', '%' . $name . '%');
     }
-    
+    public function findBySearchValue(string $searchValue): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.nameM LIKE :searchValue')
+            ->orWhere('m.entryPrice LIKE :searchValue')
+            ->orWhere('m.description LIKE :searchValue')
+            ->orWhere('m.fkcountry IN (
+                SELECT c.id FROM App\Entity\Country c WHERE c.name LIKE :searchValue
+            )')
+            ->setParameter('searchValue', '%' . $searchValue . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function searchByNameOrCountry($query)
+{
+    return $this->createQueryBuilder('m')
+        ->leftJoin('m.fkcountry', 'c')
+        ->where('LOWER(m.nameM) LIKE :query OR LOWER(c.name) LIKE :query')
+        ->setParameter('query', '%' . strtolower($query) . '%')
+        ->getQuery()
+        ->getResult();
+}
 //    /**
 //     * @return Monument[] Returns an array of Monument objects
 //     */
