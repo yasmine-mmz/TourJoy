@@ -17,6 +17,10 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Twig\Environment as TwigEnvironment;
 use Twig\Environment;
+use Symfony\Contracts\EventDispatcher\Event;
+use App\Entity\Claim; // Adjust namespace according to your application structure
+
+
 
 
 class ClaimsController extends AbstractController
@@ -40,11 +44,37 @@ class ClaimsController extends AbstractController
         ]);
     }
     #[Route('/showclaims', name: 'Claims_show')]
-    public function show(ClaimsRepository $rep): Response
-    {
-        $Claimss = $rep->findAll();
-        return $this->render('Claims/index.html.twig', ['Claimss'=>$Claimss]);
+public function show(ClaimsRepository $rep, Request $request): Response
+{
+    // Retrieve search term and sort parameters from the request
+    $searchTerm = $request->query->get('search', '');
+    $sortField = $request->query->get('sortField', 'id'); // Use a valid default field
+    $sortOrder = $request->query->get('sortOrder', 'ASC'); // Default to 'ASC'
+
+    // Fetch claims based on search criteria and sort parameters
+    $claims = $rep->findBySearchCriteriaAndSort($searchTerm, $sortField, $sortOrder);
+
+    // Check if the request is an AJAX request
+    if ($request->isXmlHttpRequest()) {
+        // If AJAX request, render the part of the template for the table body
+        return $this->render('Claims/search.html.twig', [
+            'Claimss' => $claims,
+            'searchTerm' => $searchTerm,
+            'currentSortField' => $sortField,
+            'currentSortOrder' => $sortOrder,
+        ]);
     }
+
+    // Render the full page for non-AJAX requests
+    return $this->render('Claims/index.html.twig', [
+        'Claimss' => $claims,
+        'searchTerm' => $searchTerm,
+        'currentSortField' => $sortField,
+        'currentSortOrder' => $sortOrder,
+    ]);
+}
+
+
     #[Route('/Claimsadd', name: 'Claims_add')]
     public function AddClaims(ManagerRegistry $doctrine, Request $request,ValidatorInterface $validator,
     MailerInterface $mailer): Response
@@ -73,11 +103,10 @@ class ClaimsController extends AbstractController
              ->from('no-reply@tourjoy.com')
              ->to('admin@tourjoy.com')
              ->subject('New Claim Submitted')
-             ->text('A new claim has been submitted. title: ' . $claims['title'] . '. description: ' . $claims['description']);
-
+             ->text("A new claim has been submitted. Title: {$Claims->getTitle()}, Description: {$Claims->getDescription()}");
          // Step 3: Send the email
          $mailer->send($email);
-     
+         
 
             return $this-> redirectToRoute('app_test');
         }
@@ -110,4 +139,22 @@ class ClaimsController extends AbstractController
         $em->flush();
         return $this-> redirectToRoute('Claims_show');
     }
+    #[Route('/Claimsstats', name: 'Claims_stats')]
+public function ClaimsStats(ClaimsRepository $Rep): Response
+{
+    $ClaimsStats = $Rep->countClaimsByCategory();
+
+    $labels = [];
+    $data = [];
+    foreach ($ClaimsStats as $stat) {
+        $labels[] = $stat['categoryName'];
+        $data[] = $stat['claimsCount'];
+    }
+
+    return $this->render('Claims/charts.html.twig', [
+        'ClaimsStats' => $ClaimsStats,
+        'labels' => $labels,
+        'data' => $data,
+    ]);
+}
 }

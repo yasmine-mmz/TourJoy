@@ -1,45 +1,119 @@
 {% extends 'BackOffice/navbars.html.twig' %}
 
-{% block main %}
-<div class="card-body">
-<h5 class="card-title">Claims Table</h5>
+{% block body %}
 
+<div class="card-body">
+    <h5 class="card-title">Claims Table</h5>
+    <!-- Search Input -->
+    <input type="text" id="searchInput" placeholder="Type to search..." class="form-control mb-3">
+
+    <!-- Sorting Dropdown -->
+    <form id="sortingForm" class="mb-3">
+    <div class="row">
+        <div class="col">
+            <select name="sortField" id="sortField" class="form-select">
+            <option value="title">Title</option>
+            <option value="description">Description</option>
+            <option value="createDate">Date of Creation</option>
+            <option value="state">State</option>
+            <option value="fkC.name">Category</option>
+            <option value="reply">Reply</option>
+        </select>
+        <div class="col">
+        <select name="sortOrder" id="sortOrder" class="form-select">
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+        </select>
+          </div>
+        <div class="col">
+            <button type="button" onclick="updateClaimsTable()" class="btn btn-primary">Sort</button>
+        </div>
+    </div>
+    </form>
+
+
+    <!-- Placeholder for Dynamic Content -->
+    <div id="claimsTable">
 <!-- Default Table -->
 <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Date of creation</th>
-      <th scope="col">State</th>
-    <th scope="col">Category</th>
-  <th scope="col">Reply</th>
-<th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for Claims in Claimss %}
-    <tr>
-    <th scope="row">{{ loop.index }}</th>
-      
-    
-<td>{{ Claims.title }}</td>
-<td>{{ Claims.description }}</td>
-<td>{{ Claims.createDate|date('Y-m-d') }}</td>
-<td>{{ Claims.state }}</td>
-<td>{{ Claims.fkC.name}}</td>
-<td>{{ Claims.reply}}</td>
-<td>
-
-<a href ="{{path('Claims_update',{'id':Claims.id})}}"class="btn btn-primary">Update</a> |
-<a href ="{{path('Claims_delete',{'id':Claims.id})}}"class="btn btn-danger">Delete</a> 
-</td>
-</tr>
-{% endfor %}
-</tbody>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date of creation</th>
+            <th scope="col">State</th>
+            <th scope="col">Category</th>
+            <th scope="col">Reply</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Claims in Claimss %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ Claims.title }}</td>
+            <td>{{ Claims.description }}</td>
+            <td>{{ Claims.createDate|date('Y-m-d') }}</td>
+            <td>{{ Claims.state }}</td>
+            <td>{{ Claims.fkC.name }}</td>
+            <td>{{ Claims.reply }}</td>
+            <td>
+                <a href ="{{ path('Claims_update', {'id': Claims.id}) }}" class="btn btn-primary">Update</a> |
+                <a href ="{{ path('Claims_delete', {'id': Claims.id}) }}" class="btn btn-danger">Delete</a> 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
-<!-- End Default Table Example -->
-</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('keyup', function() {
+          const searchTerm = this.value;
+  
+          // Make an AJAX request to the server
+          fetch('{{ path('Claims_show') }}?search=' + encodeURIComponent(searchTerm), {
+              headers: {
+                  'X-Requested-With': 'XMLHttpRequest' // This header is required by Symfony to recognize the request as AJAX
+              }
+          })
+          .then(response => response.text())
+          .then(html => {
+              // Update the table's tbody with the response
+              document.getElementById('claimsTable').innerHTML = html;
+          })
+          .catch(error => console.error('Error:', error));
+      });
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Existing search functionality
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keyup', function() {
+        updateClaimsTable();
+    });
+});
+
+function updateClaimsTable() {
+    const searchTerm = document.getElementById('searchInput').value;
+    const sortField = document.getElementById('sortField').value;
+    const sortOrder = document.getElementById('sortOrder').value;
+    
+    // Include sortField and sortOrder in the AJAX request
+    fetch('{{ path('Claims_show') }}?search=' + encodeURIComponent(searchTerm) + '&sortField=' + sortField + '&sortOrder=' + sortOrder, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('claimsTable').innerHTML = html;
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+  </script>
 {% endblock %}

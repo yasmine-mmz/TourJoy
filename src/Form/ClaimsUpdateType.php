@@ -43,7 +43,7 @@ class ClaimsUpdateType extends AbstractType
             ->add('state', ChoiceType::class, [
                 'choices' => [
                     'Treated' => 'treated',
-                    'Not Treated' => 'not_treated',
+                    'Not treated' => 'not_treated',
                 ],
                 'placeholder' => 'Choose the state',
                 'constraints' => [
@@ -55,6 +55,7 @@ class ClaimsUpdateType extends AbstractType
             ])
             ->add('reply')
             ->add('fkC', EntityType::class, [
+                'label' => false,
                 'class' => Categories::class,
                 'choice_label' => 'name',
                 'attr' => [

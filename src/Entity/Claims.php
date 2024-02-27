@@ -30,7 +30,7 @@ class Claims
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createDate = null;
-
+ 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $state = null;

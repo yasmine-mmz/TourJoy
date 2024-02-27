@@ -1,21 +1,25 @@
 {% extends 'BackOffice/navbars.html.twig' %}
 
-{% block main %}
+{% block body %}
 <div class="card-body">
 <h5 class="card-title">Categories Table</h5>
+<div class="col-md-6 text-md-right">
+            <a href ="{{ path('Categories_add') }}" class="btn btn-primary">Add category</a>
+        </div>
+          </div>
 
 <!-- Default Table -->
 <table class="table">
-  <thead>
-    <tr>
-    <a href ="{{path('Categories_add')}}"class="btn btn-primary">Add category</a>
+<thead>
+  <tr>
+  
     
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-    <th scope="col">Actions</th>
+  <th scope="col">#</th>
+<th scope="col">Name</th>
+<th scope="col">Actions</th>
 
-    </tr>
-  </thead>
+</tr>
+</thead>
   <tbody>
     {% for Categories in Categoriess %}
     <tr>
