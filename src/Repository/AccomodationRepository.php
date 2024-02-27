@@ -21,6 +21,10 @@ class AccomodationRepository extends ServiceEntityRepository
         parent::__construct($registry, Accomodation::class);
     }
 
+
+   
+
+
 //    /**
 //     * @return Accomodation[] Returns an array of Accomodation objects
 //     */

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ApiController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    <form id="addEventForm">
+       
+        <div>
+            <label for="startDate">Start Date:</label>
+            <input type="datetime-local" id="startDate" name="startDate" required>
+        </div>
+        <div>
+            <label for="endDate">End Date:</label>
+            <input type="datetime-local" id="endDate" name="endDate">
+        </div>
+        
+        <div>
+            <button type="submit">Book</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('addEventForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Collect form data
+        const formData = new FormData(this);
+
+        // Send POST request to add event
+        fetch('/api/event/add', {
+            method: 'POST',
+            body: JSON.stringify(Object.fromEntries(formData.entries())),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Event added successfully');
+            } else {
+                alert('Failed to add event');
+            }
+        })
+        .catch(error => {
+            console.error('Error adding event:', error);
+            alert('Error adding event');
+        });
+    });
+</script>
+{% endblock %}

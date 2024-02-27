@@ -20,7 +20,27 @@ class ReservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
-    
+   
+    public function findByAccommodationId($refA)
+{
+    return $this->createQueryBuilder('r')
+        ->andWhere('r.accommodation = :refA')
+        ->setParameter('refA', $refA)
+        ->getQuery()
+        ->getResult();
+}
+
+public function countReservationsByAccommodation()
+{
+    $qb = $this->createQueryBuilder('c')
+        ->select("name.name AS accommodationName, COUNT(c.idR) AS reservationsCount")
+        ->leftJoin('c.name', 'name') 
+        ->groupBy('accommodationName')
+        ->orderBy('accommodationName', 'ASC');
+
+    return $qb->getQuery()->getResult();
+}
+
 
 //    /**
 //     * @return Reservation[] Returns an array of Reservation objects

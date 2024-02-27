@@ -67,13 +67,14 @@
                         <input class="form-check-input filter-checkbox room-filter" type="checkbox" value="6" id="room6">
                         <label class="form-check-label" for="room6" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">6</label>
                     </div>
+                    
                 </div>
             </div>
         </div>
         <div class="col-md-9">
             <!-- Search Input -->
             <div class="input-group mb-3">
-                <input type="text" id="accommodation-search" class="form-control" placeholder="Search Accommodations by Name">
+                <input type="text" id="accommodation-search" class="form-control" placeholder="Search Accommodations">
             </div>
 
             <!-- Accommodations -->
@@ -128,7 +129,6 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 </style>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const accommodations = document.querySelector('.accommodations');
@@ -143,37 +143,50 @@
             applySearch(searchInput.value.toLowerCase());
         });
 
-        function applyFilters() {
-            const selectedPrices = Array.from(document.querySelectorAll('.price-filter:checked')).map(checkbox => checkbox.value);
-            const selectedTypes = Array.from(document.querySelectorAll('.type-filter:checked')).map(checkbox => checkbox.value);
-            const selectedRooms = Array.from(document.querySelectorAll('.room-filter:checked')).map(checkbox => checkbox.value);
+ function applyFilters() {
+    const selectedPrices = Array.from(document.querySelectorAll('.price-filter:checked')).map(checkbox => checkbox.value);
+    const selectedTypes = Array.from(document.querySelectorAll('.type-filter:checked')).map(checkbox => checkbox.value);
+    const selectedRooms = Array.from(document.querySelectorAll('.room-filter:checked')).map(checkbox => checkbox.value);
 
-            accommodations.querySelectorAll('.accommodation-item').forEach(item => {
-                const price = parseFloat(item.getAttribute('data-price'));
-                const type = item.getAttribute('data-type');
-                const rooms = parseInt(item.getAttribute('data-rooms'));
+    accommodations.querySelectorAll('.accommodation-item').forEach(item => {
+        const price = parseFloat(item.getAttribute('data-price'));
+        const type = item.getAttribute('data-type');
+        const rooms = parseInt(item.getAttribute('data-rooms'));
 
-                const priceMatch = selectedPrices.length === 0 || selectedPrices.some(priceRange => {
-                    const [min, max] = priceRange.split('-').map(Number);
-                    return price >= min && price <= max;
-                });
+        const priceMatch = selectedPrices.length === 0 || selectedPrices.some(priceRange => {
+            const [min, max] = priceRange.split('-').map(Number);
+            return price >= min && price <= max;
+        });
 
-                const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(type);
+        const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(type);
 
-                const roomsMatch = selectedRooms.length === 0 || selectedRooms.includes(String(rooms));
+        const roomsMatch = selectedRooms.length === 0 || selectedRooms.includes(String(rooms));
 
-                if (priceMatch && typeMatch && roomsMatch) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+        // Check if no checkboxes are checked, then display the item
+        if (selectedPrices.length === 0 && selectedTypes.length === 0 && selectedRooms.length === 0) {
+            item.style.display = 'block';
+        } else {
+            if (priceMatch && typeMatch && roomsMatch) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
         }
+    });
+}
 
         function applySearch(query) {
             accommodations.querySelectorAll('.accommodation-item').forEach(item => {
+                // Get the text content for name, price, and number of rooms
                 const name = item.querySelector('.card-title').textContent.toLowerCase();
-                if (name.includes(query)) {
+                const priceText = item.querySelector('.card-text.text-orange').textContent.toLowerCase().replace('price of one night : ', '').replace(' tnd', '');
+                const roomsText = item.querySelector('.card-text:not(.text-orange)').textContent.toLowerCase().replace('rooms: ', '');
+
+                // Combine all text content into a single searchable string
+                const searchableText = name + " " + priceText + " " + roomsText;
+
+                // Check if the searchableText includes the query
+                if (searchableText.includes(query)) {
                     item.style.display = 'block';
                 } else {
                     item.style.display = 'none';
@@ -181,6 +194,9 @@
             });
         }
     });
+
+
+
 
     function showMap(location) {
         const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location);

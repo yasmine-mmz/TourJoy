@@ -15,16 +15,36 @@ use App\Form\ReservationType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
-    public function index(): Response
+    public function index(ReservationRepository $reservation): Response
     {
-        return $this->render('BackOffice/res.html.twig', [
-            'controller_name' => 'ReservationController',
+        $events = $reservation->findAll();
+    
+        $rdvs = [];
+    
+        foreach($events as $event){
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'start' => $event->getStartDate()->format('Y-m-d'),
+                'end' => $event->getEndDate()->format('Y-m-d'),
+                'title' => $event->getName(),
+            ];
+        }
+    
+        $data = json_encode($rdvs);
+    
+        // Assuming $form is your form variable for reservations
+        $form = $this->createForm(ReservationType::class);
+    
+        return $this->render('FrontOffice/ResForm.html.twig', [
+            'f' => $form->createView(),
+            'data' => $data // Pass the JSON data directly to the template
         ]);
     }
+    
+
     #[Route('/fetch', name: 'fetch')] 
     public function show(ReservationRepository $repo): Response
     {
@@ -79,33 +99,27 @@ class ReservationController extends AbstractController
 
         return $this ->redirectToRoute('fetch');
     }
-    #[Route('/update{idR}', name: 'update')]
-    public function updateReservation(int $idR, ManagerRegistry $mr, Request $req, ReservationRepository $repo): Response
-    {
-        $p = $repo->find($idR); 
-    
-        if (!$p) {
-            throw $this->createNotFoundException('Reservation not found.');
-        }
-    
-        $form = $this->createForm(ReservationType::class, $p); 
-    
-        $form->handleRequest($req);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $mr->getManager();
-            $em->flush();
-    
-            return $this->redirectToRoute('fetch');
-        }
-    
-        return $this->render('BackOffice/ResUpd.html.twig', [
-            'f' => $form->createView()
-        ]);
+
+
+
+    #[Route('/statAcc', name: 'statAcc')]
+public function statAcc(ReservationRepository $Rep): Response
+{
+    $ReservationsStats = $Rep->countReservationsByAccommodation();
+
+    $labels = [];
+    $data = [];
+    foreach ($ReservationsStats as $stat) {
+        $labels[] = $stat['accommodationName'];
+        $data[] = $stat['reservationsCount'];
     }
 
-
-
-    
-    
+    return $this->render('BackOffice/chartAcc.html.twig', [
+        'ReservationsStats' => $ReservationsStats,
+        'labels' => $labels,
+        'data' => $data,
+    ]);
 }
+
+
+ }

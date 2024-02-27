@@ -38,7 +38,12 @@ class ReservationType extends AbstractType
             ])
             ->add('name')
             ->add('captchaCode', CaptchaType::class, [
-                'captchaConfig' => 'ExampleCaptcha'
+                'captchaConfig' => 'ExampleCaptcha',
+                'constraints' => [
+                    new ValidCaptcha([
+                        'message' => 'Invalid captcha, please try again',
+                    ]),
+                ]
             ])
             ->add('BOOK', SubmitType::class);
     }

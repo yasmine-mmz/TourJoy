@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\AccomodationType;
 use App\Form\ReservationType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 class AccomodationController extends AbstractController
 {
@@ -149,8 +147,4 @@ class AccomodationController extends AbstractController
     ]);
 }
 
- 
-
-   
 }
-
