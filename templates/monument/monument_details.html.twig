@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="colorlib">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/linearicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontoffice/css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        .default-header {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            background: url('/img/header-background.jpg') no-repeat center center scroll;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+        }
+
+        .navbar-light .navbar-nav .nav-link,
+        .navbar-light .navbar-brand {
+            color: #fff; /* Adjust the color to ensure readability */
+        }
+
+        /* Fix for the navbar-toggler icon color */
+        .navbar-light .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;..."); /* Here should be your navbar-toggler icon svg path */
+        }
+
+        .play-description-btn {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            transition: background-color 0.3s ease; /* Add transition effect for smoother hover */
+        }
+
+        .play-description-btn i {
+            margin-right: 5px;
+        }
+
+        /* Mapbox CSS */
+        .map-container {
+            height: 400px;
+            margin-top: 20px;
+        }
+
+        /* Adjust layout for card and map */
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: #fff; /* Assuming you want a white background for cards */
+            border-radius: 15px; /* If you want rounded corners */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow to your cards */
+        }
+
+.card-header {
+    text-align: center; /* Center the text */
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+    font-weight: 700; /* Use the bold variant */
+    font-size: 2rem; /* Adjust the font size as needed */
+}
+        .card-footer {
+            padding: 1rem;
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 0;
+        }
+
+        .monument-image {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Only apply the background to the content area below the navbar */
+        .content-area {
+            padding-top: 70px; /* Adjust this value to match the height of your navbar */
+            background: url('/img/background.webp') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh; /* Minimum height of viewport */
+        }
+
+        /* Setting the background image */
+        .container {
+            background: url('/img/background.webp') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .overlay {
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+        }
+
+        /* Adjust layout for card and map */
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #fff; /* Set the card's background to white */
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: -70px; /* Pull card up to cover image behind navbar */
+            z-index: 10; /* Ensure card is above the background image */
+        }
+
+        /* Remove transparency from the card */
+        .card-body {
+            flex: 1;
+            padding: 0;
+            background-color: #fff; /* Set the card body's background to white */
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: url('/img/background.webp') no-repeat center center fixed;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+        }
+
+        .body-background {
+            /* Use this class for the main background of the page */
+            background-image: url('/img/background.webp');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100%;
+        }
+
+        /* Ensure full coverage */
+        .container-fluid, .container {
+            min-height: 100%;
+            padding: 0 !important; /* Override any existing padding */
+        }
+
+        .navbar {
+            width: 100%; /* Ensure the navbar takes full width */
+            height: 100%;
+            background: none; /* Clear any existing background */
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+        {% block navbar %}
+            
+        
+			 <!-- start banner Area -->
+    <section class="banner-area" id="home">
+        <!-- Start Header Area -->
+        <header class="default-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                
+						<div class="container">
+							  <a class="navbar-brand" href="index.html">
+							  	<img src="img/logo.png" alt="">
+							  </a>
+							  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							    <span class="text-white lnr lnr-menu"></span>
+							  </button>
+
+							  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+							    <ul class="navbar-nav">
+									<li><a href="{{ path('app_test') }}">Home</a></li>
+									<li><a href="#about">About</a></li>									
+									<li><a href="#secvice">Monuments</a></li>
+									<li><a href="#gallery">Gallery</a></li>
+									<li><a href="#faq">Faq</a></li>
+									<li><a href="#contact">Contact</a></li>
+									<!-- Dropdown -->
+								    <li class="dropdown">
+								      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+								        Pages
+								      </a>
+								      <div class="dropdown-menu">
+								        <a class="dropdown-item" href="generic.html">Generic</a>
+								        <a class="dropdown-item" href="elements.html">Elements</a>
+								      </div>
+								    </li>
+							    </ul>
+							  </div>						
+						</div>
+					</nav>
+				</header>
+				<!-- End Header Area -->				
+			</section>
+			<br>
+        {% endblock %}
+
+
+
+{% block body %}
+<div class="content-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <br><br>
+                <div class="card">
+                    <div class="card-header">
+                        <h1>{{ monument.getNameM() }}</h1>
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ vich_uploader_asset(monument, 'imageFile') }}" alt="{{ monument.getNameM() }}" class="img-fluid mb-3 monument-image">
+                        <div class="monument-details p-3">
+                            <p><strong>Type:</strong> {{ monument.getType() }}</p>
+                            <p><strong>Entry Price:</strong> {{ monument.getEntryPrice() }} TND</p>
+                            <p><strong>Status:</strong> {{ monument.getStatus() }}</p>
+                            <p><strong>Description:</strong> {{ monument.getDescription() }}</p>
+                            <p><strong>Country:</strong> {{ monument.getFkcountry().getName() }}</p>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Embedded Mapbox Map -->
+                    <div id="map" class="map-container"></div>
+
+                    <div class="card-footer">
+                        <small class="text-muted">Map showing the location of {{ monument.getNameM() }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('frontoffice/js/vendor/jquery-2.2.4.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="{{ asset('frontoffice/js/vendor/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/slick.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('frontoffice/js/main.js') }}"></script>
+<!-- Mapbox JavaScript -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia291c3NheWJlbmhhZGpzYWxlbTEwIiwiYSI6ImNsc3E1MWk2aDB3dG0yanFxdG5seWIzeXEifQ.q7YseB8VOmSaGyXldgX3tA';
+    var latitude = {{ monument.getLatitude() }};
+    var longitude = {{ monument.getLongitude() }};
+    
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [longitude, latitude],
+        zoom: 13
+    });
+
+    new mapboxgl.Marker()
+        .setLngLat([longitude, latitude])
+        .addTo(map);
+
+   // Enhanced Play Description button with FontAwesome icon
+    var playButton = document.createElement('button');
+    playButton.innerHTML = '<i class="fas fa-play"></i> Play Description';
+    playButton.classList.add('play-description-btn'); // Add a class for styling
+    playButton.onclick = function() {
+        var textToSpeak = "{{ monument.getDescription() | escape('js') }}";
+        var utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.lang = 'en-US'; // Set the language to English
+
+        speechSynthesis.speak(utterance);
+    };
+
+    // Append the button to a specific element
+    document.querySelector('.monument-details').appendChild(playButton);
+});
+</script>
+{% endblock %}
+

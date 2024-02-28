@@ -1,6 +1,8 @@
 {
     "carlos-mg89/symfony-captcha-bundle": {
         "version": "4.2.21"
+    "babdev/pagerfanta-bundle": {
+        "version": "v4.4.0"
     },
     "doctrine/annotations": {
         "version": "2.0",
@@ -49,6 +51,12 @@
             "version": "3.0",
             "ref": "b131e6cbfe1b898a508987851963fff485986285"
         }
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
+    },
+    "mercuryseries/flashy-bundle": {
+        "version": "v5.1.0"
     },
     "phpunit/phpunit": {
         "version": "9.6",

@@ -1,0 +1,424 @@
+	<!DOCTYPE html>
+	<html lang="zxx" class="no-js">
+	<head>
+
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+			<!--
+			CSS
+			============================================= -->
+			<link rel="stylesheet" href="frontoffice/css/linearicons.css">
+			<link rel="stylesheet" href="frontoffice/css/owl.carousel.css">
+			<link rel="stylesheet" href="frontoffice/css/font-awesome.min.css">
+			<link rel="stylesheet" href="frontoffice/css/nice-select.css">			
+			<link rel="stylesheet" href="frontoffice/css/magnific-popup.css">
+			<link rel="stylesheet" href="frontoffice/css/bootstrap.css">
+			<link rel="stylesheet" href="frontoffice/css/main.css">
+          <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+		</head>
+		<body>
+        <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+
+			<script src="frontoffice/js/vendor/jquery-2.2.4.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+			<script src="frontoffice/js/vendor/bootstrap.min.js"></script>
+			<script src="frontoffice/js/owl.carousel.min.js"></script>
+			<script src="frontoffice/js/jquery.sticky.js"></script>
+			<script src="frontoffice/js/jquery.nice-select.min.js"></script>			
+			<script src="frontoffice/js/parallax.min.js"></script>
+			<script src="frontoffice/js/jquery.magnific-popup.min.js"></script>
+			<script src="frontoffice/js/main.js"></script>	
+		</body>
+	</html>
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="/backoffice/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/backoffice/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="/backoffice/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="/backoffice/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+<link href="/backoffice/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+<link href="/backoffice/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="/backoffice/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="/backoffice/assets/css/style.css" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="backoffice/assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Jan 29 2024 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <!-- Bootstrap CSS CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .pagination li {
+            margin: 0 4px;
+        }
+
+        .pagination li.active span {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+
+        .pagination li span,
+        .pagination li a {
+            color: #007bff;
+            border: 1px solid #dee2e6;
+        }
+
+        .pagination li a {
+            text-decoration: none;
+        }
+
+        .pagination li.disabled span,
+        .pagination li.disabled a,
+        .pagination li.disabled a:hover {
+            color: #6c757d;
+            pointer-events: none;
+        }
+
+        .pagination li a:focus,
+        .pagination li a:hover,
+        .pagination li span:focus,
+        .pagination li span:hover {
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+    </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="img/logo-back.png" alt="">
+        <span class="d-none d-lg-block">NiceAdmin</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+       
+            
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="{{ path('app_back') }}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Monuments</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+    <a href="{{ path('addF') }}">
+        <i class="bi bi-circle"></i><span>Add Monuments</span>
+    </a>
+</li>
+
+      <li>
+    <a href="/fetch">
+        <i class="bi bi-circle"></i><span>Show Monuments</span>
+    </a>
+</li>
+          <li>
+    <a href="{{ path('addc') }}">
+        <i class="bi bi-circle"></i><span>Add Country</span>
+    </a>
+</li>
+<li>
+    <a href="{{ path('country_show') }}">
+        <i class="bi bi-circle"></i><span>Show Country</span>
+    </a>
+</li>
+        </ul>
+      </li><!-- End Components Nav -->
+
+
+      
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>Register</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Login</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ path('app_back') }}">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+
+{% block body %}
+<div class="container">
+    <h1>All Monuments</h1>
+
+    <form action="{{ path('monument_show') }}" method="get" class="mb-3">
+    <div class="form-group">
+    <label>Price Range:</label>
+    <div class="form-check">
+        <input class="form-check-input price-filter" type="checkbox" name="priceRange[]" value="0-20" id="range1">
+        <label class="form-check-label" for="range1">
+            0 DT - 20 DT
+        </label>
+        
+    </div>
+     <div class="form-check">
+        <input class="form-check-input price-filter" type="checkbox" name="priceRange[]" value="21-50" id="range2">
+        <label class="form-check-label" for="range2">
+            21 DT - 50 DT
+        </label>
+        
+    </div>
+   
+        <div>
+            <label for="sortByAttribute">Sort by Attribute:</label>
+            <select name="sortByAttribute" onchange="this.form.submit()">
+                <option value="nameM" {{ app.request.get('sortByAttribute') == 'nameM' ? 'selected' : '' }}>Name</option>
+                <option value="entryprice" {{ app.request.get('sortByAttribute') == 'entryprice' ? 'selected' : '' }}>Entry Price</option>
+                <option value="type" {{ app.request.get('sortByAttribute') == 'type' ? 'selected' : '' }}>Type</option>
+                <!-- Add more options for other attributes if needed -->
+            </select>
+        </div>
+        <div>
+            <label for="sortOrder">Sort Order:</label>
+            <select name="sortOrder" onchange="this.form.submit()">
+                <option value="asc" {{ app.request.get('sortOrder') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                <option value="desc" {{ app.request.get('sortOrder') == 'desc' ? 'selected' : '' }}>Descending</option>
+            </select>
+        </div>
+    </form>
+<br>
+    <form action="{{ path('monument_show') }}" method="get" class="mb-3">
+        <div class="form-row align-items-end">
+            <div class="col-auto">
+                <select class="form-control" name="search_type">
+                    <option value="name">Search by name</option>
+                    <option value="price">Search by entry price</option>
+                    <option value="country">Search by country</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="search_value" placeholder="Enter search value">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ path('monument_show') }}'">Refresh</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Entry Price</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Country</th>
+                    <th>Longitude</th>
+                    <th>Latitude</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for monument in pagination  %}
+                    <tr>
+                        <td>{{ monument.getNameM() }}</td>
+                        <td>{{ monument.getType() }}</td>
+                        <td>{{ monument.getEntryprice() }}</td>
+                        <td>{{ monument.getStatus() }}</td>
+                        <td>{{ monument.getDescription() }}</td>
+                        <td>{{ monument.getFkcountry().getName() }}</td>
+                        <td>{{ monument.getLongitude() }}</td>
+                        <td>{{ monument.getLatitude() }}</td>
+                        <td><img src="{{ vich_uploader_asset(monument, 'imageFile') }}" alt="Monument Image" style="max-width: 200px; max-height: 100px;"></td>
+                        <td>
+                            <a href="{{ path('update', { 'id': monument.getref() }) }}" class="btn btn-primary mr-2">Modify</a>
+                            <a href="{{ path('remove', { 'id': monument.getref() }) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Bootstrap Pagination -->
+   <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {{ pagination.currentPageNumber <= 1 ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ path('monument_show', {'page': pagination.currentPageNumber - 1}) }}">Previous</a>
+        </li>
+        
+        {% for i in 1..pagination.pageCount %}
+            <li class="page-item {{ i == pagination.currentPageNumber ? 'active' : '' }}">
+                <a class="page-link" href="{{ path('monument_show', {'page': i}) }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+        
+        <li class="page-item {{ pagination.currentPageNumber >= pagination.pageCount ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ path('monument_show', {'page': pagination.currentPageNumber + 1}) }}">Next</a>
+        </li>
+    </ul>
+</nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const monuments = document.querySelector('.monuments');
+        const priceCheckboxes = document.querySelectorAll('.price-filter');
+
+        priceCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', applyFilters);
+        });
+
+        function applyFilters() {
+            const selectedPrices = Array.from(document.querySelectorAll('.price-filter:checked')).map(checkbox => checkbox.value);
+            console.log('Selected Prices:', selectedPrices);
+
+            monuments.querySelectorAll('.monument-item').forEach(item => {
+                const price = parseFloat(item.getAttribute('data-price'));
+                console.log('Monument Price:', price);
+
+                const priceMatch = selectedPrices.length === 0 || selectedPrices.some(priceRange => {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    return price >= min && price <= max;
+                });
+                console.log('Price Match:', priceMatch);
+
+                if (selectedPrices.length === 0) {
+                    item.style.display = 'block';
+                } else {
+                    if (priceMatch) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+
+    </div>
+{% endblock %}
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="backoffice/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="backoffice/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="backoffice/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="backoffice/assets/vendor/quill/quill.min.js"></script>
+  <script src="backoffice/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="backoffice/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="backoffice/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="backoffice/assets/js/main.js"></script>
+
+</body>
+
+</html>
+
