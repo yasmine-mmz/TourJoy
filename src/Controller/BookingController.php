@@ -158,22 +158,38 @@ public function bookingSuccess(): Response
         
     }
 
-#[Route('/back', name: 'bookings_per_guide')]
-public function bookingStats(BookingRepository $bookingRepository): Response
-{
-    $bookingStats = $bookingRepository->countBookingsByGuide();
 
-    $labels = [];
-    $data = [];
-    foreach ($bookingStats as $stat) {
-        $labels[] = $stat['guideName']; // Adjust based on actual returned array key
-        $data[] = $stat['bookingCount']; // Adjust based on actual returned array key
+    #[Route('/admin', name: 'Bookings_stats')]
+    public function BookingStats(BookingRepository $Rep): Response
+    {
+        $BookingStats = $Rep->countBookingsByGuide();
+        $BookingsPerMonth = $Rep->bookingsPerMonth();
+    
+        $guideLabels = [];
+        $guideData = [];
+        foreach ($BookingStats as $stat) {
+            $guideLabels[] = $stat['guideFirstname'] . ' ' . $stat['guideLastname'];
+            $guideData[] = $stat['bookingsCount'];
+        }
+    
+        $monthsLabels = [];
+        $monthsData = [];
+        foreach ($BookingsPerMonth as $monthStat) {
+            $date = $monthStat['date'];
+            $month = $date->format('F');
+            $monthsLabels[] = $month;
+            $monthsData[] = $monthStat['bookingsCount'];
+        }
+    
+        return $this->render('BackOffice/back_template.html.twig', [
+            'guideLabels' => $guideLabels,
+            'guideData' => $guideData,
+            'monthsLabels' => $monthsLabels,
+            'monthsData' => $monthsData,
+        ]);
     }
+    
 
-    return $this->render('BackOffice/back_template.html.twig', [
-        'labels' => json_encode($labels),
-        'data' => json_encode($data),
-    ]);
-}
-
+    
+    
 }

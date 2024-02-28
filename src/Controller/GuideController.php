@@ -23,7 +23,7 @@ class GuideController extends AbstractController
         ]);
     }
 
-    #[Route('/fetch', name: 'fetch')]
+    #[Route('/fetchg', name: 'fetchg')]
     public function fetch(Request $request, GuideRepository $repo, PaginatorInterface $paginator): Response // Inject PaginatorInterface here
     {
         $genders = $request->query->get('gender', []);
@@ -64,7 +64,7 @@ class GuideController extends AbstractController
         ]);
     }
  
-    #[Route('/addF', name: 'addF')] 
+    #[Route('/addFg', name: 'addFg')] 
     public function addF(ManagerRegistry $mr,Request $req): Response
     {
        
@@ -85,7 +85,7 @@ class GuideController extends AbstractController
 
 
 
-    #[Route('/update{id}', name: 'update')]
+    #[Route('/updateg{id}', name: 'updateg')]
     public function updateGuide(int $id, ManagerRegistry $mr, Request $req, GuideRepository $repo): Response
     {
         $s = $repo->find($id); // Find the student to update
@@ -106,7 +106,7 @@ class GuideController extends AbstractController
         ]);
     }
     
-    #[Route('/remove/{id}', name: 'remove')]
+    #[Route('/removeg/{id}', name: 'removeg')]
     public function remove(GuideRepository $repo, $id, ManagerRegistry $mr): Response
     {
         $guide = $repo->find($id);
@@ -115,7 +115,11 @@ class GuideController extends AbstractController
         }
     
         $em = $mr->getManager();
-            foreach ($guide->getFeedback() as $feedback) {
+        foreach ($guide->getFeedback() as $feedback) {
+            // Remove related Likesystem entities before removing the Feedback
+            foreach ($feedback->getLikesystems() as $likesystem) {
+                $em->remove($likesystem);
+            }
             $em->remove($feedback);
         }
     
@@ -126,8 +130,9 @@ class GuideController extends AbstractController
         $em->remove($guide);
         $em->flush();
     
-        return $this->redirectToRoute('fetch');
+        return $this->redirectToRoute('fetchg');
     }
+    
 
 
 }

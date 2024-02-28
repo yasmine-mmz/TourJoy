@@ -46,5 +46,26 @@ class BookingRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+public function countBookingsByGuide()
+{
+    $qb = $this->createQueryBuilder('b')
+        ->select("g.firstnameG AS guideFirstname, g.lastnameG AS guideLastname, COUNT(b.id) AS bookingsCount")
+        ->leftJoin('b.guide_id', 'g') // Assuming 'guide_id' is the property in the booking entity that references the guide entity
+        ->groupBy('guideFirstname, guideLastname')
+        ->orderBy('guideFirstname', 'ASC');
+
+    return $qb->getQuery()->getResult();
+}
+
+public function bookingsPerMonth()
+{
+    $qb = $this->createQueryBuilder('b')
+        ->select('b.date as date, COUNT(b.id) as bookingsCount')
+        ->groupBy('date')
+        ->orderBy('date', 'ASC');
+
+    return $qb->getQuery()->getResult();
+}
+
 
 }
