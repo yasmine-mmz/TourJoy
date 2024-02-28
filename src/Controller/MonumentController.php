@@ -25,8 +25,8 @@ class MonumentController extends AbstractController
     }
     
   
-    #[Route('/add', name: 'addF')] 
-    public function addF(FlashyNotifier $flashy,ManagerRegistry $mr, Request $req): Response
+    #[Route('/addM', name: 'addM')] 
+    public function addM(FlashyNotifier $flashy,ManagerRegistry $mr, Request $req): Response
     {
         $monument = new Monument();
         $form = $this->createForm(MonumentType::class, $monument);
@@ -42,11 +42,11 @@ class MonumentController extends AbstractController
             return $this->redirectToRoute('monument_show');    
         }
         
-        return $this->render('monument/add.html.twig', [
+        return $this->render('BackOffice/add.html.twig', [
             'f' => $form->createView()
         ]);
     }
-    #[Route('/update{id}', name: 'update')]
+    #[Route('/updateM{id}', name: 'updateM')]
     public function updateMonument(FlashyNotifier $flashy,int $id, ManagerRegistry $mr, Request $req, MonumentRepository $repo): Response
     {
         $s = $repo->find($id); 
@@ -67,12 +67,12 @@ class MonumentController extends AbstractController
             return $this->redirectToRoute('monument_show'); 
         }
     
-        return $this->render('monument/add.html.twig', [
+        return $this->render('BackOffice/add.html.twig', [
             'f' => $form->createView()
         ]);
     }
-#[Route('/remove/{id}', name: 'remove')]
-public function remove(FlashyNotifier $flashy,MonumentRepository $repo, $id, ManagerRegistry $mr):Response
+#[Route('/removeM/{id}', name: 'removeM')]
+public function removeM(FlashyNotifier $flashy,MonumentRepository $repo, $id, ManagerRegistry $mr):Response
 {
     $monument = $repo->find($id);
     $em = $mr->getManager();
@@ -116,7 +116,7 @@ public function fetch(MonumentRepository $repo, CountryRepository $countryReposi
     );
 
     // Pass the pagination object to the template.
-    return $this->render('monument/show.html.twig', [
+    return $this->render('BackOffice/show.html.twig', [
         'pagination' => $pagination,
     ]);
 }
@@ -156,7 +156,7 @@ public function searchMonuments(Request $request, MonumentRepository $monumentRe
 
     return $this->json($filteredMonuments);
 }
-#[Route('/back', name: 'monuments_per_country')]
+#[Route('/statAcc', name: 'statAcc')]
 public function monumentStats(MonumentRepository $monumentRepository): Response
 {
     
@@ -170,7 +170,7 @@ public function monumentStats(MonumentRepository $monumentRepository): Response
         $data[] = $stat['monumentCount']; 
     }
 
-    return $this->render('BackOffice/back_template.html.twig', [
+    return $this->render('BackOffice/chartAcc.html.twig', [
         'labels' => json_encode($labels),
         'data' => json_encode($data),
     ]);

@@ -45,7 +45,7 @@ class ReservationController extends AbstractController
     }
     
 
-    #[Route('/fetch', name: 'fetch')] 
+    #[Route('/fetchR', name: 'fetchR')] 
     public function show(ReservationRepository $repo): Response
     {
         $result = $repo->findAll();
@@ -55,8 +55,8 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/addF', name: 'addF')]
-    public function addF(ManagerRegistry $mr, Request $req, TranslatorInterface $translator): Response
+    #[Route('/addR', name: 'addR')]
+    public function addR(ManagerRegistry $mr, Request $req, TranslatorInterface $translator): Response
     {
         $p = new Reservation();
         $form = $this->createForm(ReservationType::class, $p);

@@ -1,8 +1,9 @@
 {
-    "carlos-mg89/symfony-captcha-bundle": {
-        "version": "4.2.21"
     "babdev/pagerfanta-bundle": {
         "version": "v4.4.0"
+    },
+    "carlos-mg89/symfony-captcha-bundle": {
+        "version": "4.2.21"
     },
     "doctrine/annotations": {
         "version": "2.0",
@@ -210,7 +211,7 @@
         ]
     },
     "symfony/phpunit-bridge": {
-        "version": "7.0",
+        "version": "6.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -250,7 +251,7 @@
         ]
     },
     "symfony/stimulus-bundle": {
-        "version": "2.14",
+        "version": "2.15",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -290,7 +291,7 @@
         ]
     },
     "symfony/ux-chartjs": {
-        "version": "v2.14.0"
+        "version": "v2.15.0"
     },
     "symfony/validator": {
         "version": "5.4",
@@ -327,9 +328,6 @@
             "branch": "main",
             "version": "1.13",
             "ref": "1b3064c2f6b255c2bc2f56461aaeb76b11e07e36"
-        },
-        "files": [
-            "./config/packages/vich_uploader.yaml"
-        ]
+        }
     }
 }

@@ -1,0 +1,118 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <h1 class="text-center mb-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-size: 36px;">Explore Our Monuments</h1>
+    <br>
+    <div class="input-group mb-3">
+        <input type="text" id="monument-search" class="form-control" placeholder="Search Monuments by Name">            </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-12 text-center">
+            <div class="btn-group" role="group" aria-label="Monument Categories">
+                <a href="{{ path('all_monuments', {'sort_by_price': 'false'}) }}" button type="button" class="btn btn-secondary btn-lg mr-2 filter-btn rounded-pill" data-filter="*">Show All</a>
+                <a href="{{ path('all_monuments', {'sort_by_price': 'true'}) }}" class="btn btn-secondary btn-lg mr-2 filter-btn rounded-pill">Sort by Price</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-12 text-center">
+            <div class="btn-group" role="group" aria-label="Country Filters">
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle rounded-pill" type="button" id="countryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Country
+                    </button>
+                    <div class="dropdown-menu bg-light" aria-labelledby="countryDropdown"> <!-- Added bg-light class for light background color -->
+                        {% for country in countries %}
+                            <button class="dropdown-item filter-btn" data-filter=".country-{{ country.getName }}">{{ country.getName }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row monuments">
+        {% for monument in Monuments %}
+            {% if monument.getStatus() == 'Active' %}
+                <div class="col-lg-4 col-md-6 mb-4 {{ monument.getType }} {{ 'country-' ~ monument.getFkcountry().getName() }}">
+                    <div class="card h-100 border-light bg-light-gray rounded-circle-border">
+                        <img src="{{ vich_uploader_asset(monument, 'imageFile') }}" class="card-img-top rounded-circle img-fluid" alt="{{ monument.getNameM }}" style="height: 200px; object-fit: cover; transition: transform 0.3s ease-in-out;">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h5 class="card-title">{{ monument.getNameM }}</h5>
+                            <p class="card-text text-orange font-weight-bold">Entry Price: {{ monument.getEntryPrice }} TND</p>
+                            <p class="card-text">{{ monument.getDescription }}</p>
+                            <div class="text-center mt-auto">
+                                <a href="{{ path('details', {'id': monument.getref()}) }}" class="btn btn-info btn-lg rounded-pill">Explore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .bg-light-gray {
+        background-color: #f5f5f5;
+    }
+    .rounded-circle-border {
+        border-radius: 20px;
+    }
+    .rounded-circle {
+        border-radius: 20px 20px 20px 20px;
+    }
+    .btn {
+        border-radius: 20px;
+    }
+    /* Add zoom animation to images on hover */
+    .card-img-top:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const monuments = document.querySelector('.monuments');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filterValue = this.getAttribute('data-filter');
+                monuments.querySelectorAll('.col-lg-4').forEach(item => {
+                    if (filterValue === '*' || item.classList.contains(filterValue.slice(1))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const monuments = document.querySelector('.monuments');
+        const searchInput = document.getElementById('monument-search');
+
+        searchInput.addEventListener('input', function() {
+            applySearch(searchInput.value.toLowerCase());
+        });
+
+        function applySearch(query) {
+            monuments.querySelectorAll('.col-lg-4').forEach(item => {
+                const name = item.querySelector('.card-title').textContent.toLowerCase();
+                if (name.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

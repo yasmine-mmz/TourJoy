@@ -53,6 +53,9 @@ class Accomodation
     #[Assert\NotBlank(message:"address is required")]
     private ?string $location = null;
 
+    #[ORM\ManyToOne(inversedBy: 'accomodations')]
+    private ?Country $fkpays = null;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -176,6 +179,18 @@ class Accomodation
     public function setLocation(string $location): static
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getFkpays(): ?Country
+    {
+        return $this->fkpays;
+    }
+
+    public function setFkpays(?Country $fkpays): static
+    {
+        $this->fkpays = $fkpays;
 
         return $this;
     }

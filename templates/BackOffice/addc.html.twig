@@ -1,0 +1,34 @@
+	{% extends 'BackOffice/navbars.html.twig' %}
+
+ {% block main %}
+    <div class="section-top-border">
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <h3 class="mb-30">Add Country</h3>
+                {{ form_start(f, {'attr': {'class': 'my-form-class', 'novalidate': 'novalidate'}}) }}
+
+                    <div class="mt-10">
+                        {{ form_row(f.name, {'attr': {'class': 'single-input', 'placeholder': 'Country Name'}}) }}
+                    </div>
+                    <div class="mt-10">
+                        {# Render 'region' as a dropdown with continents #}
+                        {{ form_label(f.region, 'Continent') }}
+                        {{ form_widget(f.region, {'attr': {'class': 'single-input'}}) }}
+                        {{ form_errors(f.region) }}
+                    </div>
+
+                    <div class="mt-10">
+                        {{ form_row(f.save, {'label': 'ADD', 'attr': {'class': 'btn btn-primary'}}) }}
+                    </div>
+
+                {{ form_end(f) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+

@@ -482,7 +482,12 @@
     {% endblock %}
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+<!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
     <!-- Vendor JS Files -->
     <script src="backoffice/assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

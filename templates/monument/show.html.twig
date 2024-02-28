@@ -167,7 +167,7 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-    <a href="{{ path('addF') }}">
+    <a href="{{ path('addM') }}">
         <i class="bi bi-circle"></i><span>Add Monuments</span>
     </a>
 </li>
@@ -320,8 +320,8 @@
                         <td>{{ monument.getLatitude() }}</td>
                         <td><img src="{{ vich_uploader_asset(monument, 'imageFile') }}" alt="Monument Image" style="max-width: 200px; max-height: 100px;"></td>
                         <td>
-                            <a href="{{ path('update', { 'id': monument.getref() }) }}" class="btn btn-primary mr-2">Modify</a>
-                            <a href="{{ path('remove', { 'id': monument.getref() }) }}" class="btn btn-danger">Delete</a>
+                            <a href="{{ path('updateM', { 'id': monument.getref() }) }}" class="btn btn-primary mr-2">Modify</a>
+                            <a href="{{ path('removeM', { 'id': monument.getref() }) }}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}

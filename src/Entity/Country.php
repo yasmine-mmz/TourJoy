@@ -33,9 +33,13 @@ class Country
     #[ORM\OneToMany(mappedBy: 'fkcountry', targetEntity: Monument::class)]
     private Collection $monuments;
 
+    #[ORM\OneToMany(mappedBy: 'fkpays', targetEntity: Accomodation::class)]
+    private Collection $accomodations;
+
     public function __construct()
     {
         $this->monuments = new ArrayCollection();
+        $this->accomodations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,4 +100,41 @@ class Country
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Accomodation>
+     */
+    public function getAccomodations(): Collection
+    {
+        return $this->accomodations;
+    }
+
+    public function addAccomodation(Accomodation $accomodation): static
+    {
+        if (!$this->accomodations->contains($accomodation)) {
+            $this->accomodations->add($accomodation);
+            $accomodation->setFkpays($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccomodation(Accomodation $accomodation): static
+    {
+        if ($this->accomodations->removeElement($accomodation)) {
+            // set the owning side to null (unless already changed)
+            if ($accomodation->getFkpays() === $this) {
+                $accomodation->setFkpays(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 }

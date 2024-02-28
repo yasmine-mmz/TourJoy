@@ -17,6 +17,7 @@ class AccomodationType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('fkpays')
             ->add('type', ChoiceType::class, [
                 'choices' => [
                     'Resort' => 'resort',

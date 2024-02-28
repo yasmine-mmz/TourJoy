@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -278,7 +278,6 @@
 
       <li class="nav-item">
         <a class="nav-link " href="statAcc">
-        <a class="nav-link " href="{{ path('app_back') }}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -302,7 +301,7 @@
             </a>
           </li>
           <li>
-            <a href="fetch">
+            <a href="fetchR">
               <i class="bi bi-circle"></i><span>All reservations</span>
             </a>
           </li>
@@ -311,74 +310,12 @@
       </li><!-- End Accommodations Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-remix.html">
-              <i class="bi bi-circle"></i><span>Remix Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-boxicons.html">
-              <i class="bi bi-circle"></i><span>Boxicons</span>
-            </a>
-          </li>
-        </ul>
-      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Monuments</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-    <a href="{{ path('addF') }}">
+    <a href="{{ path('addM') }}">
         <i class="bi bi-circle"></i><span>Add Monuments</span>
     </a>
 </li>
@@ -458,66 +395,7 @@
         
     </div>
 </div>
- <div style="display: flex; flex-direction: column; width: 100%;">
-    <div style="max-width: 650px; margin-bottom: 20px; width: 100%;">
-        <h1>Monument Statistics by Country</h1>
-        <canvas id="monumentsChart"></canvas>
-    </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var ctx = document.getElementById('monumentsChart').getContext('2d');
-        var monumentsChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {{ labels|raw }},
-                datasets: [{
-                    label: 'Number of Monuments',
-                    data: {{ data|raw }},
-                    backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',  // Red
-                            'rgba(54, 162, 235, 0.2)',  // Blue
-                            'rgba(255, 206, 86, 0.2)',  // Yellow
-                            'rgba(75, 192, 192, 0.2)',  // Green
-                            'rgba(153, 102, 255, 0.2)', // Purple
-                            'rgba(255, 159, 64, 0.2)',  // Orange
-                            'rgba(255, 99, 132, 0.2)'   // Red (repeated for additional parts)
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',    // Red
-                            'rgba(54, 162, 235, 1)',    // Blue
-                            'rgba(255, 206, 86, 1)',    // Yellow
-                            'rgba(75, 192, 192, 1)',    // Green
-                            'rgba(153, 102, 255, 1)',   // Purple
-                            'rgba(255, 159, 64, 1)',    // Orange
-                            'rgba(255, 99, 132, 1)'     // Red (repeated for additional parts)
-                        ],
-                        borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    x: { // This is where you configure the x-axis settings
-                        ticks: {
-                            font: {
-                                size: 14 // Adjust the size as needed
-                            }
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
@@ -832,7 +710,12 @@
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+<!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
   <!-- Vendor JS Files -->
   <script src="backoffice/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
