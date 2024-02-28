@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset</title>
+    <title>Claim Submitted</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,18 +15,22 @@
         }
         .container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #007bff;
+            color: #2C3E50; /* Deep blue */
             text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
         p {
             margin-bottom: 20px;
+            line-height: 1.4;
+            font-size: 16px;
         }
         a {
             color: #007bff;
@@ -43,22 +45,32 @@
             color: #888;
             font-size: 14px;
         }
+        .claim-details {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .claim-details p {
+            margin: 0;
+            color: #4F4F4F; /* Dark gray */
+        }
     </style>
 </head>
 <body>
-<br>
-<br>
-<br>
-<br>
     <div class="container">
-        <h1>Hi there!</h1>
-        <p>you have recieved a new claim</p>
-            {{ form_row(form.title) }}
-            {{ form_row(form.description) }}
-        <p>Thanks,<br>TourJoy-Team</p>
+        <h1>New Claim Submitted</h1>
+        <p>Dear Team,</p>
+        <p>A new claim has been submitted on the TourJoy platform. Please find the details below:</p>
+        <div class="claim-details">
+            <p><strong>Title:</strong> {{ title }}</p>
+            <p><strong>Description:</strong> {{ description }}</p>
+        </div>
+        <p>Thank you for your attention to this matter.</p>
+        <p>Best regards,<br>TourJoy Team</p>
     </div>
     <div class="footer">
-        &copy; {{ 'now'|date('Y') }} TourJoy
+        &copy; {{ 'now'|date('Y') }} TourJoy. All rights reserved.
     </div>
 </body>
 </html>

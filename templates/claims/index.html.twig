@@ -89,13 +89,13 @@
   });
 
 
-  document.addEventListener('DOMContentLoaded', function() {
+  {# document.addEventListener('DOMContentLoaded', function() {
     // Existing search functionality
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('keyup', function() {
         updateClaimsTable();
     });
-});
+}); #}
 
 function updateClaimsTable() {
     const searchTerm = document.getElementById('searchInput').value;

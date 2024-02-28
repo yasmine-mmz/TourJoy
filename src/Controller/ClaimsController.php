@@ -19,7 +19,7 @@ use Twig\Environment as TwigEnvironment;
 use Twig\Environment;
 use Symfony\Contracts\EventDispatcher\Event;
 use App\Entity\Claim; // Adjust namespace according to your application structure
-
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 
 
@@ -60,60 +60,54 @@ public function show(ClaimsRepository $rep, Request $request): Response
         return $this->render('Claims/search.html.twig', [
             'Claimss' => $claims,
             'searchTerm' => $searchTerm,
-            'currentSortField' => $sortField,
-            'currentSortOrder' => $sortOrder,
+            
         ]);
     }
 
     // Render the full page for non-AJAX requests
     return $this->render('Claims/index.html.twig', [
         'Claimss' => $claims,
-        'searchTerm' => $searchTerm,
         'currentSortField' => $sortField,
         'currentSortOrder' => $sortOrder,
     ]);
 }
 
 
-    #[Route('/Claimsadd', name: 'Claims_add')]
-    public function AddClaims(ManagerRegistry $doctrine, Request $request,ValidatorInterface $validator,
-    MailerInterface $mailer): Response
-    {
-
-        $Claims =new Claims();
-        $form=$this->createForm(ClaimsAddType::class,$Claims);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $title = $Claims->getTitle(); // Assuming getTitle method exists in your Claims entity
+#[Route('/Claimsadd', name: 'Claims_add')]
+public function AddClaims(ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator, MailerInterface $mailer): Response
+{
+    $Claims = new Claims();
+    $form = $this->createForm(ClaimsAddType::class, $Claims);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $title = $Claims->getTitle(); // Assuming getTitle method exists in your Claims entity
         $description = $Claims->getDescription(); // Assuming getDescription method exists in your Claims entity
 
-        $claims = [
-            'title' => $request->request->get('title'),
-            'description' => $request->request->get('description'),
-            
-            // Add more claim data as needed
-        ];
+        $Claims->setCreateDate(new \DateTimeImmutable());
+        $em = $doctrine->getManager();
+        $em->persist($Claims);
+        $em->flush();
 
-            $Claims->setCreateDate(new \DateTimeImmutable());
-            $em= $doctrine->getManager();
-            $em->persist($Claims);
-            $em->flush();
-             // Send email notification to admin
-             $email = (new Email())
-             ->from('no-reply@tourjoy.com')
-             ->to('admin@tourjoy.com')
-             ->subject('New Claim Submitted')
-             ->text("A new claim has been submitted. Title: {$Claims->getTitle()}, Description: {$Claims->getDescription()}");
-         // Step 3: Send the email
-         $mailer->send($email);
-         
+        // Send email notification to admin
+        $email = (new TemplatedEmail())
+            ->from('no-reply@tourjoy.com')
+            ->to('admin@tourjoy.com')
+            ->subject('New Claim Submitted')
+            ->htmlTemplate('Claims/Mailing.html.twig')
+            ->context([
+                'title' => $title,
+                'description' => $description
+            ]);
 
-            return $this-> redirectToRoute('app_test');
-        }
-        return $this->render('Claims/Add.html.twig',[
-            'Claims'=>$form->createView(),
-        ]);
+        $mailer->send($email);
+
+        return $this->redirectToRoute('app_test');
     }
+    return $this->render('Claims/Add.html.twig', [
+        'Claims' => $form->createView(),
+    ]);
+}
+
     #[Route('/Claimsupdate{id}', name: 'Claims_update')]
     public function UpdateClaims(ManagerRegistry $doctrine, Request $request, ClaimsRepository $rep, $id,ValidatorInterface $validator): Response
     {
