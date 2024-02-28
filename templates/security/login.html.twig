@@ -1,167 +1,268 @@
 {% extends 'FrontOffice/navbar.html.twig' %}
 
 {% block navbar %}
-    <br>
+	<br>
+	<br>
+
 {% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<style>
-  .social-btn-fb {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #000;
-    border-radius: 0.5em;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    position: relative; /* Add position relative for the button container */
-  }
+	<style>
+		body {
+			background-color: #010102;
+			background-size: cover; /* Cover the entire viewport */
+			background-position: center; /* Center the image */
+			background-attachment: fixed; /* Fix the background image */
+      cursor: none;
+			
+		}
+		body::before {
+			content: '';
+			position: fixed; /* or 'absolute' */
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background-image: url('path_to_your_image.jpg');
+			background-size: cover;
+			background-position: center;
+			filter: blur(5px) brightness(1.1) contrast(1.2);
+			z-index: -1; /* Ensure it's behind all other content */
+		}
+		.social-btn-fb {
+			background-color: #fff;
+			color: #000;
+			border: 2px solid #000;
+			border-radius: 0.5em;
+			transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+			position: relative; /* Add position relative for the button container */
+		}
 
-  .social-btn-fb i {
-    position: absolute; /* Set the icon to absolute position */
-    left: 0; /* Align the icon to the far left */
-    margin-left: 5%
-  }
+		.social-btn-fb i {
+			position: absolute; /* Set the icon to absolute position */
+			left: 0; /* Align the icon to the far left */
+			margin-left: 5%
+		}
 
-  .social-btn-gg {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #000;
-    border-radius: 0.5em;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    position: relative; /* Add position relative for the button container */
-  }
+		.social-btn-gg {
+			background-color: #fff;
+			color: #000;
+			border: 2px solid #000;
+			border-radius: 0.5em;
+			transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+			position: relative; /* Add position relative for the button container */
+		}
 
-  .social-btn-gg i {
-    position: absolute; /* Set the icon to absolute position */
-    left: 0; /* Align the icon to the far left */
-    margin-left: 5%
-  }
+		.social-btn-gg i {
+			position: absolute; /* Set the icon to absolute position */
+			left: 0; /* Align the icon to the far left */
+			margin-left: 5%
+		}
 
-  .social-btn-x {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #000;
-    border-radius: 0.5em;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    position: relative; /* Add position relative for the button container */
-  }
+		.social-btn-x {
+			background-color: #fff;
+			color: #000;
+			border: 2px solid #000;
+			border-radius: 0.5em;
+			transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+			position: relative; /* Add position relative for the button container */
+		}
 
-  .social-btn-x i {
-    position: absolute; /* Set the icon to absolute position */
-    left: 0; /* Align the icon to the far left */
-    margin-left: 5%
-  }
+		.social-btn-x i {
+			position: absolute; /* Set the icon to absolute position */
+			left: 0; /* Align the icon to the far left */
+			margin-left: 5%
+		}
 
-  .social-btn-fb:hover{
-    background-color: #0866ff;
-    color: #fff;
-    border-color: #0866ff;
-  }
-  .social-btn-gg:hover{
-    background-color: #DB4437;
-    color: #fff;
-    border-color: #DB4437;
-  }
-  .social-btn-x:hover {
-    background-color: #1DA1F2;
-    color: #fff;
-    border-color: #1DA1F2;
-  }
-    .logo-container {
-    position: fixed;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999; }    
+		.social-btn-fb:hover {
+			background-color: #0866ff;
+			color: #fff;
+			border-color: #0866ff;
+		}
+		.social-btn-gg:hover {
+			background-color: #DB4437;
+			color: #fff;
+			border-color: #DB4437;
+		}
+		.social-btn-x:hover {
+			background-color: #1DA1F2;
+			color: #fff;
+			border-color: #1DA1F2;
+		}
+		.logo-container {
+			position: fixed;
+			top: 10%;
 
-  .logo {
-    max-width: 100%;
+			right: 63.5%;
+			transform: translate(-50%, -50%);
+			z-index: 9999;
+		}
 
-  }
-</style>
+		.logo {
+			max-width: 100%;
 
-<a class="logo-container" href="{{ path('app_test') }}">
-    <img src="img/logo.png" alt="TourJoy Logo" class="logo"  >
-</a>
+		}
+
+		.right-aligned-image {
+			position: absolute; /* or 'fixed' if you want it to stay in place on scroll */
+			right: 0;
+			top: 50%; /* adjust this to place it at the desired vertical position */
+			transform: translateY(-50%); /* this centers it vertically relative to the top position */
+			max-width: 920px; /* or the width you want */
+			max-height: 1280px; /* or the height you want */
+			height: auto; /* Keep the aspect ratio */
+			z-index: -1; /* Keep the image behind the form */
+      filter: blur(5px) brightness(1.1) contrast(1.2);
+		}
 
 
-<div class="container" style="margin-top: 5%; margin-left: ">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card mt-5 mb-4 h-100" >
-        <div class="card-body h-100">
-          <h5 class="card-title text-center">Log In</h5>
+		@media(max-width: 768px) {
+			/* On smaller screens, stack the elements instead */
+			.right-aligned-image,
+			.card-container {
+				position: relative;
+				left: auto;
+				top: auto;
+				transform: none;
+				max-width: 100%;
+			}
+		}
 
-          {% if error %}
-            <div class="alert alert-danger" role="alert">
-              {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-          {% endif %}
+		.card {
+			background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+			backdrop-filter: blur(10px); /* Blurring the background */
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			overflow: hidden; /* Ensures the blur effect is contained within the card borders */
+			color: #ffffff; /* Adjust text color as needed */
+		}
 
-          {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+		.card-body {
+			position: relative;
+			z-index: 1; /* Ensures the content is above the blurred background */
+		}
 
-          <form method="post" novalidate>
-            <div class="mb-3">
-                <label for="inputEmail">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-            </div>
+		/* Adjust the form elements to better fit the dark theme */
+		.form-control {
+			background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+			color: white;
+			border: 1px solid #555; /* Darker border for input fields */
+		}
 
-            <div class="mb-3">
-                <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-            </div>
-                <input type="hidden" name="_csrf_token"
-                    value="{{ csrf_token('authenticate') }}"
-                >
+		.btn-primary {
+			background-color: #0056b3;
+			border: none;
+		}
 
-            <div class="mb-3">
-              <a href="{{ path('app_forgot_password_request')}}">Forgot password?</a>
-            </div>
 
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-            </div>
-          </form>
+    #plane {
+			pointer-events: none; /* Ignore the cursor itself for click events */
+			width: 50px; /* Adjust based on your icon size */
+			transition: transform 0.1s ease-out; /* Smooth movement */
+			color: white;
 
-          <div class="mt-3 text-center">
-            Don't have an account? <a href="{{ path('app_register') }}">Sign Up</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-4 d-flex align-items-start">
-      <div class="card mt-5 mb-4 w-100 h-100">
-        <div class="card-body h-100">
-          <h5 class="card-title text-center">Or</h5>
-          <hr>
-          <div class="text-center mb-3">
-            <p class="mb-0">Connect with:</p>
-          </div>
-          <button class="btn social-btn-fb w-100 mb-2  " type="button" style="margin-top: 10%">
-    <i class="fab fa-facebook-f"></i> Continue with Facebook
-</button>
-<hr>
-<button class="btn social-btn-gg w-100 mb-2" type="button">
-    <i class="fab fa-google"></i> Continue with Google
-</button>
-<hr>
-<button class="btn social-btn-x w-100" type="button">
-    <i class="fab fa-twitter"></i> Continue with Twitter
-</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
+		}
+
+		@keyframes trail {
+			from {
+				opacity: 1;
+			}
+			to {
+				opacity: 0;
+			}
+		}
+
+
+	</style>
+
+	<img src="img/login.png" alt="Descriptive text" class="right-aligned-image">
+
+
+	<a class="logo-container" href="{{ path('app_test') }}">
+		<img src="img/tourjoy.png" alt="TourJoy Logo" class="logo" style="max-height: 130px; width: auto; margin-top: 90%">
+	</a>
+
+
+	<div class="container" style="margin-top: 8%; margin-right: 60%">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card mt-5 mb-4 h-100">
+					<div class="card-body h-100">
+						<h3 class="card-title text-center" style="color: white;">Welcome back!</h3>
+
+						{% if error %}
+							<div class="alert alert-danger" role="alert">
+								{{ error.messageKey|trans(error.messageData, 'security') }}
+							</div>
+						{% endif %}
+
+						{% if app.user %}
+							<div class="mb-3">
+								You are logged in as
+								{{ app.user.userIdentifier }},
+								<a href="{{ path('app_logout') }}">Logout</a>
+							</div>
+						{% endif %}
+
+						<form method="post" novalidate>
+							<div class="mb-3">
+								<label for="inputEmail">Email</label>
+								<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+							</div>
+
+							<div class="mb-3">
+								<label for="inputPassword">Password</label>
+								<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+							</div>
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+							<div class="mb-3">
+								<a href="{{ path('app_forgot_password_request')}}">Forgot password?</a>
+							</div>
+
+							<div class="text-center">
+								<button type="submit" class="btn btn-block" style="background-color: #fff3cf">Sign In</button>
+							</div>
+						</form>
+
+						<div class="mt-3 text-center">
+							Don't have an account?
+							<a href="{{ path('app_register') }}">Sign Up</a>
+							<br>
+							<br>
+							<h5 class="card-title text-center" style="color: white;">Or</h5>
+							<br>
+							<a class="btn social-btn-gg w-100 mb-2" role="button" href="{{ path('connect_google_start') }}">
+								<i class="fab fa-google"></i>
+								Continue with Google
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+<img id="plane" src="img/plane2.svg" alt="Plane" style="position: absolute; display: none; width: 50px; pointer-events: none;">
+
+<script>
+document.addEventListener('mousemove', function (e) {
+const plane = document.getElementById('plane');
+const mouseX = e.clientX;
+const mouseY = e.clientY;
+plane.style.left = mouseX + 'px';
+plane.style.top = mouseY + 'px';
+plane.style.display = 'block';
+});
+
+</script>
 {% endblock %}
 
 {% block footer %}
-    <br>
+	<br>
 {% endblock %}

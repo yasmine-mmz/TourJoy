@@ -15,7 +15,7 @@
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<!-- Site Title -->
-		<title>Adventure</title>
+		<title>TourJoy</title>
         {% block stylesheets %}
             
         
@@ -31,6 +31,10 @@
 			<link rel="stylesheet" href="frontoffice/css/animate.min.css">
 			<link rel="stylesheet" href="frontoffice/css/owl.carousel.css">
 			<link rel="stylesheet" href="frontoffice/css/main.css">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
 
         {% endblock %}  
 		{% set user = app.user %}
@@ -47,24 +51,32 @@
 				<header class="default-header">
 					<nav class="navbar navbar-expand-lg  navbar-light bg-secondary">
 						<div class="container">
-							  <a class="navbar-brand" href="index.html">
-							  	<img src="img/logo.png" alt="">
-							  </a>
-							  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							    <span class="text-white lnr lnr-menu"></span>
-							  </button>
-
-							  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-							    <ul class="navbar-nav">
-									<li><a href="{{path('app_test')}}">Home</a></li>
-									<li><a href="#about">About</a></li>		
-									<li><a href="/fetch2">Guides</a></li>																
-									<li><a href="#secvice">Service</a></li>
-									<li><a href="#gallery">Gallery</a></li>
-									<li><a href="#faq">Faq</a></li>
-									<li><a href="#contact">feedback</a></li>
-									<!-- Dropdown -->
-								    
+							<a class="navbar-brand" href="{{ path('app_test')}}">
+								<img src="img/logo.png" alt="">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="text-white lnr lnr-menu"></span>
+							</button>
+							<div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+								<ul class="navbar-nav">
+									<li>
+										<a href="#home">Home</a>
+									</li>
+									<li>
+										<a href="#about">About</a>
+									</li>
+									<li>
+										<a href="#secvice">Service</a>
+									</li>
+									<li>
+										<a href="#gallery">Gallery</a>
+									</li>
+									<li>
+										<a href="#faq">Faq</a>
+									</li>
+									<li>
+										<a href="#contact">Contact</a>
+									</li>
 									<li>
 										{% if app.user %}
 											<!-- Dropdown -->

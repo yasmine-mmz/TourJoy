@@ -16,6 +16,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use App\Entity\User;
 
 
 
@@ -45,7 +49,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/2fa', name: '2fa_login')]
     public function check2fa(GoogleAuthenticatorInterface $authenticator, TokenStorageInterface $storage)
     {
-        
+
         $user = $storage->getToken()->getUser();
         $otpAuthUrl = $authenticator->getQRContent($user);
         $qrcodeUrl = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" . urlencode($otpAuthUrl);
@@ -137,17 +141,42 @@ class SecurityController extends AbstractController
     #[Route('/admin/users/stats', name: 'user_stats')]
     public function userStats(UserRepository $userRepository): Response
     {
+        // Get user statistics from the repository
         $userStats = $userRepository->countUsersByCreationDate();
+
+        // Assume the first and last statistics have the earliest and latest dates
+        $startDate = new \DateTime($userStats[0]['createdAt']); // Use the actual date from your stats
+        $endDate = new \DateTime(end($userStats)['createdAt']); // Use the actual date from your stats
+        $endDate = $endDate->modify('+1 day'); // Include the end date in the period
+
+
+        $interval = new \DateInterval('P1D');
+
+
+        $period = new \DatePeriod($startDate, $interval, $endDate);
+
 
         $labels = [];
         $data = [];
-        foreach ($userStats as $stat) {
-            $labels[] = $stat['createdAt'];
-            $data[] = $stat['userCount'];
+        foreach ($period as $date) {
+            $dateStr = $date->format('Y-m-d');
+            $labels[] = $dateStr;
+            $data[$dateStr] = 0;
         }
 
+
+        foreach ($userStats as $stat) {
+            $dateStr = new \DateTime($stat['createdAt']);
+            $dateStr = $dateStr->format('Y-m-d');
+            if (array_key_exists($dateStr, $data)) {
+                $data[$dateStr] = $stat['userCount'];
+            }
+        }
+
+
+        $data = array_values($data);
+
         return $this->render('BackOffice/user_stats.html.twig', [
-            'userStats' => $userStats,
             'labels' => $labels,
             'data' => $data,
         ]);
@@ -186,4 +215,80 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute('admin_users');
     }
+
+    #[Route('/connect/google', name: 'connect_google_start')]
+    public function connectAction(ClientRegistry $clientRegistry)
+    {
+        if($this->getUser()){
+            return $this->redirectToRoute('app_test');
+        }
+        
+        return $clientRegistry
+            ->getClient('google_main')
+            ->redirect([
+                'email'
+            ]);
+    }
+    
+    #[Route('/connect/google/check', name:'connect_google_check')]
+    public function connectCheckAction(Request $request, ClientRegistry $clientRegistry)
+    {
+        /** @var \KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient $client */
+        $client = $clientRegistry->getClient('google_main');
+
+        try {
+            /** @var \League\OAuth2\Client\Provider\GoogleUser $user */
+            $user = $client->fetchUser();
+            var_dump($user); die;
+        } catch (IdentityProviderException $e) {
+            var_dump($e->getMessage()); die;
+        }
+    }
+
+
+    #[Route('/admin/users/export-csv', name: 'admin_export_users_csv')]
+public function exportUsersCsv(EntityManagerInterface $entityManager): Response
+{
+    $users = $entityManager->getRepository(User::class)->findAll();
+
+    $output = fopen('php://temp', 'w+'); // File pointer to 'temp' memory
+
+    // Add CSV headers
+    fputcsv($output, ['ID', 'Email', 'First Name', 'Last Name', 'Phone Number', 'Country', 'Created At', 'Modified At', 'isVerified', 'isBanned', 'Roles']);
+
+    // Add user data
+    foreach ($users as $user) {
+        fputcsv($output, [
+            $user->getId(),
+            $user->getEmail(),
+            $user->getFirstName(),
+            $user->getLastName(),
+            $user->getPhoneNumber(),
+            $user->getCountry(),
+            $user->getCreatedAt()->format('Y-m-d H:i:s'),
+            $user->getModifiedAt() ? $user->getModifiedAt()->format('Y-m-d H:i:s') : '',
+            $user->isVerified() ? 'Yes' : 'No',
+            $user->getIsBanned() ? 'Yes' : 'No',
+            implode(', ', $user->getRoles())
+        ]);
+    }
+
+    rewind($output); // Set the pointer back to the start of the file
+
+    $csv = stream_get_contents($output); // Get the contents of 'temp' memory
+    fclose($output); // Close the "file" pointer
+
+    $response = new Response($csv);
+
+    $disposition = $response->headers->makeDisposition(
+        ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        'users.csv'
+    );
+
+    $response->headers->set('Content-Disposition', $disposition);
+    $response->headers->set('Content-Type', 'text/csv');
+
+    return $response;
+}
+
 }
