@@ -24,7 +24,7 @@ class GuideController extends AbstractController
     }
 
     #[Route('/fetchg', name: 'fetchg')]
-    public function fetch(Request $request, GuideRepository $repo, PaginatorInterface $paginator): Response // Inject PaginatorInterface here
+    public function fetchg(Request $request, GuideRepository $repo, PaginatorInterface $paginator): Response // Inject PaginatorInterface here
     {
         $genders = $request->query->get('gender', []);
         $ratings = $request->query->get('rating', []);
@@ -75,7 +75,7 @@ class GuideController extends AbstractController
             $em = $mr->getManager(); ///3- persist flush
             $em->persist($g);
             $em->flush();
-            return $this ->redirectToRoute('fetch');    
+            return $this ->redirectToRoute('fetchg');    
         }
         
         return $this-> render('guide/add.html.twig',[
@@ -99,7 +99,7 @@ class GuideController extends AbstractController
             $em = $mr->getManager();
            
             $em->flush();
-            return $this->redirectToRoute('fetch'); 
+            return $this->redirectToRoute('fetchg'); 
         }
         return $this->render('guide/add.html.twig', [
             'f' => $form->createView()
