@@ -156,7 +156,7 @@ public function searchMonuments(Request $request, MonumentRepository $monumentRe
 
     return $this->json($filteredMonuments);
 }
-#[Route('/statAcc', name: 'statAcc')]
+#[Route('/monuments', name: 'monuments_per_country')]
 public function monumentStats(MonumentRepository $monumentRepository): Response
 {
     
@@ -170,9 +170,10 @@ public function monumentStats(MonumentRepository $monumentRepository): Response
         $data[] = $stat['monumentCount']; 
     }
 
-    return $this->render('BackOffice/chartAcc.html.twig', [
+    return $this->render('BackOffice/monuments_stats.html.twig', [
         'labels' => json_encode($labels),
         'data' => json_encode($data),
     ]);
 }
+
 }
