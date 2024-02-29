@@ -41,6 +41,14 @@ public function countReservationsByAccommodation()
     return $qb->getQuery()->getResult();
 }
 
+public function findAllWithUsers(): array
+{
+    return $this->createQueryBuilder('r')
+        ->leftJoin('r.fkuser', 'u')
+        ->addSelect('u')
+        ->getQuery()
+        ->getResult();
+}
 
 //    /**
 //     * @return Reservation[] Returns an array of Reservation objects

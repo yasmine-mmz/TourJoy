@@ -29,7 +29,7 @@ class FavsController extends AbstractController
         $favorites[$accommodation->getRefA()] = $accommodation;
         $session->set("favorites", $favorites);
 
-        return $this->redirectToRoute("showF");
+        return $this->redirectToRoute("showFac");
     }
 
     #[Route('/favorites/remove/{refA}', name: 'favorites_remove')]

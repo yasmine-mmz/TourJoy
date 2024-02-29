@@ -37,6 +37,9 @@ class Reservation
     #[ORM\JoinColumn(name:'name',referencedColumnName:'refA')]
     private ?Accomodation $name = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?User $fkuser = null;
+
     public function getIdR(): ?int
     {
         return $this->idR;
@@ -85,5 +88,20 @@ class Reservation
     public function setCaptchaCode($captchaCode)
     {
         $this->captchaCode = $captchaCode;
+    }
+
+    public function getFkuser(): ?User
+    {
+        return $this->fkuser;
+    }
+
+    public function setFkuser(?User $fkuser): static
+    {
+        $this->fkuser = $fkuser;
+
+        return $this;
+    }
+    public function __toString(){
+        return $this->endDate;
     }
 }

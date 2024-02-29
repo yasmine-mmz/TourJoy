@@ -90,8 +90,11 @@
                             <p class="card-text">Rooms: {{ t.nbRooms }}</p>
                             <div class="text-center mt-auto">
                                 <div class="d-flex justify-content-center align-items-end">
-                                    <a href="{{ path('book_accommodation', {'refA': t.refA}) }}" class="btn btn-info btn-sm rounded-pill mx-2">Book</a>
-                                    <a href="{{ path('favorites_add', {'refA': t.refA}) }}" class="btn btn-info btn-sm rounded-pill mx-2">Favorites</a>
+        {% if app.user %}
+            <a href="{{ path('book_accommodation', {'refA': t.refA}) }}" class="btn btn-info btn-sm rounded-pill mx-2">Book</a>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="btn btn-info btn-sm rounded-pill mx-2">Book</a>
+        {% endif %}                                    <a href="{{ path('favorites_add', {'refA': t.refA}) }}" class="btn btn-info btn-sm rounded-pill mx-2">Favorites</a>
                                     <button class="btn btn-success btn-sm rounded-pill mx-2" onclick="showMap('{{ t.location }}')" style="font-size: 20px; background-color: transparent; border: none;"><span style="color: #28a745;">📍</span></button>
                                 </div>
                             </div>

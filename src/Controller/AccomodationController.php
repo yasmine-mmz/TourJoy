@@ -24,7 +24,7 @@ class AccomodationController extends AbstractController
             'controller_name' => 'AccomodationController',
         ]);
     }
-    #[Route('/show', name: 'show')] 
+    #[Route('/showAcc', name: 'showAcc')] 
     public function show(AccomodationRepository $repo): Response
     {
         $result = $repo->findAll();
@@ -33,8 +33,8 @@ class AccomodationController extends AbstractController
             'response' => $result
         ]);
     }
-    #[Route('/showF', name: 'showF')] 
-    public function showF(AccomodationRepository $repo): Response
+    #[Route('/showFac', name: 'showFac')] 
+    public function showFac(AccomodationRepository $repo): Response
     {
         $result = $repo->findAll();
 
@@ -66,8 +66,8 @@ class AccomodationController extends AbstractController
             $em->persist($accomodation);
             $em->flush();
     
-            return $this->redirectToRoute('show');
-             return $this->redirectToRoute('showF');
+            return $this->redirectToRoute('showAcc');
+             return $this->redirectToRoute('showFac');
         }
     
         return $this->render('BackOffice/AccForm.html.twig', [
@@ -88,8 +88,8 @@ class AccomodationController extends AbstractController
         $em->remove($accomodation);
         $em->flush(); 
 
-        return $this ->redirectToRoute('show');
-        return $this ->redirectToRoute('showF');    
+        return $this->redirectToRoute('showAcc');
+        return $this->redirectToRoute('showFac');    
 
     }
     #[Route('/update1{refA}', name: 'update1')]
@@ -109,8 +109,8 @@ class AccomodationController extends AbstractController
             $em = $mr->getManager();
             $em->flush();
     
-            return $this->redirectToRoute('show');
-            return $this ->redirectToRoute('showF');    
+            return $this->redirectToRoute('showAcc');
+             return $this->redirectToRoute('showFac');
 
         }
     

@@ -48,7 +48,7 @@ class ReservationController extends AbstractController
     #[Route('/fetchR', name: 'fetchR')] 
     public function show(ReservationRepository $repo): Response
     {
-        $result = $repo->findAll();
+        $result = $repo->findAllWithUsers(); // Use the correct method
 
         return $this->render('BackOffice/res.html.twig', [
             'response' => $result
@@ -61,8 +61,10 @@ class ReservationController extends AbstractController
         $p = new Reservation();
         $form = $this->createForm(ReservationType::class, $p);
         $form->handleRequest($req);
+        dump($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $p->setFkuser($this->getUser());
             $em = $mr->getManager();
             $em->persist($p);
             $em->flush();
@@ -89,15 +91,15 @@ class ReservationController extends AbstractController
 
    
 
-    #[Route('/remove/{idR}', name: 'remove')]
-    public function remove(ReservationRepository $repo, $idR, ManagerRegistry $mr):Response
+    #[Route('/removeR/{idR}', name: 'removeR')]
+    public function removeR(ReservationRepository $repo, $idR, ManagerRegistry $mr):Response
     {
         $reservation = $repo->find($idR);
         $em = $mr->getManager();
         $em->remove($reservation);
         $em->flush(); 
 
-        return $this ->redirectToRoute('fetch');
+        return $this ->redirectToRoute('fetchR');
     }
 
 

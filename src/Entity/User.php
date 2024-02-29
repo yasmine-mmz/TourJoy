@@ -88,11 +88,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Booking::class)]
     private Collection $bookings;
 
+    #[ORM\OneToMany(mappedBy: 'fkuser', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
         $this->likesystems = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
 
@@ -423,6 +427,36 @@ public function removeBooking(Booking $booking): static
         // set the owning side to null (unless already changed)
         if ($booking->getUser() === $this) {
             $booking->setUser(null);
+        }
+    }
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Reservation>
+ */
+public function getReservations(): Collection
+{
+    return $this->reservations;
+}
+
+public function addReservation(Reservation $reservation): static
+{
+    if (!$this->reservations->contains($reservation)) {
+        $this->reservations->add($reservation);
+        $reservation->setFkuser($this);
+    }
+
+    return $this;
+}
+
+public function removeReservation(Reservation $reservation): static
+{
+    if ($this->reservations->removeElement($reservation)) {
+        // set the owning side to null (unless already changed)
+        if ($reservation->getFkuser() === $this) {
+            $reservation->setFkuser(null);
         }
     }
 

@@ -301,39 +301,32 @@
 
 			<ul class="sidebar-nav" id="sidebar-nav">
 
-        <li class="nav-item">
-          <a class="nav-link " href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>Dashboard</span>
-          </a>
-        </li><!-- End Dashboard Nav -->
+				<li class="nav-item">
+					<a class="nav-link " href="{{ path('app_back')}}">
+						<i class="bi bi-grid"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+				<!-- End Dashboard Nav -->
 
 				<li class="nav-item">
-					<a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+					<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
 						<i class="bi bi-menu-button-wide"></i>
-						<span>Management</span>
+						<span>User Management</span>
 						<i class="bi bi-chevron-down ms-auto"></i>
 					</a>
-					<ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 						<li>
 							<a href="{{ path('admin_users')}}">
 								<i class="bi bi-circle"></i>
 								<span>Users</span>
 							</a>
 						</li>
-						<li>
-							<a href="{{ path('Bookings_stats')}}">
-								<i class="bi bi-circle"></i>
-								<span>Users</span>
-							</a>
-						</li>
-				
-					
-					
+										
 						
 					</ul>
 				</li>
-				<!-- End Components Nav -->
+				<!-- End forms Nav -->
 
 				
 
@@ -364,79 +357,117 @@
 				</li>
 				<!-- End Icons Nav -->
 
-        <li class="nav-heading">Pages</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+						<i class="bi bi-menu-button-wide"></i>
+						<span>Accommodation Management</span>
+						<i class="bi bi-chevron-down ms-auto"></i>
+					</a>
+					<ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+						<li>
+							<a href="{{ path('addF1')}}">
+								<i class="bi bi-circle"></i>
+								<span>add accommodations</span>
+							</a>
+						</li>
+							<li>
+							<a href="{{ path('showAcc')}}">
+								<i class="bi bi-circle"></i>
+								<span>list of accommodations</span>
+							</a>
+						</li>				
+						
+							<li>
+							<a href="{{ path('fetchR')}}">
+								<i class="bi bi-circle"></i>
+								<span>All bookings</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<!-- End Components Nav -->
 
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="users-profile.html">
-            <i class="bi bi-person"></i>
-            <span>Profile</span>
-          </a>
-        </li><!-- End Profile Page Nav -->
+				
 
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-faq.html">
-            <i class="bi bi-question-circle"></i>
-            <span>F.A.Q</span>
-          </a>
-        </li><!-- End F.A.Q Page Nav -->
+			
+			
+				<li class="nav-item">
+					<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+						<i class="bi bi-gem"></i>
+						<span>Monument management</span>
+						<i class="bi bi-chevron-down ms-auto"></i>
+					</a>
+					<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+							<li>
+							<a href="{{ path('addc')}}">
+								<i class="bi bi-circle"></i>
+								<span>Add country</span>
+							</a>
+					
+						</li>
+							<li>
+							<a href="{{ path('country_show')}}">
+								<i class="bi bi-circle"></i>
+								<span>List of countries</span>
+							</a>
+						</li>
+							<li>
+							<a href="{{ path('addM')}}">
+								<i class="bi bi-circle"></i>
+								<span>Add Monument</span>
+							</a>
+					
+						</li>
+							<li>
+							<a href="{{ path('monument_show')}}">
+								<i class="bi bi-circle"></i>
+								<span>List of Monuments</span>
+							</a>
+						</li>						
+					</ul>
+				</li>
+				<!-- End Icons Nav -->
 
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-contact.html">
-            <i class="bi bi-envelope"></i>
-            <span>Contact</span>
-          </a>
-        </li><!-- End Contact Page Nav -->
 
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-register.html">
-            <i class="bi bi-card-list"></i>
-            <span>Register</span>
-          </a>
-        </li><!-- End Register Page Nav -->
+			
 
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-login.html">
-            <i class="bi bi-box-arrow-in-right"></i>
-            <span>Login</span>
-          </a>
-        </li><!-- End Login Page Nav -->
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-error-404.html">
-            <i class="bi bi-dash-circle"></i>
-            <span>Error 404</span>
-          </a>
-        </li><!-- End Error 404 Page Nav -->
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-blank.html">
-            <i class="bi bi-file-earmark"></i>
-            <span>Blank</span>
-          </a>
-        </li><!-- End Blank Page Nav -->
 
 			</ul>
 
-    </aside><!-- End Sidebar-->
+		</aside>
+		<!-- End Sidebar-->
 
-    {% block main %}
-      
-    {% endblock %}
+		{% block body %}{% endblock %}
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+		<footer class="footer" style="position: fixed;
+			bottom: 0;
+			width: 100%;">
+    <div class="copyright">
+      &copy; Copyright <strong><span>TourJoy</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
 
-    <!-- Vendor JS Files -->
-    <script src="backoffice/assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="backoffice/assets/vendor/chart.js/chart.umd.js"></script>
-    <script src="backoffice/assets/vendor/echarts/echarts.min.js"></script>
-    <script src="backoffice/assets/vendor/quill/quill.min.js"></script>
-    <script src="backoffice/assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="backoffice/assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="backoffice/assets/vendor/php-email-form/validate.js"></script>
+      Designed by <a href="faceboook.com/TourJoyOfficial">Devotion</a>
+    </div>
+  </footer><!-- End Footer -->
 
-    <!-- Template Main JS File -->
-    <script src="backoffice/assets/js/main.js"></script>
+		<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+			<i class="bi bi-arrow-up-short"></i>
+		</a>
+
+		<!-- Vendor JS Files -->
+		<script src="{{ asset('backoffice/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+		<script src="{{ asset('backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+		<script src="{{ asset('backoffice/assets/vendor/chart.js/chart.umd.js') }}"></script>
+		<script src="{{ asset('backoffice/assets/vendor/echarts/echarts.min.js') }}"></script>
+		<script src="{{ asset('backoffice/assets/vendor/quill/quill.min.js') }}"></script>
+		<script src="{{ asset('backoffice/assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+		<script src="{{ asset('backoffice/assets/vendor/tinymce/tinymce.min.js') }}"></script>
+		<script src="{{ asset('backoffice/assets/vendor/php-email-form/validate.js') }}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<!-- Template Main JS File -->
+		<script src="{{ asset('backoffice/assets/js/main.js') }}"></script>
 
 	</body>
 </html>

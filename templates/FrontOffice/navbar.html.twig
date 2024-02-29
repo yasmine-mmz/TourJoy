@@ -30,8 +30,15 @@
 			<link rel="stylesheet" href="frontoffice/css/animate.min.css">
 			<link rel="stylesheet" href="frontoffice/css/owl.carousel.css">
 			<link rel="stylesheet" href="frontoffice/css/main.css">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 
-        {% endblock %}    
+
+        {% endblock %}  
+		{% set user = app.user %}
+		{% set isVerified = user and not user.isVerified() %}
+  
 		</head>
 		<body>
         {% block navbar %}
@@ -41,33 +48,69 @@
 			<section class="banner-area" id="home">
 				<!-- Start Header Area -->
 				<header class="default-header">
-					<nav class="navbar navbar-expand-lg  navbar-light bg-primary">
+					<nav class="navbar navbar-expand-lg  navbar-light bg-secondary">
 						<div class="container">
-							  <a class="navbar-brand" href="index.html">
-							  	<img src="img/logo.png" alt="">
-							  </a>
-							  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							    <span class="text-white lnr lnr-menu"></span>
-							  </button>
-
-							  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-							    <ul class="navbar-nav">
-									<li><a href="#home">Home</a></li>
-									<li><a href="#about">About</a></li>									
-									<li><a href="#secvice">Service</a></li>
-									<li><a href="#gallery">Gallery</a></li>
-									<li><a href="#faq">Faq</a></li>
-									<li><a href="#contact">Contact</a></li>
-									<!-- Dropdown -->
-								    <li class="dropdown">
-								      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-								        Pages
-								      </a>
-								      <div class="dropdown-menu">
-								        <a class="dropdown-item" href="generic.html">Generic</a>
-								        <a class="dropdown-item" href="elements.html">Elements</a>
-								      </div>
-								    </li>
+							<a class="navbar-brand" href="{{ path('app_test')}}">
+								<img src="img/logo.png" alt="">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="text-white lnr lnr-menu"></span>
+							</button>
+							<div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+								<ul class="navbar-nav">
+									<li>
+										<a href="#home">Home</a>
+									</li>
+									<li>
+										<a href="#about">About</a>
+									</li>
+									<li>
+										<a href="fetch2">Guides</a>
+									</li>
+									<li>
+										<a href="showFac">Accommodations</a>
+									</li>
+									<li>
+										<a href="{{ path('favorites_index') }}" >Favorites</a></li>
+									<li>
+										<a href="all_monuments">Monuments</a>
+									</li>
+									<li>
+										<a href="addfb">Feedback</a>
+									</li>
+									<li>
+										{% if app.user %}
+											<!-- Dropdown -->
+											<li class="dropdown">
+												<a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+													Profile
+												</a>
+												{% if user.profilePicture %}
+													<img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="rounded-circle" style="max-height: 28px; max-width: 28px">
+												{% else %}
+													<img src="{{ asset('img/noProfilePicture.png') }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 28px; max-height: 28px;">
+												{% endif %}
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="{{ path('app_profile') }}">Update</a>
+														<a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+														{% if is_granted('ROLE_ADMIN') %}
+															<a class="dropdown-item" href="{{ path('app_back') }}">Backoffice</a>
+														{% endif %}
+													</div>
+												</li>
+											{% else %}
+												<li class="dropdown">
+													<a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+														SignIn/Up
+													</a>
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="{{ path('app_login') }}">Sign In</a>
+														<a class="dropdown-item" href="{{ path('app_register') }}">Sign Up</a>
+													</div>
+												</li>
+											{% endif %}
+										</li>
+									</li>
 							    </ul>
 							  </div>						
 						</div>
@@ -83,7 +126,6 @@
 				</header>
 				<!-- End Header Area -->				
 			</section>
-			<br><br><br><br>
         {% endblock %}
 
 {% block body %}
@@ -202,20 +244,19 @@
         {% endblock %}	
 			<!-- End footer Area -->	
 
-     
-       {% block javascripts %}
-    <script src="{{ asset('frontoffice/js/vendor/jquery-2.2.4.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="{{ asset('frontoffice/js/vendor/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/jquery.ajaxchimp.min.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/jquery.sticky.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/slick.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/jquery.counterup.min.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/waypoints.min.js') }}"></script>
-    <script src="{{ asset('frontoffice/js/main.js') }}"></script>
-{% endblock %}
+        {% block javascripts %}
+			<script src="frontoffice/js/vendor/jquery-2.2.4.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+			<script src="frontoffice/js/vendor/bootstrap.min.js"></script>
+			<script src="frontoffice/js/jquery.ajaxchimp.min.js"></script>
+			<script src="frontoffice/js/jquery.magnific-popup.min.js"></script>	
+			<script src="frontoffice/js/owl.carousel.min.js"></script>			
+			<script src="frontoffice/js/jquery.sticky.js"></script>
+			<script src="frontoffice/js/slick.js"></script>
+			<script src="frontoffice/js/jquery.counterup.min.js"></script>
+			<script src="frontoffice/js/waypoints.min.js"></script>		
+			<script src="frontoffice/js/main.js"></script>	
+        {% endblock %}		
 		</body>
 	</html>
 		

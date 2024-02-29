@@ -6,6 +6,7 @@
 parameters:
     profile_picture_directory: '%kernel.project_dir%/public/uploads/profile_pictures'
     admin_secret_key: '%env(ADMIN_SECRET_KEY)%'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     # default configuration for services in *this* file

@@ -1,5 +1,5 @@
 {% extends 'BackOffice/navbars.html.twig' %}
-{% block main %}
+{% block body %}
     <h1 class="text-center mb-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-size: 36px;">All reservations</h1>
 <div id="pricing" class="pricing-tables">
   <div class="container">
@@ -10,13 +10,20 @@
           <h4>Reservation {{ t.idR }}</h4>
           <ul>
             <li>Name: {{ t.name }}</li>
+            <li>User: 
+                {% if t.fkuser %}
+                    {{ t.fkuser.firstName }} {{ t.fkuser.lastName }}
+                {% else %}
+                    No user associated
+                {% endif %}
+            </li>
             <li>Start Date: {{ t.startDate|date("Y-m-d") }}</li>
             <li>End Date: {{ t.endDate|date("Y-m-d") }}</li>
 
             <!-- Add any additional information here -->
           </ul>
           <div class="border-button">
-            <a href="{{ path('remove', {'idR': t.idR}) }}" class="btn btn-danger">Delete</a>
+            <a href="{{ path('removeR', {'idR': t.idR}) }}" class="btn btn-danger">Delete</a>
           </div>
         </div>
       </div>
