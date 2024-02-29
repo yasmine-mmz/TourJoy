@@ -1,0 +1,80 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block title %}Booked Accommodation Statistics{% endblock %}
+
+{% block main %}
+
+    <h1>Booked Accommodation Statistics</h1>
+    <canvas id="ReservationsStatsChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 359px; width: 719px;" width="719" height="359"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('ReservationsStatsChart').getContext('2d');
+            var ReservationsStatsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: {{ labels|json_encode|raw }},
+                    datasets: [{
+                        label: 'Reservation created',
+                        data: {{ data|json_encode|raw }},
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',  // Red
+                            'rgba(54, 162, 235, 0.2)',  // Blue
+                            'rgba(255, 206, 86, 0.2)',  // Yellow
+                            'rgba(75, 192, 192, 0.2)',  // Green
+                            'rgba(153, 102, 255, 0.2)', // Purple
+                            'rgba(255, 159, 64, 0.2)',  // Orange
+                            'rgba(255, 99, 132, 0.2)'   // Red (repeated for additional parts)
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',    // Red
+                            'rgba(54, 162, 235, 1)',    // Blue
+                            'rgba(255, 206, 86, 1)',    // Yellow
+                            'rgba(75, 192, 192, 1)',    // Green
+                            'rgba(153, 102, 255, 1)',   // Purple
+                            'rgba(255, 159, 64, 1)',    // Orange
+                            'rgba(255, 99, 132, 1)'     // Red (repeated for additional parts)
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+               
+            });
+        });
+    </script>
+    <br><br><br><br><br><br><br><br>
+    <h1>Monument Statistics by Country</h1>
+    <canvas id="monumentsChart" style="max-height: 400px; display: block;"></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('monumentsChart').getContext('2d');
+            var monumentsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {{ labels | json_encode | raw }},
+                    datasets: [{
+                        label: 'Number of Monuments',
+                        data: {{ data | json_encode | raw }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

@@ -301,13 +301,12 @@
 
 			<ul class="sidebar-nav" id="sidebar-nav">
 
-				<li class="nav-item">
-					<a class="nav-link " href="{{ path('app_back')}}">
-						<i class="bi bi-grid"></i>
-						<span>Dashboard</span>
-					</a>
-				</li>
-				<!-- End Dashboard Nav -->
+        <li class="nav-item">
+          <a class="nav-link " href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>Dashboard</span>
+          </a>
+        </li><!-- End Dashboard Nav -->
 
 				<li class="nav-item">
 					<a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -365,47 +364,79 @@
 				</li>
 				<!-- End Icons Nav -->
 
-				
+        <li class="nav-heading">Pages</li>
 
-			
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="users-profile.html">
+            <i class="bi bi-person"></i>
+            <span>Profile</span>
+          </a>
+        </li><!-- End Profile Page Nav -->
 
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-faq.html">
+            <i class="bi bi-question-circle"></i>
+            <span>F.A.Q</span>
+          </a>
+        </li><!-- End F.A.Q Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-contact.html">
+            <i class="bi bi-envelope"></i>
+            <span>Contact</span>
+          </a>
+        </li><!-- End Contact Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-register.html">
+            <i class="bi bi-card-list"></i>
+            <span>Register</span>
+          </a>
+        </li><!-- End Register Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-login.html">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span>Login</span>
+          </a>
+        </li><!-- End Login Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-error-404.html">
+            <i class="bi bi-dash-circle"></i>
+            <span>Error 404</span>
+          </a>
+        </li><!-- End Error 404 Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-blank.html">
+            <i class="bi bi-file-earmark"></i>
+            <span>Blank</span>
+          </a>
+        </li><!-- End Blank Page Nav -->
 
 			</ul>
 
-		</aside>
-		<!-- End Sidebar-->
+    </aside><!-- End Sidebar-->
 
-		{% block body %}{% endblock %}
+    {% block main %}
+      
+    {% endblock %}
 
-		<footer class="footer" style="position: fixed;
-			bottom: 0;
-			width: 100%;">
-    <div class="copyright">
-      &copy; Copyright <strong><span>TourJoy</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-      Designed by <a href="faceboook.com/TourJoyOfficial">Devotion</a>
-    </div>
-  </footer><!-- End Footer -->
+    <!-- Vendor JS Files -->
+    <script src="backoffice/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="backoffice/assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="backoffice/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="backoffice/assets/vendor/quill/quill.min.js"></script>
+    <script src="backoffice/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="backoffice/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="backoffice/assets/vendor/php-email-form/validate.js"></script>
 
-		<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
-			<i class="bi bi-arrow-up-short"></i>
-		</a>
-
-		<!-- Vendor JS Files -->
-		<script src="{{ asset('backoffice/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
-		<script src="{{ asset('backoffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-		<script src="{{ asset('backoffice/assets/vendor/chart.js/chart.umd.js') }}"></script>
-		<script src="{{ asset('backoffice/assets/vendor/echarts/echarts.min.js') }}"></script>
-		<script src="{{ asset('backoffice/assets/vendor/quill/quill.min.js') }}"></script>
-		<script src="{{ asset('backoffice/assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
-		<script src="{{ asset('backoffice/assets/vendor/tinymce/tinymce.min.js') }}"></script>
-		<script src="{{ asset('backoffice/assets/vendor/php-email-form/validate.js') }}"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<!-- Template Main JS File -->
-		<script src="{{ asset('backoffice/assets/js/main.js') }}"></script>
+    <!-- Template Main JS File -->
+    <script src="backoffice/assets/js/main.js"></script>
 
 	</body>
 </html>

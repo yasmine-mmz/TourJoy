@@ -1,0 +1,63 @@
+<h1>List of reservation</h1>
+<table style="width: 50%;">
+    <thead>
+    <a href="{{ path('addF') }}" class="btn btn-Add">Add</a>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>start Date</th>
+            <th>end date</th>
+            <th>Actions</th> <!-- Rename the table header to "Actions" -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in response %}
+            <tr>
+                <td>{{ t.idR }}</td>
+                <td>{{ t.name }}</td>
+                <td>{{ t.startDate|date("Y-m-d H:i:s") }}</td>
+                <td>{{ t.endDate|date("Y-m-d H:i:s") }}</td>
+                <td>
+                    <a href="{{ path('update', {'idR': t.idR}) }}" class="btn btn-update">Update</a>
+                    <a href="{{ path('remove', {'idR': t.idR}) }}" class="btn btn-delete">X</a>
+                </td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 0.5px solid #000;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 5px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .btn-update {
+        background-color: #007bff;
+        color: #fff;
+    }
+ .btn-Add {
+        background-color: #007bff;
+        color: #fff;
+    }
+    .btn-delete {
+        background-color: #ff0000;
+        color: #fff;
+        width: 20px;
+        text-align: center;
+    }
+</style>

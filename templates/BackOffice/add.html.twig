@@ -1,0 +1,66 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+  {% block main %}
+    <div class="section-top-border">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-8 col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4" style="font-size: 24px; color: blue;">Add Monument</h2>
+                        <div class="form-group">
+                            {{ form_start(f, {'attr': {'class': 'my-form-class', 'novalidate': 'novalidate'}}) }}
+
+                            <label for="monument_name">Monument Name</label>
+                            {{ form_widget(f.nameM, {'attr': {'class': 'form-control', 'placeholder': 'Monument Name'}}) }}
+                            {{ form_errors(f.nameM) }}
+
+                            <label for="monument_type">Type</label>
+                            {{ form_widget(f.type, {'attr': {'class': 'form-control', 'placeholder': 'Type'}}) }}
+                            {{ form_errors(f.type) }}
+
+                            <label for="monument_entryprice">Entry Price</label>
+                            {{ form_widget(f.entryprice, {'attr': {'class': 'form-control', 'placeholder': 'Entry Price'}}) }}
+                            {{ form_errors(f.entryprice) }}
+
+                            <label for="monument_status">Status</label>
+                            {{ form_widget(f.status, {'attr': {'class': 'form-control', 'placeholder': 'Status'}}) }}
+                            {{ form_errors(f.status) }}
+
+                            <label for="monument_description">Description</label>
+                            {{ form_widget(f.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+                            {{ form_errors(f.description) }}
+
+                            <label for="monument_latitude">Latitude</label>
+                            {{ form_widget(f.latitude, {'attr': {'class': 'form-control', 'placeholder': 'Latitude'}}) }}
+                            {{ form_errors(f.latitude) }}
+
+                            <label for="monument_longitude">Longitude</label>
+                            {{ form_widget(f.longitude, {'attr': {'class': 'form-control', 'placeholder': 'Longitude'}}) }}
+                            {{ form_errors(f.longitude) }}
+
+                            <label for="monument_image">Image</label>
+                            {{ form_widget(f.imageFile, {'attr': {'class': 'form-control-file', 'style': 'max-width: 200px; max-height: 100px;'}}) }}
+                            {{ form_errors(f.imageFile) }}
+
+                            <label for="monument_fkcountry">Country</label>
+                            {{ form_widget(f.fkcountry, {'attr': {'class': 'form-select'}}) }}
+                            {{ form_errors(f.fkcountry) }}
+
+                            <div class="text-center mt-3">
+                                {{ form_row(f.save, {'label': 'ADD', 'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+
+                            {{ form_end(f) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Adjust image size */
+        .form-control-file img {
+            max-width: 200px;
+            max-height: 100px;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <h1 class="text-center mb-4">Add an Accommodation</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="border p-4 rounded">
+                {{ form_start(f, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
+                <div class="form-group">
+                    {{ form_label(f.name, null, {'label_attr': {'class': 'small'}}) }}
+                    {{ form_widget(f.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                 <div class="form-group">
+                    {{ form_label(f.fkpays, null, {'label_attr': {'class': 'small'}}) }}
+                    {{ form_widget(f.fkpays, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(f.type, null, {'label_attr': {'class': 'small'}}) }}
+                    {{ form_widget(f.type, {'attr': {'class': 'form-control custom-select'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(f.nbRooms, null, {'label_attr': {'class': 'small'}}) }}
+                    {{ form_widget(f.nbRooms, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(f.price, null, {'label_attr': {'class': 'small'}}) }}
+                    {{ form_widget(f.price, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group"> 
+                    {{ form_label(f.location, 'Location', {'label_attr': {'class': 'small'}}) }}
+                    {{ form_widget(f.location, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <br>
+                <div class="form-group">
+                    {{ form_row(f.imageFile) }} 
+                </div>
+                <br>
+                <div class="form-group text-center">
+                    {{ form_widget(f.save, {'label': 'Submit', 'attr': {'class': 'btn btn-primary btn-lg rounded-pill'}}) }}
+                </div>
+                {{ form_end(f) }}
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

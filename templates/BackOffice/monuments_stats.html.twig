@@ -1,0 +1,37 @@
+	{% block title %}Monuments per Country{% endblock %}
+
+{% block body %}
+    <h1>Monument Statistics by Country</h1>
+    <canvas id="monumentsChart" style="max-height: 400px; display: block;"></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('monumentsChart').getContext('2d');
+            var monumentsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {{ labels | json_encode | raw }},
+                    datasets: [{
+                        label: 'Number of Monuments',
+                        data: {{ data | json_encode | raw }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %}

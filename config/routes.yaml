@@ -5,3 +5,8 @@ admin_export_users_csv:
     path: /admin/users/export-csv
     controller: App\Controller\SecurityController::exportUsersCsv
     methods: GET
+captcha_routing:
+      resource: "@CaptchaBundle/Resources/config/routing.yml"
+monument_details:
+    path: /details/{id}
+    controller: App\Controller\TestController::details

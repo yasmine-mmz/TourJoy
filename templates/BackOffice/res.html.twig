@@ -1,0 +1,93 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+{% block main %}
+    <h1 class="text-center mb-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-size: 36px;">All reservations</h1>
+<div id="pricing" class="pricing-tables">
+  <div class="container">
+    <div class="row">
+      {% for t in response %}
+      <div class="col-lg-4">
+        <div class="pricing-item-regular">
+          <h4>Reservation {{ t.idR }}</h4>
+          <ul>
+            <li>Name: {{ t.name }}</li>
+            <li>Start Date: {{ t.startDate|date("Y-m-d") }}</li>
+            <li>End Date: {{ t.endDate|date("Y-m-d") }}</li>
+
+            <!-- Add any additional information here -->
+          </ul>
+          <div class="border-button">
+            <a href="{{ path('remove', {'idR': t.idR}) }}" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .pricing-tables {
+    padding: 50px 0;
+  }
+
+  .pricing-item-regular {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .pricing-item-regular h4 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .pricing-item-regular ul {
+    padding: 0;
+    margin: 20px 0;
+    list-style-type: none;
+  }
+
+  .pricing-item-regular ul li {
+    margin-bottom: 10px;
+  }
+
+  .border-button {
+    margin-top: 20px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  .btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: #fff;
+  }
+
+  .btn-info:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+</style>
+
+{% endblock %}

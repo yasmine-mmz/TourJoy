@@ -1,0 +1,113 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<style>
+    /* General styles */
+    .container {
+        display: flex; /* Use flexbox for layout */
+        justify-content: flex-start; /* Align children to the start */
+        align-items: flex-start; /* Align children to the top */
+        gap: 20px; /* Add some space between the calendar and the form */
+        margin-top: 40px; /* Add some margin on the top */
+        margin-bottom: 40px; /* Add some margin on the bottom */
+    }
+
+    /* Calendar styling */
+    .calendar-container {
+        width: 70%; /* Calendar takes 70% of the container width */
+        /* Additional styles to improve the calendar's appearance, like padding or borders, can go here */
+    }
+
+    /* Form styling */
+    .form-container {
+        width: 30%; /* Form takes 30% of the container width */
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Form inputs and labels styling */
+    .form-horizontal .form-group label {
+        font-size: 0.8rem; /* Adjust label size as needed */
+    }
+    .form-horizontal .form-group input,
+    .form-horizontal .form-group .btn {
+        font-size: 0.9rem; /* Adjust input and button size as needed */
+    }
+
+    /* Responsive behavior */
+    @media (max-width: 992px) {
+        .container {
+            flex-direction: column; /* Stack them on smaller screens */
+            align-items: stretch; /* Stretch children to match width */
+        }
+        .calendar-container,
+        .form-container {
+            width: 100%; /* Full width on smaller screens */
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<br><br><br>
+<h1 class="text-center mb-4">Book now</h1>
+<br><br>
+<div class="container">
+    <div class="calendar-container">
+        {# Pass the current accommodation reference to the calendar #}
+        {{ render(controller('App\\Controller\\CalendarController::index', {'refA': f.vars.value.name.refA})) }}
+    </div>
+    <div class="form-container">
+        {{ form_start(f, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
+        <div class="form-group">
+            {{ form_label(f.name, null, {'label_attr': {'class': 'small'}}) }}
+            {{ form_widget(f.name, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(f.startDate, null, {'label_attr': {'class': 'small'}}) }}
+            <div class="input-group date" data-provide="datepicker">
+                {{ form_widget(f.startDate, {'attr': {'class': 'form-control datepicker'}}) }}
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(f.endDate, null, {'label_attr': {'class': 'small'}}) }}
+            <div class="input-group date" data-provide="datepicker">
+                {{ form_widget(f.endDate, {'attr': {'class': 'form-control datepicker'}}) }}
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {# Add captcha label and widget #}
+            {{ form_label(f.captchaCode, null, {'label_attr': {'class': 'small'}}) }}
+            {{ form_widget(f.captchaCode, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group text-center">
+            {{ form_widget(f.BOOK, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+        {{ form_end(f) }}
+    </div>
+</div>
+<br><br><br>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    // Initialize datepicker for elements with class "datepicker"
+    $(document).ready(function(){
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+    });
+</script>
+{% endblock %}

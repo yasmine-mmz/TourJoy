@@ -1,0 +1,68 @@
+	{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block main %}
+    <h1>All Countries</h1>
+    <br>
+    <form action="{{ path('country_show') }}" method="get"> <!-- Modified form action -->
+        <div class="col">
+            <input type="text" class="form-control" name="search_value" placeholder="Enter search value">
+        </div>
+        <br>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+        <br>
+        <div class="col-auto">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ path('country_show') }}'">Refresh</button>
+                </div>
+    </form>
+    <br>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Region</th>
+                    <th>Actions</th> <!-- Added a header for actions -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in pagination %}
+                    <tr>
+                        <td>{{ c.getName() }}</td>
+                        <td>{{ c.getRegion() }}</td>
+                        <td>
+                            <a href="{{ path('updatec', {'id': c.getId()}) }}" class="btn btn-primary">Modify</a>
+                            <a href="{{ path('removec', {'id': c.getId()}) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+              <!-- Bootstrap Pagination -->
+   <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {{ pagination.currentPageNumber <= 1 ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ path('country_show', {'page': pagination.currentPageNumber - 1}) }}">Previous</a>
+        </li>
+        
+        {% for i in 1..pagination.pageCount %}
+            <li class="page-item {{ i == pagination.currentPageNumber ? 'active' : '' }}">
+                <a class="page-link" href="{{ path('country_show', {'page': i}) }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+        
+        <li class="page-item {{ pagination.currentPageNumber >= pagination.pageCount ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ path('country_show', {'page': pagination.currentPageNumber + 1}) }}">Next</a>
+        </li>
+    </ul>
+</nav>
+
+    </div>
+    
+{% endblock %}
+
+
+
+
