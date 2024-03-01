@@ -7,9 +7,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MonumentRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\SubscriptionRepository;
+
+use App\Entity\Subscription;
+use Doctrine\Persistence\ManagerRegistry;
 
 class TestController extends AbstractController
 {
+    private ManagerRegistry $registry;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
+
     #[Route('/', name: 'app_test')]
     public function index(): Response
     {

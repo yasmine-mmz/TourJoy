@@ -1,0 +1,64 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title text-center text-white mb-0">Subscriptions</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ path('choose_subscription') }}" method="post" id="subscriptionForm">
+                        {% for subscription in subscriptionList %}
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="selected_subscription" value="{{ subscription.id }}" id="subscription_{{ subscription.id }}" style="display: none;">
+                            <label class="form-check-label subscription-label" for="subscription_{{ subscription.id }}">
+                                <strong>{{ subscription.plan }}</strong> - {{ subscription.duration }} Days - {{ subscription.typeT }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Choose Subscription</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Highlight label on hover */
+    .subscription-label {
+        margin-bottom: 10px; /* Add margin between each element */
+        padding: 10px; /* Add padding for spacing within each element */
+        display: block; /* Ensure the label is displayed as a block */
+        background-color: #f8f9fa; /* Light background color */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Show pointer cursor on hover */
+    }
+
+    .subscription-label:hover {
+        background-color: lightblue; /* Highlight background color on hover */
+    }
+
+    .form-check-input {
+        display: none; /* Hide the checkboxes */
+    }
+
+    .selected {
+        background-color: lightgreen; /* Background color for selected subscription */
+    }
+</style>
+
+<script>
+    // Add click event listener to each subscription label
+    document.querySelectorAll('.subscription-label').forEach(label => {
+        label.addEventListener('click', function() {
+            // Toggle 'selected' class on the clicked label
+            this.classList.toggle('selected');
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block main %}
+<div class="card-body">
+    <h5 class="card-title"><strong>Subscription Table</strong></h5>
+
+
+    
+   <div class="d-flex justify-content-end mb-3">
+    <a href="{{ path('createS') }}" class="btn btn-primary mr-3">Add Subscription</a>
+    <a href="{{ path('chart') }}" class="btn btn-secondary">
+        <i class="bi bi-bar-chart"></i> <!-- Bootstrap icon for bar chart -->
+    </a>
+</div>
+
+
+
+    
+
+
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Plan</th>
+                
+                <th scope="col">Duration(Days)</th> 
+                <th scope="col">Type</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subscription in subscriptionList %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ subscription.plan }}</td>
+                <td>{{ subscription.duration }}</td>
+                <td>{{ subscription.typeT }}</td>
+                <td class="text-right"> 
+                    <a href ="{{ path('updateS', {'id': subscription.id}) }}" class="btn btn-custom-primary">Update</a> |
+                    <a href ="{{ path('deleteS', {'id': subscription.id}) }}" class="btn btn-custom-danger">Delete</a>
+                    <a href="{{ path('subscription_pdf', {'id': subscription.id}) }}" class="btn btn-info">Generate PDF</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- End Default Table Example -->
+</div>
+<style>
+    .btn-custom-primary {
+        color: #fff;
+        background-color: #98ed6d;
+        border-color: #98ed6d;
+    }
+     .btn-custom-primary:hover {
+        color: #fff;
+        background-color: #6bab4b;
+        border-color: #6bab4b;
+    }
+    .btn-custom-danger {
+        color: #fff;
+        background-color: #ed6d6d;
+        border-color: #ed6d6d;
+
+    }
+    .btn-custom-danger:hover {
+        color: #fff;
+        background-color: #fa3c3c;
+        border-color: #fa3c3c;
+    }
+</style>
+
+
+
+{% endblock %}
