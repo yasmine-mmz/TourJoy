@@ -31,6 +31,9 @@ class Subscription
     #[ORM\ManyToOne(inversedBy: 'subscriptions')]
     private ?Transport $typeT = null;
 
+    #[ORM\ManyToOne(inversedBy: 'subscriptions')]
+    private ?User $user_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +71,18 @@ class Subscription
     public function setTypeT(?Transport $typeT): static
     {
         $this->typeT = $typeT;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

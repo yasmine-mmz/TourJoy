@@ -92,6 +92,36 @@ class TestController extends AbstractController
             'monument' => $monument,
         ]);
     }
+    #[Route('/showSF', name: 'showSF')]
+    public function showF(SubscriptionRepository $rep): Response
+    {
+        $subscriptionList = $rep->findAll();
+        return $this->render('subscription/subscriptionsF.html.twig', ['subscriptionList'=>$subscriptionList]);
+    }
+    
+    #[Route('/mySubscriptions', name: 'mySubscriptions')]
+    public function mySubs(SubscriptionRepository $rep): Response
+    {
+        $subscriptionList = $rep->findAll();
+        return $this->render('subscription/mySubscriptions.html.twig', ['subscriptionList' => $subscriptionList]);
+    }
+
+    #[Route('/choose-subscription', name: 'choose_subscription')]
+    public function chooseSubscription(Request $request, SubscriptionRepository $rep): Response
+    {
+        $subscriptionList = $rep->findAll();
+        $selectedSubscriptionId = $request->request->get('selected_subscription');
+
+        
+        $entityManager = $this->registry->getManager();
+        $selectedSubscription = $entityManager->getRepository(Subscription::class)->find($selectedSubscriptionId);
+
+        
+        return $this->render('subscription/chosensub.html.twig', [
+            'selectedSubscription' => $selectedSubscription,
+            
+        ]);
+    }
 
 
 }
