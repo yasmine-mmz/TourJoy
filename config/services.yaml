@@ -31,6 +31,6 @@ services:
     # please note that last definitions always *replace* previous ones
 
     # We need to autowire the Container (or manually wire it)
-    Captcha\Bundle\CaptchaBundle\Controller\:
-      resource: "../vendor/carlos-mg89/symfony-captcha-bundle/Controller"
-      autowire: true
+  Captcha\Bundle\CaptchaBundle\Controller\:
+    resource: "../vendor/carlos-mg89/symfony-captcha-bundle/Controller"
+    autowire: true
