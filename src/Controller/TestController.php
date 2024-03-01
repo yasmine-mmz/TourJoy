@@ -11,6 +11,8 @@ use App\Repository\SubscriptionRepository;
 
 use App\Entity\Subscription;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Notification;
+
 
 class TestController extends AbstractController
 {
@@ -35,7 +37,20 @@ class TestController extends AbstractController
     #[Route('/admin', name: 'app_back')]
     public function back(): Response
     {
+
+        $notifications = $this->getDoctrine()->getRepository(Notification::class)->findBy(['isRead' => false], ['createdAt' => 'DESC']);
+
+
         return $this->render('BackOffice/back_template.html.twig', [
+            'controller_name' => 'BackController',
+            'notifications' => $notifications,
+        ]);
+        
+    }
+    #[Route('/layouts', name: 'app_layouts')]
+    public function layouts(): Response
+    {
+        return $this->render('BackOffice/forms-layouts.html.twig', [
             'controller_name' => 'BackController',
         ]);
     } 
