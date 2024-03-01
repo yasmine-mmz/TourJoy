@@ -31,7 +31,7 @@ class ClaimsAddType extends AbstractType
                 'required' => false,
                 'disabled' => true,
                 'attr' => [
-                    'style' => 'display: none;', // Hide the createDate field
+                    'style' => 'display: none;',
                 ],
             ])
             ->add('state', TextType::class, [

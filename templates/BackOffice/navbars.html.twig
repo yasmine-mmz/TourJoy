@@ -167,64 +167,37 @@
 						</a>
 						<!-- End Messages Icon -->
 
-						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-							<li class="dropdown-header">
-								You have 3 new messages
-								<a href="#">
-									<span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
-								</a>
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
+						<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+    {% if notifications is empty %}
+        <div class="dropdown-header">No new notifications</div>
+    {% else %}
+        <div class="dropdown-header">
+            You have {{ notifications|length }} new notifications
+            <a href="#">
+                <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
+            </a>
+        </div>
+        <hr class="dropdown-divider">
+        
+        {% for notification in notifications %}
+            <div class="message-item">
+                <!-- If you have an image or icon to represent the notification, include it here -->
+                <div>
+                    <h4>{{ notification.title|default('Notification') }}</h4>
+                    <p>{{ notification.message }}</p>
+                    <p>{{ notification.createdAt|ago }}</p>
+                </div>
+            </div>
+            <hr class="dropdown-divider">
+        {% endfor %}
+        
+        <div class="dropdown-footer">
+            <a href="#">Show all messages</a>
+        </div>
+    {% endif %}
+</div>
 
-							<li class="message-item">
-								<a href="#">
-									<img src="img/messages-1.jpg" alt="" class="rounded-circle">
-									<div>
-										<h4>Maria Hudson</h4>
-										<p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-										<p>4 hrs. ago</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
 
-							<li class="message-item">
-								<a href="#">
-									<img src="img/messages-2.jpg" alt="" class="rounded-circle">
-									<div>
-										<h4>Anna Nelson</h4>
-										<p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-										<p>6 hrs. ago</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-
-							<li class="message-item">
-								<a href="#">
-									<img src="img/messages-3.jpg" alt="" class="rounded-circle">
-									<div>
-										<h4>David Muldon</h4>
-										<p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-										<p>8 hrs. ago</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-
-							<li class="dropdown-footer">
-								<a href="#">Show all messages</a>
-							</li>
-
-						</ul>
 						<!-- End Messages Dropdown Items -->
 
 					</li>

@@ -2,6 +2,8 @@
 
 {% block body %}
 
+
+
 <div class="card-body">
     <h5 class="card-title">Claims Table</h5>
     <!-- Search Input -->
@@ -10,8 +12,8 @@
     <!-- Sorting Dropdown -->
     <form id="sortingForm" class="mb-3">
     <div class="row">
-        <div class="col">
-            <select name="sortField" id="sortField" class="form-select">
+        
+            <select name="sortField" id="sortField" class="form-select" style="margin-left: 1.5vh;width: 13%; margin-right: 1vh">
             <option value="title">Title</option>
             <option value="description">Description</option>
             <option value="createDate">Date of Creation</option>
@@ -19,15 +21,15 @@
             <option value="fkC.name">Category</option>
             <option value="reply">Reply</option>
         </select>
-        <div class="col">
-        <select name="sortOrder" id="sortOrder" class="form-select">
+        
+        <select name="sortOrder" id="sortOrder" class="form-select" style="width: 13%; margin-right: 1vh">
             <option value="ASC">Ascending</option>
             <option value="DESC">Descending</option>
         </select>
-          </div>
-        <div class="col">
-            <button type="button" onclick="updateClaimsTable()" class="btn btn-primary">Sort</button>
-        </div>
+          
+        
+            <button type="button" onclick="updateClaimsTable()" class="btn btn-primary" style="width: 5%;margin-right: 1vh">Sort</button>
+        
     </div>
     </form>
 

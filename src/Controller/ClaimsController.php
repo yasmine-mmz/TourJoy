@@ -11,6 +11,7 @@ use App\Form\ClaimsType;
 use App\Form\ClaimsAddType;
 use App\Form\ClaimsUpdateType;
 use App\Entity\Claims;
+use App\Entity\Notification;
 use App\Repository\ClaimsRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -64,11 +65,14 @@ public function show(ClaimsRepository $rep, Request $request): Response
         ]);
     }
 
+   
     // Render the full page for non-AJAX requests
     return $this->render('Claims/index.html.twig', [
         'Claimss' => $claims,
         'currentSortField' => $sortField,
         'currentSortOrder' => $sortOrder,
+        // 'notifications' => $notifications,
+
     ]);
 }
 
@@ -84,14 +88,22 @@ public function AddClaims(ManagerRegistry $doctrine, Request $request, Validator
         $description = $Claims->getDescription(); // Assuming getDescription method exists in your Claims entity
 
         $Claims->setCreateDate(new \DateTimeImmutable());
+
+
+        $notification = new Notification();
+        $notification->setMessage('A new claim has been submitted.');
+        $notification->setIsRead(false);
+        $notification->setCreatedAt(new \DateTimeImmutable());
+
         $em = $doctrine->getManager();
         $em->persist($Claims);
+        $em->persist($notification);
         $em->flush();
 
         // Send email notification to admin
         $email = (new TemplatedEmail())
             ->from('no-reply@tourjoy.com')
-            ->to('admin@tourjoy.com')
+            ->to('admin@tourjoy.com')   
             ->subject('New Claim Submitted')
             ->htmlTemplate('Claims/Mailing.html.twig')
             ->context([

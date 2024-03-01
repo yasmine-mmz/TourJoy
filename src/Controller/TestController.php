@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Notification;
+
 
 class TestController extends AbstractController
 {
@@ -19,8 +21,13 @@ class TestController extends AbstractController
     #[Route('/back', name: 'app_back')]
     public function back(): Response
     {
+
+        $notifications = $this->getDoctrine()->getRepository(Notification::class)->findBy(['isRead' => false], ['createdAt' => 'DESC']);
+
+
         return $this->render('BackOffice/back_template.html.twig', [
             'controller_name' => 'BackController',
+            'notifications' => $notifications,
         ]);
         
     }
