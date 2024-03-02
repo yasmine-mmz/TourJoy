@@ -11,6 +11,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\GuideType;
 use Knp\Component\Pager\PaginatorInterface; // Make sure this is included
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 
 
 class GuideController extends AbstractController
@@ -107,7 +111,7 @@ class GuideController extends AbstractController
     }
     
     #[Route('/removeg/{id}', name: 'removeg')]
-    public function remove(GuideRepository $repo, $id, ManagerRegistry $mr): Response
+    public function remove(GuideRepository $repo, $id, ManagerRegistry $mr, MailerInterface $mailer, \Twig\Environment $twig): Response
     {
         $guide = $repo->find($id);
         if (!$guide) {
@@ -124,6 +128,21 @@ class GuideController extends AbstractController
         }
     
         foreach ($guide->getBookings() as $booking) {
+            $user = $booking->getUser();
+            if ($user) {
+                $email = (new TemplatedEmail())
+                    ->from('no-reply@tourjoy.com')
+                    ->to($user->getEmail())
+                    ->subject('Booking Cancellation')
+                    ->htmlTemplate('guide/booking_cancellation.html.twig')
+                    ->context([
+                        'user' => $user,
+                        'guide' => $guide,
+                        'booking' => $booking, // Pass the booking variable to the template
+
+                    ]);
+                $mailer->send($email);
+            }
             $em->remove($booking);
         }
     
