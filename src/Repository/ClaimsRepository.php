@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Claims;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -74,4 +75,12 @@ public function findBySearchCriteriaAndSort(?string $searchTerm, $sortField = 'i
 
     return $qb->getQuery()->getResult();
 }
+public function findByUser($user)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.fkU = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Choice;
 use App\Entity\Claims;
 use App\Entity\Categories;
+use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -23,6 +24,8 @@ class ClaimsAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $user = $options['user'];
+
         $builder
         ->add('title')
         ->add('description')
@@ -58,14 +61,26 @@ class ClaimsAddType extends AbstractType
                     'style' => 'display: none;', // Hide the createDate field
                 ],
                 'data' => '-',
-            ])
-        ;
+            ]);
+            if ($user instanceof User) {
+                // Set the idU value for the logged-in user
+                $builder->add('fkU', EntityType::class, [
+                    'class' => User::class,
+                    'choice_label' => false,
+                    'data' => $user,
+                    'mapped' => false,
+                    'attr' => ['style' => 'display: none;'],
+                ]);
+            }
+        
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Claims::class,
+            'user' => null,
             
         ]);
     }

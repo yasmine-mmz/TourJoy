@@ -94,6 +94,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Subscription::class)]
     private Collection $subscriptions;
 
+    #[ORM\OneToMany(mappedBy: 'fkU', targetEntity: Claims::class)]
+    private Collection $claims;
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
@@ -101,6 +104,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         $this->bookings = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->claims = new ArrayCollection();
     }
 
 
@@ -491,6 +495,36 @@ public function removeSubscription(Subscription $subscription): static
         // set the owning side to null (unless already changed)
         if ($subscription->getUserId() === $this) {
             $subscription->setUserId(null);
+        }
+    }
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Claims>
+ */
+public function getClaims(): Collection
+{
+    return $this->claims;
+}
+
+public function addClaim(Claims $claim): static
+{
+    if (!$this->claims->contains($claim)) {
+        $this->claims->add($claim);
+        $claim->setFkU($this);
+    }
+
+    return $this;
+}
+
+public function removeClaim(Claims $claim): static
+{
+    if ($this->claims->removeElement($claim)) {
+        // set the owning side to null (unless already changed)
+        if ($claim->getFkU() === $this) {
+            $claim->setFkU(null);
         }
     }
 

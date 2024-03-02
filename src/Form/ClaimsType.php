@@ -18,6 +18,7 @@ class ClaimsType extends AbstractType
             ->add('state')
             ->add('fkC')
             ->add('reply')
+            ->add('fkU')
         ;
     }
 

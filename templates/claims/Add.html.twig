@@ -3,13 +3,18 @@
 {% block body %}
 {% block status %} 
 {% endblock %}
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
+    <a href ="{{ path('Claims_showU') }}" class="btn btn-primary" style="margin-bottom:3vh">My claims</a> 
+    <br>
             <div class="card">
+            
                 <div class="card-header">
                     <h4>Add claim</h4>
                 </div>
+           
                 <div class="card-body">
                 {{ form_start(Claims, {'attr': {'novalidate': 'novalidate', 'id': 'claimForm'}}) }}
                     <div class="mb-3">

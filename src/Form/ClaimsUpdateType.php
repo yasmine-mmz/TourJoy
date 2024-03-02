@@ -5,6 +5,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Claims;
 use App\Entity\Categories;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +17,7 @@ class ClaimsUpdateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $user = $options['user'];
         $builder
             ->add('title', null, [
                 'label' => false,
@@ -66,12 +68,24 @@ class ClaimsUpdateType extends AbstractType
             
         
         ;
+        if ($user instanceof User) {
+            // Set the idU value for the logged-in user
+            $builder->add('fkU', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => false,
+                'data' => $user,
+                'mapped' => false,
+                'attr' => ['style' => 'display: none;'],
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Claims::class,
+            'user' => null,
+            
         ]);
     }
 }

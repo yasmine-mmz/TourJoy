@@ -1,0 +1,41 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+
+
+
+<div class="card-body">
+    <h5 class="card-title">My claims</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date of creation</th>
+            <th scope="col">State</th>
+            <th scope="col">Category</th>
+            <th scope="col">Reply</th>
+       
+           
+    </thead>
+    <tbody>
+        {% for Claims in Claimss %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ Claims.title }}</td>
+            <td>{{ Claims.description }}</td>
+            <td>{{ Claims.createDate|date('Y-m-d') }}</td>
+            <td>{{ Claims.state }}</td>
+            <td>{{ Claims.fkC.name }}</td>
+            <td>{{ Claims.reply }}</td>
+            
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+{% block footer %}
+    
+{% endblock %}

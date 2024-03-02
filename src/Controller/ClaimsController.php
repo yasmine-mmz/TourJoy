@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ClaimsType;
 use App\Form\ClaimsAddType;
 use App\Form\ClaimsUpdateType;
+use App\Form\ClaimsShowType;
 use App\Entity\Claims;
 use App\Entity\Notification;
 use App\Repository\ClaimsRepository;
@@ -21,7 +22,7 @@ use Twig\Environment;
 use Symfony\Contracts\EventDispatcher\Event;
 use App\Entity\Claim; // Adjust namespace according to your application structure
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-
+use Symfony\Component\Security\Core\Security;
 
 
 class ClaimsController extends AbstractController
@@ -78,12 +79,17 @@ public function show(ClaimsRepository $rep, Request $request): Response
 
 
 #[Route('/Claimsadd', name: 'Claims_add')]
-public function AddClaims(ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator, MailerInterface $mailer): Response
+public function AddClaims(ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator, MailerInterface $mailer,Security $security): Response
 {
     $Claims = new Claims();
+    $user = $security->getUser();
+    $firstName = $user->getFirstName();
+   
+
     $form = $this->createForm(ClaimsAddType::class, $Claims);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
+        $Claims->setFkU($user);
         $title = $Claims->getTitle(); // Assuming getTitle method exists in your Claims entity
         $description = $Claims->getDescription(); // Assuming getDescription method exists in your Claims entity
 
@@ -91,9 +97,12 @@ public function AddClaims(ManagerRegistry $doctrine, Request $request, Validator
 
 
         $notification = new Notification();
+       
         $notification->setMessage('A new claim has been submitted.');
         $notification->setIsRead(false);
         $notification->setCreatedAt(new \DateTimeImmutable());
+        $notification->setUser($firstName);
+
 
         $em = $doctrine->getManager();
         $em->persist($Claims);
@@ -113,7 +122,7 @@ public function AddClaims(ManagerRegistry $doctrine, Request $request, Validator
 
         $mailer->send($email);
 
-        return $this->redirectToRoute('app_test');
+        return $this->redirectToRoute('Claims_showU');
     }
     return $this->render('Claims/Add.html.twig', [
         'Claims' => $form->createView(),
@@ -163,4 +172,18 @@ public function ClaimsStats(ClaimsRepository $Rep): Response
         'data' => $data,
     ]);
 }
+#[Route('/showclaimsU', name: 'Claims_showU')]
+public function showU(ClaimsRepository $rep, Request $request, Security $security): Response
+{
+   $user=$security->getUser();
+    // Fetch claims based on search criteria and sort parameters
+    $claims = $rep->findByUser($user);
+
+    return $this->render('Claims/show.html.twig', [
+        'Claimss' => $claims,
+        
+
+    ]);
+}
+
 }

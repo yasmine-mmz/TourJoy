@@ -22,7 +22,10 @@ class Notification
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    public function getId(): ?int
+    #[ORM\Column]
+    private ?string $user = null;
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -59,6 +62,18 @@ class Notification
     public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?string
+    {
+        return $this->user;
+    }
+
+    public function setUser(string $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

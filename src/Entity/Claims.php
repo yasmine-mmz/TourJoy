@@ -44,6 +44,9 @@ class Claims
     #[Assert\Length(max: 255)]
     private ?string $reply = null;
 
+    #[ORM\ManyToOne(inversedBy: 'claims')]
+    private ?User $fkU = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -117,6 +120,18 @@ class Claims
     public function setReply(?string $reply): static
     {
         $this->reply = $reply;
+
+        return $this;
+    }
+
+    public function getFkU(): ?User
+    {
+        return $this->fkU;
+    }
+
+    public function setFkU(?User $fkU): static
+    {
+        $this->fkU = $fkU;
 
         return $this;
     }

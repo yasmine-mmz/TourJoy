@@ -95,14 +95,16 @@
 													<img src="{{ asset('img/noProfilePicture.png') }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 28px; max-height: 28px;">
 												{% endif %}
 													<div class="dropdown-menu">
-														<a class="dropdown-item" href="{{ path('app_profile') }}">Update</a>
+														<a class="dropdown-item" href="{{ path('Claims_add') }}">Claims</a>
+														{<a class="dropdown-item" href="{{ path('app_profile') }}">Update</a> }
 														<a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
 														{% if is_granted('ROLE_ADMIN') %}
-															<a class="dropdown-item" href="{{ path('app_back') }}">Backoffice</a>
-														{% endif %}
+														<a class="dropdown-item" href="{{ path('app_back') }}">Backoffice</a>
+
+												{% endif %}
 													</div>
 												</li>
-											{% else %}
+											    {% else %}
 												<li class="dropdown">
 													<a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 														SignIn/Up

@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ClaimsType extends AbstractType
+class ClaimsShowType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -18,6 +18,7 @@ class ClaimsType extends AbstractType
             ->add('state')
             ->add('fkC')
             ->add('reply')
+            ->add('fkU')
         ;
     }
 
