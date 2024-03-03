@@ -56,9 +56,13 @@ class Accomodation
     #[ORM\ManyToOne(inversedBy: 'accomodations')]
     private ?Country $fkpays = null;
 
+    #[ORM\OneToMany(mappedBy: 'acc', targetEntity: Favs::class)]
+    private Collection $favs;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->favs = new ArrayCollection();
     }
 
     public function getRefA(): ?int
@@ -191,6 +195,36 @@ class Accomodation
     public function setFkpays(?Country $fkpays): static
     {
         $this->fkpays = $fkpays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favs>
+     */
+    public function getFavs(): Collection
+    {
+        return $this->favs;
+    }
+
+    public function addFav(Favs $fav): static
+    {
+        if (!$this->favs->contains($fav)) {
+            $this->favs->add($fav);
+            $fav->setAcc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFav(Favs $fav): static
+    {
+        if ($this->favs->removeElement($fav)) {
+            // set the owning side to null (unless already changed)
+            if ($fav->getAcc() === $this) {
+                $fav->setAcc(null);
+            }
+        }
 
         return $this;
     }

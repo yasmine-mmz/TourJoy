@@ -14,12 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ReservationType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Security;
 
 class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
-    public function index(ReservationRepository $reservation): Response
-    {
+    public function index(ReservationRepository $reservation,Security $security): Response
+    {      
+          $user = $security->getUser();
+          dump($user);
+
+          $form = $this->createForm(ReservationType::class, null, ['user' => $user]);
+
         $events = $reservation->findAll();
     
         $rdvs = [];
@@ -56,15 +62,18 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/addR', name: 'addR')]
-    public function addR(ManagerRegistry $mr, Request $req, TranslatorInterface $translator): Response
+    public function addR(ManagerRegistry $mr, Request $req, TranslatorInterface $translator,Security $security): Response
     {
         $p = new Reservation();
+        $user = $security->getUser();
+        $firstName = $user->getFirstName();    
         $form = $this->createForm(ReservationType::class, $p);
         $form->handleRequest($req);
         dump($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $p->setFkuser($this->getUser());
+            $p->setFkuser($user);
+	    dump($p);
             $em = $mr->getManager();
             $em->persist($p);
             $em->flush();

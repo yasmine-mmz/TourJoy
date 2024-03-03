@@ -10,7 +10,8 @@
         <p class="text-center">You have no favorite accommodations yet.</p>
     {% else %}
         <div class="row">
-            {% for accommodation in favoriteAccommodations %}
+            {% for fav in favoriteAccommodations %}
+                {% set accommodation = fav.acc %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <img src="{{ vich_uploader_asset(accommodation, 'imageFile') }}" class="card-img-top" alt="{{ accommodation.name }}">

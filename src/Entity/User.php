@@ -97,6 +97,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\OneToMany(mappedBy: 'fkU', targetEntity: Claims::class)]
     private Collection $claims;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favs::class)]
+    private Collection $favs;
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
@@ -105,6 +108,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         $this->reservations = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->claims = new ArrayCollection();
+        $this->favs = new ArrayCollection();
     }
 
 
@@ -525,6 +529,36 @@ public function removeClaim(Claims $claim): static
         // set the owning side to null (unless already changed)
         if ($claim->getFkU() === $this) {
             $claim->setFkU(null);
+        }
+    }
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Favs>
+ */
+public function getFavs(): Collection
+{
+    return $this->favs;
+}
+
+public function addFav(Favs $fav): static
+{
+    if (!$this->favs->contains($fav)) {
+        $this->favs->add($fav);
+        $fav->setUser($this);
+    }
+
+    return $this;
+}
+
+public function removeFav(Favs $fav): static
+{
+    if ($this->favs->removeElement($fav)) {
+        // set the owning side to null (unless already changed)
+        if ($fav->getUser() === $this) {
+            $fav->setUser(null);
         }
     }
 

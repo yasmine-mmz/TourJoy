@@ -20,7 +20,8 @@ class AccomodationType extends AbstractType
             ->add('fkpays')
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'Resort' => 'resort',
+                    'Private house' => 'private house',
+                    'Guesthouse' => 'guesthouse',
                     'Apartment' => 'apartment',
                     'Villa' => 'villa',
                 ],
