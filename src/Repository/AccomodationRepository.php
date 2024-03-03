@@ -21,6 +21,16 @@ class AccomodationRepository extends ServiceEntityRepository
         parent::__construct($registry, Accomodation::class);
     }
 
+ public function findByType(string $type): array
+{
+    return $this->createQueryBuilder('a')
+        ->andWhere('a.type = :type')
+        ->setParameter('type', $type)
+        ->getQuery()
+        ->getResult();
+}
+
+    
 
    
 

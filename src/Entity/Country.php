@@ -42,6 +42,9 @@ class Country
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Transport::class)]
     private Collection $transports;
 
+    #[ORM\Column]
+    private ?bool $VisaRequired = null;
+
     public function __construct()
     {
         $this->monuments = new ArrayCollection();
@@ -205,4 +208,17 @@ class Country
         return $this;
     }
 
+    public function isVisaRequired(): ?bool
+    {
+        return $this->VisaRequired;
+    }
+
+    public function setVisaRequired(bool $VisaRequired): static
+    {
+        $this->VisaRequired = $VisaRequired;
+
+        return $this;
+    }
+
+   
 }

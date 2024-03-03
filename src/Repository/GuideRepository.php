@@ -78,4 +78,14 @@ public function findGuidesFiltered($genders, $ratings, $sortByAge = null)
 
         return $qb->getQuery()->getResult();
     }
+    public function findByLanguage($language): array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.language = :language')
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getResult();
+    }
+    
+
 }

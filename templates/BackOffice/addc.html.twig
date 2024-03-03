@@ -15,8 +15,14 @@
                         {{ form_label(f.region, 'Continent') }}
                         {{ form_widget(f.region, {'attr': {'class': 'single-input'}}) }}
                         {{ form_errors(f.region) }}
+                    </div>   
+                       <div class="mt-10">
+                        {{ form_label(f.visaRequired, 'Visa Requirement:', {'label_attr': {'class': 'form-label'}}) }}
+                        <div class="form-check">
+                            {{ form_widget(f.visaRequired, {'attr': {'class': 'form-check-input'}}) }}
+                        </div>
+                        {{ form_errors(f.visaRequired) }}
                     </div>
-
                     <div class="mt-10">
                         {{ form_row(f.save, {'label': 'ADD', 'attr': {'class': 'btn btn-primary'}}) }}
                     </div>

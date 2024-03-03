@@ -101,6 +101,16 @@ class MonumentRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
 }
+public function findByCountryRegion($region): array
+{
+    return $this->createQueryBuilder('m')
+        ->innerJoin('m.fkcountry', 'c')
+        ->where('c.region = :region')
+        ->setParameter('region', $region)
+        ->getQuery()
+        ->getResult();
+}
+
 //    /**
 //     * @return Monument[] Returns an array of Monument objects
 //     */

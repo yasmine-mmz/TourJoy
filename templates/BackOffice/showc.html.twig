@@ -24,6 +24,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Region</th>
+                    <th>Visa</th>
+
                     <th>Actions</th> <!-- Added a header for actions -->
                 </tr>
             </thead>
@@ -32,6 +34,7 @@
                     <tr>
                         <td>{{ c.getName() }}</td>
                         <td>{{ c.getRegion() }}</td>
+                        <td>{{ c.isVisaRequired ? 'Yes' : 'No' }}</td>
                         <td>
                             <a href="{{ path('updatec', {'id': c.getId()}) }}" class="btn btn-primary">Modify</a>
                             <a href="{{ path('removec', {'id': c.getId()}) }}" class="btn btn-danger">Delete</a>

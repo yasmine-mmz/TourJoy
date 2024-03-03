@@ -59,6 +59,7 @@ class Monument
     #[Assert\Type(type: 'numeric', message: "Longitude must be a numeric value!")]
     private ?float $longitude = null;
 
+   
     public function getRef(): ?int
     {
         return $this->ref;
@@ -196,4 +197,6 @@ class Monument
 
         return $this;
     }
+
+   
 }

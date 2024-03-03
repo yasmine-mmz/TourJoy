@@ -1,0 +1,150 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-size: 36px;">Recommendations Based on Your Preferences</h1>
+
+    <div class="text-center mb-4">
+        <button class="btn btn-gray mx-2 rounded-pill" onclick="showSection('countries')">Countries</button>
+        <button class="btn btn-gray mx-2 rounded-pill" onclick="showSection('accommodations')">Accommodations</button>
+        <button class="btn btn-gray mx-2 rounded-pill" onclick="showSection('monuments')">Monuments</button>
+        <button class="btn btn-gray mx-2 rounded-pill" onclick="showSection('guides')">Guides</button>
+        <button class="btn btn-gray mx-2 rounded-pill" onclick="showSection('transports')">Transports</button>
+    </div>
+
+    <div id="countries" class="section" style="display: none;">
+        <div class="row">
+            {% for country in recommendedCountries %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-light bg-light-gray rounded-circle-border">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ country.name }}</h5>
+                            <p class="card-text">Region: {{ country.region }}</p>
+                            <p class="card-text">Visa Required: {{ country.visaRequired ? 'Yes' : 'No' }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+ <div id="accommodations" class="section" style="display: none;">
+    <div class="row">
+        {% for accommodation in recommendedAccommodations %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 border-light bg-light-gray rounded">
+                    <img src="{{ vich_uploader_asset(accommodation, 'imageFile') }}" class="card-img-top" alt="{{ accommodation.name }}" style="height: 200px; object-fit: cover; border-top-left-radius: 0.25rem; border-top-right-radius: 0.25rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ accommodation.name }}</h5>
+                        <p class="card-text text-orange font-weight-bold">Price: ${{ accommodation.price }}</p>
+                        <p class="card-text">Type: {{ accommodation.type }}</p>
+                        <p class="card-text">Type: {{ accommodation.fkpays }}</p>                       
+                        <div class="text-center mt-2">
+                            <button class="btn btn-success btn-sm rounded-pill mx-2" onclick="showMap('{{ accommodation.location }}')" style="font-size: 20px; background-color: transparent; border: none;"><span style="color: #28a745;">📍</span></button>
+                             <a href="{{ path('book_accommodation', {'refA':accommodation.refA}) }}" class="btn btn-info btn-sm rounded-pill mx-2">Book</a>
+ <a href="{{ path('favorites_add', {'refA':accommodation.refA}) }}" class="btn btn-info btn-sm rounded-pill mx-2">Favorites</a>                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .bg-light-gray {
+        background-color: #f5f5f5;
+    }
+    .rounded {
+        border-radius: 20px;
+    }
+    .btn {
+        border-radius: 10px;
+        font-size: 14px;
+    }
+</style>
+<script>
+    function showMap(location) {
+        const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location);
+        window.open(googleMapsUrl, '_blank');
+    }
+</script>
+
+<div id="monuments" class="section" style="display: none;">
+    <div class="row">
+        {% for country in recommendedCountries %}
+            {% set monuments = monumentsByCountry[country.id] %}
+            {% for monument in monuments %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        {% if monument.imageName %}
+                            <img src="{{ vich_uploader_asset(monument, 'imageFile') }}" class="card-img-top" alt="{{ monument.nameM }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <img src="{{ asset('path/to/default/image.png') }}" class="card-img-top" alt="Default Monument Image" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ monument.nameM }} - {{ country.name }}</h5>
+                            <p class="card-text">{{ monument.description }}</p>
+                            <p class="card-text text-muted">Entry Price: {{ monument.entryPrice }} TND</p>
+                            <a href="{{ path('details', {'id': monument.ref}) }}" class="btn btn-primary mt-auto">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+
+    <div id="guides" class="section" style="display: none;">
+        <div class="row">
+            {% for guide in recommendedGuides %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-light bg-light-gray rounded">
+                        <img src="{{ vich_uploader_asset(guide, 'imageFile') }}" class="card-img-top" alt="Guide Image" style="height: 200px; object-fit: cover; border-top-left-radius: 0.25rem; border-top-right-radius: 0.25rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ guide.firstnameG }} {{ guide.lastnameG }}</h5>
+                            
+                            <p class="card-text">Language: {{ guide.language }}</p>
+                            <div class="text-center">
+                            <a href="{{ path('addB', {'guide_cin': guide.CIN}) }}" class="btn btn-primary" style="padding: 6px 10px; text-decoration: none; border-radius: 5px; background-color: #000; color: #fff;">Book</a>
+                            <a href="{{ path('fetchfg', {'id': guide.CIN}) }}" class="btn btn-info" style="padding: 6px 10px; text-decoration: none; border-radius: 5px;">See Feedbacks</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="transports" class="section" style="display: none;">
+        <div class="row">
+            {% for transport in recommendedTransports %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-light bg-light-gray rounded-circle-border">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ transport.typeT }}</h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-gray {
+        color: white;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+</style>
+<script>
+    function showSection(sectionName) {
+        document.querySelectorAll('.section').forEach(function(section) {
+            section.style.display = 'none';
+        });
+        document.getElementById(sectionName).style.display = 'block';
+    }
+</script>
+{% endblock %}

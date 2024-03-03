@@ -20,7 +20,15 @@ class TransportRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Transport::class);
     }
-
+    public function findByType($type): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.typeT = :type')
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
+    }
+    
 //    /**
 //     * @return Transport[] Returns an array of Transport objects
 //     */

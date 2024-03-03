@@ -67,6 +67,7 @@ class MonumentType extends AbstractType
             'choice_label' => 'name',
             'label' => 'Country:',
         ])
+
         ->add('save', SubmitType::class)
         ;
     }

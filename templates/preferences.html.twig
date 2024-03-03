@@ -1,0 +1,172 @@
+{% extends 'FrontOffice/navbar.html.twig' %}
+
+{% block title %}Preferences{% endblock %}
+{% block body %}
+<style>
+    .video-background {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+        object-fit: cover;
+    }
+
+    .card {
+        position: relative;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 60px; /* Even more padding for a larger card */
+        border-radius: 25px; /* Softer corners for the card */
+        margin: 10vh auto; /* More vertical space */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Stronger shadow for depth */
+        max-width: 1000px; /* Larger max-width for bigger screens */
+        text-align: center; /* Center text */
+    }
+
+ .form-label {
+        font-size: 1rem; /* Smaller font size */
+        color: transparent;
+        text-shadow: 0 0 0 #333;
+        margin-bottom: 2rem;
+        padding: 1rem 0;
+        display: block;
+        border: none;
+    }
+
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: .75rem 1rem; /* Larger padding */
+        font-size: .70rem; /* Larger font size */
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: none; /* Remove borders */
+        border-bottom: 2px solid #ced4da; /* Thicker underline */
+        border-radius: 0; /* Remove border radius */
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: none; /* Remove focus shadow */
+    }
+
+    .btn {
+        font-size: 1.25rem; /* Larger font size */
+        padding: .75rem 1.5rem; /* Larger padding */
+        margin-top: 1rem; /* Space above the button */
+    }
+
+    .btn-primary {
+        background-color: #6c757d; /* Gray background */
+        border-color: #6c757d; /* Gray border */
+    }
+
+    .btn-primary:hover {
+        background-color: #5a6268; /* Darker gray on hover */
+        border-color: #545b62;
+    }
+
+    .btn-primary:focus {
+        box-shadow: none; /* Remove focus shadow */
+    }
+       .button-container {
+        display: flex;
+        justify-content: center; /* This will center the buttons */
+        gap: 20px; /* This will create some space between the buttons */
+    }
+    
+</style>
+
+<video class="video-background" autoplay muted loop>
+    <source src="/images/mataar.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="container">
+    <h1 class="text-center mb-5">Preferences</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                <div id="step1">
+                    <div class="form-group">
+                        {{ form_label(form.region, 'Region') }}
+                        {{ form_widget(form.region, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div id="step2" style="display: none;">
+                    <div class="form-group">
+                        {{ form_label(form.visaRequired, 'Visa required?') }}
+                        {{ form_widget(form.visaRequired, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div id="step3" style="display: none;">
+                    <div class="form-group">
+                        {{ form_label(form.language, 'Preferred Guide Language') }}
+                        {{ form_widget(form.language, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div id="step4" style="display: none;">
+                    <div class="form-group">
+                        {{ form_label(form.tripDuration, 'How many days is your trip?') }}
+                        {{ form_widget(form.tripDuration, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div id="step5" style="display: none;">
+                    <div class="form-group">
+                        {{ form_label(form.transportType, 'Transport Type') }}
+                        {{ form_widget(form.transportType, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div id="step6" style="display: none;">
+                    <div class="form-group">
+                        {{ form_label(form.accommodationType, 'Accommodation Type') }}
+                        {{ form_widget(form.accommodationType, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+              <div class="button-container">
+    <button type="button" class="btn btn-primary" id="prevButton">Previous</button>
+    <button type="button" class="btn btn-primary" id="nextButton">Next</button>
+
+                <button type="submit" class="btn btn-primary" id="submitButton" style="display: none;">Submit</button></div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const steps = document.querySelectorAll('[id^=step]');
+        let currentStep = 0;
+
+        document.getElementById('nextButton').addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                steps[currentStep].style.display = 'none';
+                currentStep++;
+                steps[currentStep].style.display = 'block';
+                if (currentStep === steps.length - 1) {
+                    document.getElementById('submitButton').style.display = 'block';
+                    document.getElementById('nextButton').style.display = 'none';
+                }
+            }
+        });
+
+        document.getElementById('prevButton').addEventListener('click', () => {
+            if (currentStep > 0) {
+                steps[currentStep].style.display = 'none';
+                currentStep--;
+                steps[currentStep].style.display = 'block';
+                document.getElementById('submitButton').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'block';
+            }
+        });
+    </script>
+{% endblock %}
+{% block footer %}
+{% endblock %}
