@@ -26,11 +26,7 @@ class GuideType extends AbstractType
             ->add('lastnameG')
             ->add('emailaddressG')
             ->add('phonenumberG')
-            ->add('countryG', CountryType::class, [
-                'label' => 'Country',
-                'preferred_choices' => ['US', 'GB', 'CA'], // Optional: Set preferred choices
-                'placeholder' => 'Choose a country', // Optional: Placeholder text
-            ])    
+            ->add('country')    
             ->add('language', ChoiceType::class, [
                 'choices' => [
                     'English' => 'English',

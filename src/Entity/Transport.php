@@ -26,6 +26,9 @@ class Transport
     #[ORM\OneToMany(mappedBy: 'typeT', targetEntity: Subscription::class)]
     private Collection $subscriptions;
 
+    #[ORM\ManyToOne(inversedBy: 'transports')]
+    private ?Country $country = null;
+
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
@@ -82,6 +85,18 @@ class Transport
                 $subscription->setTypeT(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): static
+    {
+        $this->country = $country;
 
         return $this;
     }

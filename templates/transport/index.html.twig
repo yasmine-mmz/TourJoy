@@ -25,6 +25,8 @@
             <tr>
                 <th scope="row">{{ loop.index }}</th>
                 <td>{{ transport.typeT }}</td>
+                                <td>{{ transport.country }}</td>
+
                 <td class="text-right"> {# Apply text-right class to align buttons to the right #}
                     <a href ="{{ path('updateT', {'id': transport.id}) }}" class="btn btn-custom-primary">Update</a> |
                     <a href ="{{ path('deleteT', {'id': transport.id}) }}" class="btn btn-custom-danger">Delete</a>

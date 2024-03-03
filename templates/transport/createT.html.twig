@@ -17,6 +17,11 @@
                         {{ form_widget(form.typeT, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.typeT) }}
                     </div>
+                    <div class="mb-3">
+                        {{ form_label(form.country, 'Country') }}
+                        {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.country) }}
+                    </div>
                          
                     
                     <button id="submit-btn" type="submit" class="btn btn-primary">Add</button>

@@ -13,6 +13,8 @@ class TransportType extends AbstractType
     {
         $builder
             ->add('typeT')
+            ->add('country')
+
         ;
     }
 

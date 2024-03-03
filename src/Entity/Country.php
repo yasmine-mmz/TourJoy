@@ -36,10 +36,18 @@ class Country
     #[ORM\OneToMany(mappedBy: 'fkpays', targetEntity: Accomodation::class)]
     private Collection $accomodations;
 
+    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Guide::class)]
+    private Collection $guides;
+
+    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Transport::class)]
+    private Collection $transports;
+
     public function __construct()
     {
         $this->monuments = new ArrayCollection();
         $this->accomodations = new ArrayCollection();
+        $this->guides = new ArrayCollection();
+        $this->transports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,6 +143,66 @@ class Country
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Guide>
+     */
+    public function getGuides(): Collection
+    {
+        return $this->guides;
+    }
+
+    public function addGuide(Guide $guide): static
+    {
+        if (!$this->guides->contains($guide)) {
+            $this->guides->add($guide);
+            $guide->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGuide(Guide $guide): static
+    {
+        if ($this->guides->removeElement($guide)) {
+            // set the owning side to null (unless already changed)
+            if ($guide->getCountry() === $this) {
+                $guide->setCountry(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transport>
+     */
+    public function getTransports(): Collection
+    {
+        return $this->transports;
+    }
+
+    public function addTransport(Transport $transport): static
+    {
+        if (!$this->transports->contains($transport)) {
+            $this->transports->add($transport);
+            $transport->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransport(Transport $transport): static
+    {
+        if ($this->transports->removeElement($transport)) {
+            // set the owning side to null (unless already changed)
+            if ($transport->getCountry() === $this) {
+                $transport->setCountry(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -59,9 +59,9 @@ class Guide
     #[ORM\Column(length: 255)]
     private ?string $phonenumberG = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"country is required")]
-    private ?string $countryG = null;
+   // #[ORM\Column(length: 255)]
+    //#[Assert\NotBlank(message:"country is required")]
+    //private ?string $countryG = null;
 
     #[ORM\Column(length: 255)]
     private ?string $genderG = null;
@@ -80,6 +80,9 @@ class Guide
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dob = null;
+
+    #[ORM\ManyToOne(inversedBy: 'guides')]
+    private ?Country $country = null;
 
     public function __construct()
     {
@@ -146,17 +149,17 @@ class Guide
         return $this;
     }
 
-    public function getCountryG(): ?string
-    {
-        return $this->countryG;
-    }
+   // public function getCountryG(): ?string
+   // {
+   //     return $this->countryG;
+   // }
 
-    public function setCountryG(?string $countryG): static
-    {
-        $this->countryG = $countryG;
+  //  public function setCountryG(?string $countryG): static
+  //  {
+    //    $this->countryG = $countryG;
 
-        return $this;
-    }
+    //    return $this;
+   // }
 
     public function getGenderG(): ?string
     {
@@ -309,6 +312,18 @@ class Guide
     public function setDob(\DateTimeInterface $dob): static
     {
         $this->dob = $dob;
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): static
+    {
+        $this->country = $country;
 
         return $this;
     }
