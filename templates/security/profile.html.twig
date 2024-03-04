@@ -2,6 +2,15 @@
 
 
 {% block body %}
+
+	<style>
+		html,
+		body {
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
+		}
+	</style>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 	<br>
@@ -19,7 +28,7 @@
 					</div>
 					<div class="card-body">
 						<div class="row">
-							
+
 							<div class="col-md-6">
 								{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 								<div class="row">
@@ -57,9 +66,9 @@
 								</div>
 								<button type="submit" class="btn btn-primary btn-block" tabindex="10">Update Profile</button>
 								{{ form_end(form) }}
-                                
+
 							</div>
-                            <div class="col-md-6" style="padding-top: 3vh; padding-left: 14vh" > 
+							<div class="col-md-6" style="padding-top: 3vh; padding-left: 14vh">
 								{% if user.profilePicture %}
 									<img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Profile Picture" class="rounded-circle" style="max-width: 150px; max-height: 150px;">
 								{% else %}

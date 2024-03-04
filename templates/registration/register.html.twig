@@ -15,6 +15,9 @@
 		body,
 		html {
 			cursor: none;
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
 		}
 
 		input::-webkit-outer-spin-button,
@@ -262,9 +265,6 @@
 	</div>
 
 
-	<br>
-
-
 	<div class="container mt-5">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
@@ -333,8 +333,6 @@
 		</div>
 	</div>
 
-
-	<br><br><br><br><br>
 	<img id="plane" src="img/plane2.svg" alt="Plane" style="position: absolute; display: none; width: 50px; pointer-events: none;">
 
 {% endblock %}
@@ -453,16 +451,20 @@ if (password.length > 6)
 score++;
 
 
+
 if (password.match(/[a-z]/)) 
 score++;
+
 
 
 if (password.match(/[A-Z]/)) 
 score++;
 
 
+
 if (password.match(/\d+/)) 
 score++;
+
 
 
 if (password.match(/[\!@#$%^&*\(\)_\+~`|}{\[\]:;?><,./\\-]/)) 

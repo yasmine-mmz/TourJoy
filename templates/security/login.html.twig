@@ -11,12 +11,14 @@
 
 	<style>
 		body {
-			background-color: #010102;
+			background-color: #588989;
 			background-size: cover; /* Cover the entire viewport */
 			background-position: center; /* Center the image */
 			background-attachment: fixed; /* Fix the background image */
-      cursor: none;
-			
+			cursor: none;
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
 		}
 		body::before {
 			content: '';
@@ -93,9 +95,9 @@
 		}
 		.logo-container {
 			position: fixed;
-			top: 10%;
+			top: 14%;
 
-			right: 63.5%;
+			right: 62.5%;
 			transform: translate(-50%, -50%);
 			z-index: 9999;
 		}
@@ -110,11 +112,11 @@
 			right: 0;
 			top: 50%; /* adjust this to place it at the desired vertical position */
 			transform: translateY(-50%); /* this centers it vertically relative to the top position */
-			max-width: 920px; /* or the width you want */
-			max-height: 1280px; /* or the height you want */
+			max-width: 1500px; /* or the width you want */
+			max-height: 1400px; /* or the height you want */
 			height: auto; /* Keep the aspect ratio */
 			z-index: -1; /* Keep the image behind the form */
-      filter: blur(5px) brightness(1.1) contrast(1.2);
+			filter: blur(5px) brightness(1.1) contrast(1.2);
 		}
 
 
@@ -158,7 +160,7 @@
 		}
 
 
-    #plane {
+		#plane {
 			pointer-events: none; /* Ignore the cursor itself for click events */
 			width: 50px; /* Adjust based on your icon size */
 			transition: transform 0.1s ease-out; /* Smooth movement */
@@ -175,15 +177,13 @@
 				opacity: 0;
 			}
 		}
-
-
 	</style>
 
-	<img src="img/login.png" alt="Descriptive text" class="right-aligned-image">
+	<img src="img/login-white.png" alt="Descriptive text" class="right-aligned-image">
 
 
 	<a class="logo-container" href="{{ path('app_test') }}">
-		<img src="img/tourjoy.png" alt="TourJoy Logo" class="logo" style="max-height: 130px; width: auto; margin-top: 90%">
+		<img src="img/tourjoy.png" alt="TourJoy Logo" class="logo" style="max-height: 150px; width: auto; margin-top: 90%">
 	</a>
 
 
@@ -248,10 +248,10 @@
 
 		</div>
 	</div>
-<img id="plane" src="img/plane2.svg" alt="Plane" style="position: absolute; display: none; width: 50px; pointer-events: none;">
+	<img id="plane" src="img/plane2.svg" alt="Plane" style="position: absolute; display: none; width: 50px; pointer-events: none;">
 
-<script>
-document.addEventListener('mousemove', function (e) {
+	<script>
+		document.addEventListener('mousemove', function (e) {
 const plane = document.getElementById('plane');
 const mouseX = e.clientX;
 const mouseY = e.clientY;
@@ -259,8 +259,7 @@ plane.style.left = mouseX + 'px';
 plane.style.top = mouseY + 'px';
 plane.style.display = 'block';
 });
-
-</script>
+	</script>
 {% endblock %}
 
 {% block footer %}
