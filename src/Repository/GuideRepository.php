@@ -87,5 +87,11 @@ public function findGuidesFiltered($genders, $ratings, $sortByAge = null)
             ->getResult();
     }
     
-
+    public function countTotalGuides(): int
+    {
+        return $this->createQueryBuilder('g')
+            ->select('COUNT(g.CIN)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

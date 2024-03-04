@@ -135,4 +135,12 @@ public function findByCountryRegion($region): array
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function countTotalMonuments(): int
+{
+    return $this->createQueryBuilder('m')
+        ->select('COUNT(m.ref)')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
 }

@@ -159,7 +159,7 @@ public function bookingSuccess(): Response
     }
 
 
-    #[Route('/admin', name: 'Bookings_stats')]
+    #[Route('/Booking_stats', name: 'Bookings_stats')]
     public function BookingStats(BookingRepository $Rep): Response
     {
         $BookingStats = $Rep->countBookingsByGuide();
@@ -181,7 +181,7 @@ public function bookingSuccess(): Response
             $monthsData[] = $monthStat['bookingsCount'];
         }
     
-        return $this->render('BackOffice/back_template.html.twig', [
+        return $this->render('BackOffice/booking_stats.html.twig', [
             'guideLabels' => $guideLabels,
             'guideData' => $guideData,
             'monthsLabels' => $monthsLabels,

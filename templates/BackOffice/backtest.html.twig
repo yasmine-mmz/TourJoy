@@ -1,0 +1,90 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Statistics</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-primary mb-3">
+                <div class="card-header text-primary">Total Users</div>
+                <div class="card-body text-primary">
+                    <p class="card-text">{{ total_users }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-success mb-3">
+                <div class="card-header text-success">Total Bookings</div>
+                <div class="card-body text-success">
+                    <p class="card-text">{{ total_bookings }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-danger mb-3">
+                <div class="card-header text-danger">Total Accommodations</div>
+                <div class="card-body text-danger">
+                    <p class="card-text">{{ total_accommodations }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-warning mb-3">
+                <div class="card-header text-warning">Total Claims</div>
+                <div class="card-body text-warning">
+                    <p class="card-text">{{ total_claims }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-info mb-3">
+                <div class="card-header text-info">Total Countries</div>
+                <div class="card-body text-info">
+                    <p class="card-text">{{ total_countries }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-secondary mb-3">
+                <div class="card-header text-secondary">Total Guides</div>
+                <div class="card-body text-secondary">
+                    <p class="card-text">{{ total_guides }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-dark mb-3">
+                <div class="card-header text-dark">Total Monuments</div>
+                <div class="card-body text-dark">
+                    <p class="card-text">{{ total_monuments }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-dark mb-3">
+                <div class="card-header text-primary">Total Reservations</div>
+                <div class="card-body text-primary">
+                    <p class="card-text">{{ total_reservations }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary mb-3">
+                <div class="card-header text-danger">Total Subscriptions</div>
+                <div class="card-body text-danger">
+                    <p class="card-text">{{ total_subscriptions }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-success mb-3">
+                <div class="card-header text-success">Total Transports</div>
+                <div class="card-body text-success">
+                    <p class="card-text">{{ total_transports }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -31,7 +31,13 @@ class AccomodationRepository extends ServiceEntityRepository
 }
 
     
-
+public function countTotalAccommodations(): int
+{
+    return $this->createQueryBuilder('a')
+        ->select('COUNT(a.refA)') // Change 'id' to 'refA' or whatever your primary key field is named
+        ->getQuery()
+        ->getSingleScalarResult();
+}
    
 
 

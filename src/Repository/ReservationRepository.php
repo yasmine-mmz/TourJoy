@@ -74,4 +74,12 @@ public function findAllWithUsers(): array
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function countTotalReservations(): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r.idR)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

@@ -140,6 +140,7 @@
 			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 			overflow: hidden; /* Ensures the blur effect is contained within the card borders */
 			color: #ffffff; /* Adjust text color as needed */
+			
 		}
 
 		.card-body {
@@ -183,11 +184,11 @@
 
 
 	<a class="logo-container" href="{{ path('app_test') }}">
-		<img src="img/tourjoy.png" alt="TourJoy Logo" class="logo" style="max-height: 150px; width: auto; margin-top: 90%">
+		<img src="img/tourjoy.png" alt="TourJoy Logo" class="logo" style="max-height: 150px; width: auto; margin-top: 2%; margin-left: 110%">
 	</a>
 
 
-	<div class="container" style="margin-top: 8%; margin-right: 60%">
+	<div class="container" style="margin-top: 3%; margin-right: 100%">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<div class="card mt-5 mb-4 h-100">
@@ -221,7 +222,7 @@
 							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 							<div class="mb-3">
-								<a href="{{ path('app_forgot_password_request')}}">Forgot password?</a>
+								<a href="{{ path('app_forgot_password_request')}}" style="color: white;">Forgot password?</a>
 							</div>
 
 							<div class="text-center">
@@ -231,7 +232,7 @@
 
 						<div class="mt-3 text-center">
 							Don't have an account?
-							<a href="{{ path('app_register') }}">Sign Up</a>
+							<a href="{{ path('app_register')}}" >Sign Up</a>
 							<br>
 							<br>
 							<h5 class="card-title text-center" style="color: white;">Or</h5>

@@ -1,6 +1,7 @@
 {% extends "FrontOffice/navbar.html.twig" %}
 
 {% block body %}
+   
 	<section class="default-banner active-blog-slider">
 		<div class="item-slider relative" style="background: url(img/slider1.jpg);background-size: cover;">
 			<div class="overlay" style="background: rgba(0,0,0,.3)"></div>
@@ -57,47 +58,85 @@
 
 	</section>
 
-
-	<!-- Start about Area -->
-	<section class="section-gap info-area" id="about">
-		<div class="container">
-			<div class="row d-flex justify-content-center">
-				<div class="menu-content pb-40 col-lg-8">
-					<div class="title text-center">
-						<h1 class="mb-10">Why Choose Us Your Fitness Builder</h1>
-						<p>Who are in extremely love with eco friendly system.</p>
-					</div>
-				</div>
-			</div>
-			<div class="single-info row mt-40">
-				<div class="col-lg-6 col-md-12 mt-120 text-center no-padding info-left">
-					<div class="info-thumb">
-						<img src="img/about-img.jpg" class="img-fluid" alt="">
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-12 no-padding info-rigth">
-					<div class="info-content">
-						<h2 class="pb-30">We Realize that
-							<br>
-							there are reduced
-							<br>
-							Wastege Stand out</h2>
-						<p>
-							inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. That’s why it’s crucial that, as women.
-						</p>
-						<br>
-						<p>
-							inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. That’s why it’s crucial that, as women. inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. That’s why it’s crucial that, as women.
-						</p>
-						<br>
-						<p>
-							inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. That’s why it’s crucial that, as women.
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+<section class="section-gap info-area" id="about">
+    <div id="portfolio" class="our-portfolio section">
+        <div class="container">
+            <div class="row" style="text-align: center;">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading  wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <h2 style="text-align: center;">Discover Our Tailored Services</h2>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    
+                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                            
+                            <div class="showed-content">
+                                <div class="image-container">
+                                    <img src="img/mapp.jpg" alt="" class="image">
+                                    <div class="text-container">
+                                        <h4>Exceptional Customer Service</h4>
+                                        <p>We ensure that your travel experience exceeds your expectations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    
+                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                            
+                            <div class="showed-content">
+                                <div class="image-container">
+                                    <img src="img/mapp.jpg" alt="" class="image">
+                                    <div class="text-container">
+                                        <h4>Expert Guidance</h4>
+                                        <p>We offer an expert advice and insights to help you make informed decisions about your travel plans.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    
+                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                            
+                            <div class="showed-content">
+                                <div class="image-container">
+                                    <img src="img/mapp.jpg" alt="" class="image">
+                                    <div class="text-container">
+                                        <h4>Exclusive Access</h4>
+                                        <p>We enhance your journey with unique opportunities and unforgettable moments.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    
+                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                            
+                            <div class="showed-content">
+                                <div class="image-container">
+                                    <img src="img/mapp.jpg" alt="" class="image">
+                                    <div class="text-container">
+                                        <h4>Unparalleled Destination</h4>
+                                        <p>we offer valuable insights and recommendations that elevate your travel experience and uncover hidden gems.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>            </div>
+        </div>
+    </div>
+</section>
 	<!-- End about Area -->
 
 
@@ -349,6 +388,99 @@
 		.btn:hover {
 			background-color: #333; /* Darker black color on hover */
 		}
+
+		/* Add this CSS to your existing stylesheet */
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px; /* Adjust the border-radius as needed */
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+
+
+.image-container:hover .image {
+    transform: scale(1.1); /* Adjust the scale factor as needed */
+}
+
+.image-container:hover .text-container {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.item {
+    position: relative;
+    overflow: hidden; /* Ensure that overflowing content is hidden */
+    border-radius: 15px; /* Match the border-radius of the image */
+}
+
+.image-container {
+    position: relative;
+    border-radius: 15px; /* Adjust the border-radius as needed */
+}
+
+.image {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.text-container {
+    position: absolute;
+    bottom: -100%; /* Start below the image */
+    left: 0;
+    width: 100%;
+    background-color: gray; /* Your chosen color for the background */
+    color: #ffffff; /* Text color */
+    transition: all 0.5s ease;
+    border-radius: 15px; /* Match the border-radius of the image */
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0; /* Start with text container invisible */
+}
+
+.item:hover .text-container {
+    bottom: 0;
+    opacity: 1; /* Show the text container on hover */
+}
+
+/* Add this to make sure the image also scales up on hover */
+.item:hover .image {
+    transform: scale(1.1);
+}
+
+/* WOW animations */
+.wow.bounceInUp {
+    visibility: visible;
+    animation-name: bounceInUp;
+}
+
+@keyframes bounceInUp {
+    from, 20%, 40%, 60%, 80%, to {
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    0% {
+        opacity: 0;
+        bottom: -100%;
+    }
+    60% {
+        opacity: 1;
+        bottom: 25px;
+    }
+    80% {
+        bottom: 10px;
+    }
+    to {
+        bottom: 0;
+    }
+}
+
 	</style>
 
 {% endblock %}

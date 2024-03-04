@@ -1,0 +1,54 @@
+{% extends 'BackOffice/navbars.html.twig' %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Bookings Statistics</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Bookings Per Guide</h2>
+                    <canvas id="BookingStatsChart" style="max-height: 500px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx1 = document.getElementById('BookingStatsChart').getContext('2d');
+        var BookingStatsChart = new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: {{ guideLabels|json_encode|raw }},
+                datasets: [{
+                    label: 'Bookings',
+                    data: {{ guideData|json_encode|raw }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',  // Red
+                        'rgba(54, 162, 235, 0.2)',  // Blue
+                        'rgba(255, 206, 86, 0.2)',  // Yellow
+                        // ...additional colors
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',    // Red
+                        'rgba(54, 162, 235, 1)',    // Blue
+                        'rgba(255, 206, 86, 1)',    // Yellow
+                        // ...additional borders
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                aspectRatio: 1 // You can adjust this value to change the chart size
+            }
+        });
+    });
+</script>
+
+{% endblock %}

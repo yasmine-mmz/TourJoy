@@ -106,7 +106,7 @@ class SubscriptionController extends AbstractController
         'data' => json_encode(array_values($chartData)),
     ]);
 }
-#[Route('/subscription/pdf/{id}', name: 'subscription_pdf')]
+#[Route('/subscription/pdf/{id}', name: 'subscriptionF_pdf')]
 public function generatePdf(Pdf $snappy, SubscriptionRepository $repository, int $id): Response
 {
     $subscription = $repository->find($id);

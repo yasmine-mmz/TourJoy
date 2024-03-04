@@ -83,4 +83,12 @@ public function findByUser($user)
             ->getQuery()
             ->getResult();
     }
+
+    public function countTotalClaims(): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

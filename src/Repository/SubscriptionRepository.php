@@ -20,7 +20,17 @@ class SubscriptionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Subscription::class);
     }
+    public function findByTransportType($typeT): array
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.typeT', 't')
+            ->where('t.typeT = :typeT')
+            ->setParameter('typeT', $typeT)
+            ->getQuery()
+            ->getResult();
+    }
 
+    
 //    /**
 //     * @return Subscription[] Returns an array of Subscription objects
 //     */
@@ -45,4 +55,12 @@ class SubscriptionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function countTotalSubscriptions(): int
+    {
+        return $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

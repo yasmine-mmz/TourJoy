@@ -295,7 +295,7 @@
 				<ul class="sidebar-nav" id="sidebar-nav">
 
 					<li class="nav-item">
-						<a class="nav-link " href="{{ path('Claims_stats')}}">
+						<a class="nav-link " href="{{ path('app_back')}}">
 							<i class="bi bi-grid"></i>
 							<span>Dashboard</span>
 						</a>
@@ -342,7 +342,12 @@
 									<span>List of guides</span>
 								</a>
 							</li>
-
+                            <li>
+								<a href="{{ path('Bookings_stats')}}">
+									<i class="bi bi-circle"></i>
+									<span>Statistics</span>
+								</a>
+							</li>
 						</ul>
 					</li>
 					<!-- End Icons Nav -->
@@ -366,6 +371,7 @@
 									<span>list of accommodations</span>
 								</a>
 							</li>
+							
 
 							<li>
 								<a href="{{ path('fetchR')}}">
@@ -495,8 +501,15 @@
 								</a>
 
 							</li>
+                               <li>
+								<a href="{{ path('Claims_stats')}}">
+									<i class="bi bi-circle"></i>
+									<span>Statistics</span>
+								</a>
 
+							</li>
 						</ul>
+						
 					</li>
 
 				</aside>

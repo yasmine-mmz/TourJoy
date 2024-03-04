@@ -36,6 +36,13 @@
 		{% endblock %}
 		{% set user = app.user %}
 		{% set isVerified = user and not user.isVerified() %}
+    <style>
+        .custom-text {
+            font-family: 'Great Vibes', cursive;
+        font-size: 20px; /* You can adjust the size as needed */
+        color: #333; /* Adjust the color to fit your design */
+        }
+    </style>
 
 	</head>
 	<body>
@@ -48,26 +55,26 @@
 				class="banner-area" id="home">
 				<!-- Start Header Area -->
 				<header class="default-header">
-					<nav class="navbar navbar-expand-lg  navbar-light bg-secondary">
-						<div class="container">
-							<a class="navbar-brand" href="{{ path('app_test')}}">
-								<img src="img/logo.png" alt="">
-							</a>
-							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-								<span class="text-white lnr lnr-menu"></span>
-							</button>
-							<div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-								<ul class="navbar-nav">
-									<li>
-										<a href="#home">Home</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light {% if app.request.attributes.get('_route') == 'app_profile' or app.request.attributes.get('_route') == 'app_check_email' or app.request.attributes.get('_route') == 'showSF'%}bg-secondary{% endif %}" >        <div class="container">
+            <a class="navbar-brand" href="{{ path('app_test') }}">
+                <img src="img/tourjoy.png" alt="" style="max-width: 60px; height: auto;">
+				<span class="ml-2 font-weight-bold custom-text">TourJoy</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="text-black lnr lnr-menu"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li>
+										<a href="#home"style="color: black;">Home</a>
 									</li>
 									<li>
-										<a href="#about">About</a>
+										<a href="#about"style="color: black;">About</a>
 									</li>
 
 
 									<li class="dropdown">
-										<a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+										<a class="dropdown-toggle" href="#" style="color: black;"id="navbardrop" data-toggle="dropdown">
 											Trip
 										</a>
 										<div class="dropdown-menu">
@@ -82,7 +89,7 @@
 										{% if app.user %}
 											<!-- Dropdown -->
 											<li class="dropdown">
-												<a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+												<a class="dropdown-toggle" href="#" style="color: black;" id="navbardrop" data-toggle="dropdown">
 													Profile
 												</a>
 												{% if user.profilePicture %}
@@ -123,7 +130,7 @@
 											</li>
 										{% else %}
 											<li class="dropdown">
-												<a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+												<a class="dropdown-toggle" href="#" style="color: black;"id="navbardrop" data-toggle="dropdown">
 													SignIn/Up
 												</a>
 												<div class="dropdown-menu">

@@ -66,6 +66,12 @@ public function bookingsPerMonth()
 
     return $qb->getQuery()->getResult();
 }
-
+public function countTotalBookings(): int
+{
+    return $this->createQueryBuilder('b')
+        ->select('COUNT(b.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
 
 }

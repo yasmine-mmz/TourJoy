@@ -99,4 +99,13 @@ public function findByRegionAndVisaRequired(string $region, bool $visaRequired):
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function countTotalCountries(): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    
 }

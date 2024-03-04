@@ -9,6 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Transport;
 use App\Form\TransportType;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\UserRepository;
+use App\Repository\BookingRepository;
+use App\Repository\AccomodationRepository;
+use App\Repository\ClaimsRepository;
+use App\Repository\CountryRepository;
+use App\Repository\GuideRepository;
+use App\Repository\MonumentRepository;
+use App\Repository\ReservationRepository;
+use App\Repository\SubscriptionRepository;
 use App\Repository\TransportRepository;
 
 class TransportController extends AbstractController
@@ -72,5 +81,44 @@ class TransportController extends AbstractController
         $em->remove($transport);
         $em->flush();
         return $this-> redirectToRoute('showT');
+    }
+
+
+    #[Route('/admin', name: 'app_back')]
+    public function statss(
+        UserRepository $userRepository,
+        BookingRepository $bookingRepository,
+        AccomodationRepository $accommodationRepository,
+        ClaimsRepository $claimsRepository,
+        CountryRepository $countryRepository,
+        GuideRepository $guideRepository,
+        MonumentRepository $monumentRepository,
+        ReservationRepository $reservationRepository,
+        SubscriptionRepository $subscriptionRepository,
+        TransportRepository $transportRepository
+    ): Response {
+        $totalUsers = $userRepository->countTotalUsers();
+        $totalBookings = $bookingRepository->countTotalBookings();
+        $totalAccommodations = $accommodationRepository->countTotalAccommodations();
+        $totalClaims = $claimsRepository->countTotalClaims();
+        $totalCountries = $countryRepository->countTotalCountries();
+        $totalGuides = $guideRepository->countTotalGuides();
+        $totalMonuments = $monumentRepository->countTotalMonuments();
+        $totalReservations = $reservationRepository->countTotalReservations();
+        $totalSubscriptions = $subscriptionRepository->countTotalSubscriptions();
+        $totalTransports = $transportRepository->countTotalTransports();
+
+        return $this->render('BackOffice/backtest.html.twig', [
+            'total_users' => $totalUsers,
+            'total_bookings' => $totalBookings,
+            'total_accommodations' => $totalAccommodations,
+            'total_claims' => $totalClaims,
+            'total_countries' => $totalCountries,
+            'total_guides' => $totalGuides,
+            'total_monuments' => $totalMonuments,
+            'total_reservations' => $totalReservations,
+            'total_subscriptions' => $totalSubscriptions,
+            'total_transports' => $totalTransports,
+        ]);
     }
 }
