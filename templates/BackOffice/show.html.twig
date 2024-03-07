@@ -6,40 +6,8 @@
 
     <form action="{{ path('monument_show') }}" method="get" class="mb-3">
     <div class="form-group">
-    <label>Price Range:</label>
-    <div class="form-check">
-        <input class="form-check-input price-filter" type="checkbox" name="priceRange[]" value="0-20" id="range1">
-        <label class="form-check-label" for="range1">
-            0 DT - 20 DT
-        </label>
-        
-    </div>
-     <div class="form-check">
-        <input class="form-check-input price-filter" type="checkbox" name="priceRange[]" value="21-50" id="range2">
-        <label class="form-check-label" for="range2">
-            21 DT - 50 DT
-        </label>
-        
-    </div>
    
-        <div>
-            <label for="sortByAttribute">Sort by Attribute:</label>
-            <select name="sortByAttribute" onchange="this.form.submit()">
-                <option value="nameM" {{ app.request.get('sortByAttribute') == 'nameM' ? 'selected' : '' }}>Name</option>
-                <option value="entryprice" {{ app.request.get('sortByAttribute') == 'entryprice' ? 'selected' : '' }}>Entry Price</option>
-                <option value="type" {{ app.request.get('sortByAttribute') == 'type' ? 'selected' : '' }}>Type</option>
-                <!-- Add more options for other attributes if needed -->
-            </select>
-        </div>
-        <div>
-            <label for="sortOrder">Sort Order:</label>
-            <select name="sortOrder" onchange="this.form.submit()">
-                <option value="asc" {{ app.request.get('sortOrder') == 'asc' ? 'selected' : '' }}>Ascending</option>
-                <option value="desc" {{ app.request.get('sortOrder') == 'desc' ? 'selected' : '' }}>Descending</option>
-            </select>
-        </div>
-    </form>
-<br>
+   
     <form action="{{ path('monument_show') }}" method="get" class="mb-3">
         <div class="form-row align-items-end">
             <div class="col-auto">

@@ -130,7 +130,7 @@
     </div>
 
    <div id="transports" class="section" style="display: none;">
-        <div class="row">
+        <div class="row"> 
             {% for subscription in recommendedSubscriptions %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100 border-light bg-light-gray rounded-circle-border">
@@ -140,9 +140,7 @@
                           <div class="text-center">
                             <a href="{{ path('subscription_pdf', {'id': subscription.id}) }}" class="btn btn-info">Generate PDF</a>
                         </div>  
-                        <div class="text-center">
-                            <a href="{{ path('showSF') }}" class="btn btn-info">choisir</a>
-                        </div> 
+                        
                         </div>
                     </div>
                 </div>

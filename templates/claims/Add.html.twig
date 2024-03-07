@@ -3,11 +3,11 @@
 {% block body %}
 {% block status %} 
 {% endblock %}
-
+<br><br><br>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-    <a href ="{{ path('Claims_showU') }}" class="btn btn-primary" style="margin-bottom:3vh">My claims</a> 
+    <a href ="{{ path('Claims_showU') }}" class="btn btn-secondary" style="margin-bottom:3vh">My claims</a> 
     <br>
             <div class="card">
             
@@ -45,7 +45,7 @@
                     </div>
                     
                     
-                    <button id="submit-btn" type="submit" class="btn btn-primary btn-block">Add</button>
+                    <button id="submit-btn" type="submit" class="btn btn-secondary btn-block">Add</button>
                     {{ form_end(Claims) }}
                 </div>
             </div>

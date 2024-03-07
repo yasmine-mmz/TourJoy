@@ -228,228 +228,229 @@
 
 			<!-- ======= Sidebar ======= -->
 			<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_back')}}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <!-- End Dashboard Nav -->
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>User Management</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ path('admin_users')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+				<li>
+                    <a href="{{ path('user_stats')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End forms Nav -->
+        
+        <!-- Other management sections -->
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-person-hearts"></i>
+                <span>Guide management</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ path('addFg')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add guide</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('fetchg')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>List of guides</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('Bookings_stats')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Icons Nav -->
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-house"></i>
+                <span>Accommodation Management</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ path('addF1')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>add accommodations</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('showAcc')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>list of accommodations</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('fetchR')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>All bookings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('statAcc')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Components Nav -->
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#monument-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-bank"></i>
+                <span>Monument management</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="monument-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ path('addc')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add country</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('country_show')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>List of countries</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('addM')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add Monument</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('monument_show')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>List of Monuments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('monuments_per_country')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Monument Nav -->
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#transport-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-scooter"></i>
+                <span>Transportation management</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="transport-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ path('createT')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add Transport</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('showT')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>List of Transportation</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('createS')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add Subscription</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('showS')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>List of Subscriptions</span>
+                    </a>
+                </li>
+				<li>
+                    <a href="{{ path('chart')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Transportation Nav -->
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#categories-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-tag"></i>
+                <span>Categories management</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="categories-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ path('Categories_show')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Categories list</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Categories Nav -->
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#claims-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-exclamation-triangle"></i>
+                <span>Claims management</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="claims-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ path('Claims_show')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Claims list</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('Claims_stats')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Claims Nav -->
+        
+    </ul>
+</aside>
 
-				<ul class="sidebar-nav" id="sidebar-nav">
-
-					<li class="nav-item">
-						<a class="nav-link " href="{{ path('app_back')}}">
-							<i class="bi bi-grid"></i>
-							<span>Dashboard</span>
-						</a>
-					</li>
-					<!-- End Dashboard Nav -->
-
-					<li class="nav-item">
-						<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-							<i class="bi bi-menu-button-wide"></i>
-							<span>User Management</span>
-							<i class="bi bi-chevron-down ms-auto"></i>
-						</a>
-						<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-							<li>
-								<a href="{{ path('admin_users')}}">
-									<i class="bi bi-circle"></i>
-									<span>Users</span>
-								</a>
-							</li>
-
-
-						</ul>
-					</li>
-					<!-- End forms Nav -->
-
-
-					<li class="nav-item">
-						<a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-							<i class="bi bi-person-hearts"></i>
-							<span>Guide management</span>
-							<i class="bi bi-chevron-down ms-auto"></i>
-						</a>
-						<ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-							<li>
-								<a href="{{ path('addFg')}}">
-									<i class="bi bi-circle"></i>
-									<span>Add guide</span>
-								</a>
-
-							</li>
-							<li>
-								<a href="{{ path('fetchg')}}">
-									<i class="bi bi-circle"></i>
-									<span>List of guides</span>
-								</a>
-							</li>
-                            <li>
-								<a href="{{ path('Bookings_stats')}}">
-									<i class="bi bi-circle"></i>
-									<span>Statistics</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- End Icons Nav -->
-
-					<li class="nav-item">
-						<a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-							<i class="bi bi-house"></i>
-							<span>Accommodation Management</span>
-							<i class="bi bi-chevron-down ms-auto"></i>
-						</a>
-						<ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-							<li>
-								<a href="{{ path('addF1')}}">
-									<i class="bi bi-circle"></i>
-									<span>add accommodations</span>
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('showAcc')}}">
-									<i class="bi bi-circle"></i>
-									<span>list of accommodations</span>
-								</a>
-							</li>
-							
-
-							<li>
-								<a href="{{ path('fetchR')}}">
-									<i class="bi bi-circle"></i>
-									<span>All bookings</span>
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('statAcc')}}">
-									<i class="bi bi-circle"></i>
-									<span>Statistics</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- End Components Nav -->
-
-
-					<li class="nav-item">
-						<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-							<i class="bi bi-bank"></i>
-							<span>Monument management</span>
-							<i class="bi bi-chevron-down ms-auto"></i>
-						</a>
-						<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-							<li>
-								<a href="{{ path('addc')}}">
-									<i class="bi bi-circle"></i>
-									<span>Add country</span>
-								</a>
-
-							</li>
-							<li>
-								<a href="{{ path('country_show')}}">
-									<i class="bi bi-circle"></i>
-									<span>List of countries</span>
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('addM')}}">
-									<i class="bi bi-circle"></i>
-									<span>Add Monument</span>
-								</a>
-
-							</li>
-							<li>
-								<a href="{{ path('monument_show')}}">
-									<i class="bi bi-circle"></i>
-									<span>List of Monuments</span>
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('monuments_per_country')}}">
-									<i class="bi bi-circle"></i>
-									<span>Statistics</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- End Icons Nav -->
-					<li class="nav-item">
-						<a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-							<i class="bi bi-scooter"></i>
-							<span>Transportation management</span>
-							<i class="bi bi-chevron-down ms-auto"></i>
-						</a>
-						<ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-							<li>
-								<a href="{{ path('createT')}}">
-									<i class="bi bi-circle"></i>
-									<span>Add Transport</span>
-								</a>
-
-							</li>
-							<li>
-								<a href="{{ path('showT')}}">
-									<i class="bi bi-circle"></i>
-									<span>List of Transportation</span>
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('createS')}}">
-									<i class="bi bi-circle"></i>
-									<span>Add Subscription</span>
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('showS')}}">
-									<i class="bi bi-circle"></i>
-									<span>List of Subscriptions</span>
-								</a>
-							</li>
-
-						</ul>
-					</li>
-
-
-					<li class="nav-item">
-						<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-							<i class="bi bi-tag"></i>
-							<span>Categories management</span>
-							<i class="bi bi-chevron-down ms-auto"></i>
-						</a>
-						<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-							<li>
-								<a href="{{ path('Categories_show')}}">
-									<i class="bi bi-circle"></i>
-									<span>Categories list</span>
-								</a>
-
-							</li>
-
-						</ul>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-							<i class="bi bi-exclamation-triangle"></i>
-							<span>Claims management</span>
-							<i class="bi bi-chevron-down ms-auto"></i>
-						</a>
-						<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-							<li>
-								<a href="{{ path('Claims_show')}}">
-									<i class="bi bi-circle"></i>
-									<span>Claims list</span>
-								</a>
-
-							</li>
-                               <li>
-								<a href="{{ path('Claims_stats')}}">
-									<i class="bi bi-circle"></i>
-									<span>Statistics</span>
-								</a>
-
-							</li>
-						</ul>
-						
-					</li>
-
-				</aside>
 				<!-- End Sidebar-->
 
 				{% block body %}{% endblock %}
