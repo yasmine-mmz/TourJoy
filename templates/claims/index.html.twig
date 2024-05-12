@@ -47,7 +47,7 @@
             <th scope="col">State</th>
             <th scope="col">Category</th>
             <th scope="col">Reply</th>
-        <th scope="col">User</th>
+        
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -61,7 +61,7 @@
             <td>{{ Claims.state }}</td>
             <td>{{ Claims.fkC.name }}</td>
             <td>{{ Claims.reply }}</td>
-            <td>{{ Claims.fkU.email }}</td>
+            
             <td>
                 <a href ="{{ path('Claims_update', {'id': Claims.id}) }}" class="btn btn-primary">Update</a> |
                 <a href ="{{ path('Claims_delete', {'id': Claims.id}) }}" class="btn btn-danger">Delete</a> 
